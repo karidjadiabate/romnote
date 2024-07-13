@@ -1,0 +1,130 @@
+/*  bienvenu */
+.container-fluid {
+    height: 100%;
+}
+
+.welcome-section {
+    background-image: url('../img/font.png');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.welcome-section h1 {
+    font-size: 4rem;
+}
+
+.welcome-section p {
+    font-size: 1.2rem;
+}
+
+/* formulaire */
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    margin: auto;
+    color: #37377a;
+}
+
+.login-form h2 {
+    font-size: 2rem;
+}
+
+.login-form h3 {
+    font-size: 1.5rem;
+}
+
+.form-control {
+    height: 45px;
+    font-size: 1.1rem;
+    border-radius: 0%;
+    border: 2px solid #37377a;
+}
+
+#password,
+#email {
+    font-family: 'Poppins', sans-serif;
+}
+
+#password::placeholder,
+#email::placeholder {
+    font-family: 'Font Awesome 5 Free';
+}
+
+input {
+    font-family: "popins", sans-serif;
+}
+
+.form-check-input {
+    border: 2px solid #37377a;
+}
+
+.btn-primary {
+    background-color: #4a4aa6;
+    border-color: #4a4aa6;
+    font-size: 1.2rem;
+    height: 45px;
+    border-radius: 0%;
+    width: 100%;
+    max-width: 400px;
+}
+
+a {
+    color: #37377a;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #37377a;
+    border-color: #37377a;
+}
+
+.mdp {
+    color: #38B293;
+
+}
+
+.btn-retour {
+    font-size: 15px;
+    border-radius: 0%;
+    margin-top: 20px;
+    width: 150px;
+    height: 40px;
+    background-color: #38B293;
+    color: white;
+}
+
+.btn-retour:hover {
+    background-color: #37377a;
+    color: white;
+
+}
+
+.form-control:focus,
+.form-check-input:focus {
+    border: 2px solid #37377a;
+    box-shadow: none;
+
+}
+
+label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 10px;
+
+
+}
+
+
+
+.form-check-input:checked {
+    background-color: #38B293;
+    border-color: #38B293;
+}
+
+#mdp {
+    margin-top: -2px;
+}

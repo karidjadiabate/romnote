@@ -1,6 +1,8 @@
 /*  bienvenu */
 .container-fluid {
     height: 100%;
+    position: static;
+    height: 100vh;
 }
 
 .welcome-section {
@@ -125,6 +127,6 @@ label {
     border-color: #38B293;
 }
 
-#mdp {
+#et {
     margin-top: -2px;
 }

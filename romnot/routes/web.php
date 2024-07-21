@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/',[ClientController::class,'home'])->name('home');
+Route::get('/nos-taris',[ClientController::class,'nostarifs'])->name('nostarifs');
+Route::get('/demandeinscription',[ClientController::class,'demandeinscription'])->name('demandeinscription');

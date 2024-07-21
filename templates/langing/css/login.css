@@ -2,15 +2,17 @@
 .container-fluid {
     height: 100%;
     position: static;
-    height: 100vh;
+
 }
+
 
 .welcome-section {
     background-image: url('../img/font.png');
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
+
 }
 
 .welcome-section h1 {
@@ -73,15 +75,32 @@ input {
     max-width: 400px;
 }
 
+#connect {
+    background-color: #4a4aa6;
+    border-color: #4a4aa6;
+    font-size: 1.2rem;
+    height: 45px;
+    border-radius: 0%;
+    width: 100%;
+    max-width: 400px;
+}
+
+#connect:active {
+
+    color: #37377a;
+}
+
+#connect:hover {
+    background-color: #38B293;
+    border-color: #38B293;
+}
+
 a {
     color: #37377a;
     font-weight: bold;
 }
 
-.btn-primary:hover {
-    background-color: #37377a;
-    border-color: #37377a;
-}
+
 
 .mdp {
     color: #38B293;
@@ -130,3 +149,8 @@ label {
 #et {
     margin-top: -2px;
 }
+
+
+/* .is-invalid {
+    border-color: red !important;
+} */

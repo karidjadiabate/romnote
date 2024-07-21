@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text('matiere_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

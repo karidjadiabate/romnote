@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('type_sujets', function (Blueprint $table) {
             $table->id();
+            $table->string('libtypesujet');
             $table->timestamps();
         });
     }

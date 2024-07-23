@@ -178,6 +178,7 @@
         </table>
     </div>
     <script>
+
         document.getElementById("printBtn").addEventListener("click", function () {
             window.print();
         });
@@ -195,31 +196,11 @@
         }
 
         function exportTableToExcel() {
+            // Récupérer les données du tableau
             var table = document.querySelector("table");
+            var workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
 
-            // Créer une copie de la table pour éviter de modifier l'original
-            var filteredTable = table.cloneNode(true);
-            var headers = filteredTable.querySelectorAll("thead tr th");
-            var rows = filteredTable.querySelectorAll("tbody tr");
-
-            // Exclure la dernière colonne de l'entête
-            var rows = [];
-            var rowElements = document.querySelectorAll("table tbody tr");
-            rowElements.forEach(rowElement => {
-                if (rowElement.style.display !== "none") {
-                    var row = [];
-                    var cellElements = rowElement.querySelectorAll("td");
-                    cellElements.forEach((cell, index) => {
-                        if (index < cellElements.length - 1) {
-                            row.push(cell.textContent);
-                        }
-                    });
-                    rows.push(row);
-                }
-            });
-
-            // Convertir la table filtrée en Excel
-            var workbook = XLSX.utils.table_to_book(filteredTable, { sheet: "Sheet1" });
+            // Sauvegarder le fichier Excel
             XLSX.writeFile(workbook, "liste_enseignants.xlsx");
         }
 
@@ -231,35 +212,36 @@
             var headers = [];
             var headerElements = document.querySelectorAll("table thead tr th");
             headerElements.forEach((header, index) => {
+                // Inclure tous les en-têtes sauf celui de la colonne "Action"
                 if (index < headerElements.length - 1) {
                     headers.push(header.textContent);
                 }
             });
 
-            // Récupérer les lignes visibles du tableau
+            // Récupérer les lignes du tableau
             var rows = [];
             var rowElements = document.querySelectorAll("table tbody tr");
             rowElements.forEach(rowElement => {
-                if (rowElement.style.display !== "none") {
-                    var row = [];
-                    var cellElements = rowElement.querySelectorAll("td");
-                    cellElements.forEach((cell, index) => {
-                        if (index < cellElements.length - 1) {
-                            row.push(cell.textContent);
-                        }
-                    });
-                    rows.push(row);
-                }
+                var row = [];
+                var cellElements = rowElement.querySelectorAll("td");
+                cellElements.forEach((cell, index) => {
+                    // Inclure toutes les cellules sauf celles de la colonne "Action"
+                    if (index < cellElements.length - 1) {
+                        row.push(cell.textContent);
+                    }
+                });
+                rows.push(row);
             });
 
             // Générer le PDF avec autoTable
             doc.autoTable({
-                head: [headers],
-                body: rows,
-                margin: { top: 10 },
-                theme: 'striped'
+                head: [headers], // En-têtes des colonnes
+                body: rows,     // Données des lignes
+                margin: { top: 10 }, // Ajuster la marge du haut si nécessaire
+                theme: 'striped' // Thème pour la table, optionnel
             });
 
+            // Sauvegarder le PDF
             doc.save("liste_enseignants.pdf");
         }
 
@@ -268,25 +250,25 @@
             var headers = [];
             var headerElements = document.querySelectorAll("table thead tr th");
             headerElements.forEach((header, index) => {
+                // Inclure tous les en-têtes sauf celui de la colonne "Action"
                 if (index < headerElements.length - 1) {
                     headers.push(header.textContent);
                 }
             });
 
-            // Récupérer les lignes visibles du tableau
+            // Récupérer les lignes du tableau
             var rows = [];
             var rowElements = document.querySelectorAll("table tbody tr");
             rowElements.forEach(rowElement => {
-                if (rowElement.style.display !== "none") {
-                    var row = [];
-                    var cellElements = rowElement.querySelectorAll("td");
-                    cellElements.forEach((cell, index) => {
-                        if (index < cellElements.length - 1) {
-                            row.push(cell.textContent);
-                        }
-                    });
-                    rows.push(row);
-                }
+                var row = [];
+                var cellElements = rowElement.querySelectorAll("td");
+                cellElements.forEach((cell, index) => {
+                    // Inclure toutes les cellules sauf celles de la colonne "Action"
+                    if (index < cellElements.length - 1) {
+                        row.push(cell.textContent);
+                    }
+                });
+                rows.push(row);
             });
 
             // Convertir en CSV
@@ -306,7 +288,6 @@
             document.body.removeChild(link);
         }
     </script>
-
 
 
 

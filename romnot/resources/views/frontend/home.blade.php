@@ -50,6 +50,16 @@
         </nav>
     </header>
 
+    <div class="pt-5">
+
+        @if(Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('success') }}
+        </div>
+        @endif
+    </div>
+
+
     <section class="hero-section">
         <div class="row d-flex">
             <div class="col-md-6">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DemandeInscription;
 use App\Http\Requests\StoreDemandeInscriptionRequest;
 use App\Http\Requests\UpdateDemandeInscriptionRequest;
+use Illuminate\Support\Facades\Session;
 
 class DemandeInscriptionController extends Controller
 {
@@ -29,7 +30,20 @@ class DemandeInscriptionController extends Controller
      */
     public function store(StoreDemandeInscriptionRequest $request)
     {
-        //
+        DemandeInscription::create([
+            'prenom' => $request->prenom,
+            'nom' => $request->nom,
+            'contact' => $request->contact,
+            'email' => $request->email,
+            'nometablissement' => $request->nometablissement,
+            'adresseetablissement' => $request->adresseetablissement,
+            'password' => $request->password,
+            'password_confirm' => $request->password_confirm
+        ]);
+
+        Session::flash('success', 'Votre demande d\'inscription a bien été soumise !');
+
+        return to_route('home');
     }
 
     /**

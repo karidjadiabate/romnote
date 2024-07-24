@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nometablissement');
             $table->string('adresseetablissement');
             $table->string('password');
+            $table->string('password_confirm');
             $table->timestamps();
         });
     }

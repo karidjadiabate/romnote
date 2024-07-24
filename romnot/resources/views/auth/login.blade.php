@@ -36,18 +36,19 @@
                 <div class="login-form text-center">
                     <h2 class="mb-4"><span class="mdp">AKP</span> ROM-Note</h2>
                     <h3 class="mb-4 fw-bold">Connexion</h3>
-                    <form>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
                         <div class="form-group position-relative">
-                            <label for="email" class="fw-bold">Email</label>
+                            <label for="email" class="fw-bold">Username</label>
                             <i class="fas fa-envelope position-absolute" id="emailIcon"
                                 style="top: 35px; left: 10px;"></i>
-                            <input type="email" class="form-control" id="email" placeholder="" required>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="" required>
                         </div>
                         <br>
                         <div class="form-group position-relative">
                             <label for="password" class="fw-bold">Mot de passe</label>
                             <i class="fas fa-lock position-absolute" id="lockIcon" style="top: 35px; left: 10px;"></i>
-                            <input type="password" class="form-control" id="password" placeholder="" required>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="" required>
                             <i class="fas fa-eye-slash position-absolute" id="togglePassword"
                                 style="cursor: pointer; right: 10px; top: 35px;"></i>
                         </div><br>

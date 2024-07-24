@@ -30,52 +30,53 @@
             <a href="/" id="btnRetour" class="btn btn-success ml-auto">Retour</a>
         </div>
         <div class="registration">
-            <form id="registrationForm">
+            <form action="{{route('demandeinscription.store')}}" id="registrationForm" method="POST">
+                @csrf
                 <h2 class="registration-title">Inscription</h2>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <input type="text" class="form-control form-control-underline" id="firstName"
+                        <input type="text" class="form-control form-control-underline" name="prenom" id="firstName"
                             placeholder="Prénom">
                         <div class="invalid-feedback">Veuillez entrer votre prénom.</div>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" class="form-control form-control-underline" id="lastName" placeholder="Nom">
+                        <input type="text" class="form-control form-control-underline" name="nom" id="lastName" placeholder="Nom">
                         <div class="invalid-feedback">Veuillez entrer votre nom.</div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <input type="text" class="form-control form-control-underline" id="contact"
+                        <input type="text" class="form-control form-control-underline" name="contact" id="contact"
                             placeholder="Contact">
                         <div class="invalid-feedback">Veuillez entrer un numéro de contact valide.</div>
                     </div>
                     <div class="col-md-6">
-                        <input type="email" class="form-control form-control-underline" id="email" placeholder="Email">
+                        <input type="email" class="form-control form-control-underline" name="email" id="email" placeholder="Email">
                         <div class="invalid-feedback">Veuillez entrer une adresse email valide.</div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <input type="text" class="form-control form-control-underline" id="schoolName"
+                        <input type="text" class="form-control form-control-underline" name="nometablissement" id="schoolName"
                             placeholder="Nom de l'établissement">
                         <div class="invalid-feedback">Veuillez entrer le nom de l'établissement.</div>
                     </div>
                     <div class="col-md-6">
-                        <input type="text" class="form-control form-control-underline" id="schoolAddress"
+                        <input type="text" class="form-control form-control-underline" name="adresseetablissement" id="schoolAddress"
                             placeholder="Adresse de l'établissement">
                         <div class="invalid-feedback">Veuillez entrer l'adresse de l'établissement.</div>
                     </div>
                 </div>
                 <div class="row mb-3 position-relative">
                     <div class="col-md-6 position-relative">
-                        <input type="password" class="form-control form-control-underline" id="password"
+                        <input type="password" class="form-control form-control-underline" name="password" id="password"
                             placeholder="Créer votre mot de passe">
                         <div class="invalid-feedback">Veuillez créer votre mot de passe.</div>
                         <i class="fas fa-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 toggle-password"
                             data-toggle="password"></i>
                     </div>
                     <div class="col-md-6 position-relative">
-                        <input type="password" class="form-control form-control-underline" id="confirmPassword"
+                        <input type="password" class="form-control form-control-underline" name="password_confirm" id="confirmPassword"
                             placeholder="Confirmer votre mot de passe">
                         <div class="invalid-feedback">Veuillez confirmer votre mot de passe.</div>
                         <i class="fas fa-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 toggle-password"
@@ -91,7 +92,7 @@
                         <div class="invalid-feedback">Vous devez accepter les termes et conditions.</div>
                     </div>
                 </div>
-                <button id="" type="submit" class="btn btn-primary btn-block">Inscription</button>
+                <button type="submit" class="btn btn-primary btn-block">Inscription</button>
             </form>
         </div>
     </div>

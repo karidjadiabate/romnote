@@ -1,6 +1,7 @@
 // debut Inscription
 document.getElementById('registrationForm').addEventListener('submit', function (event) {
-    event.preventDefault();
+
+    document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
 
     const fieldIds = ['firstName', 'lastName', 'contact', 'email', 'schoolName', 'schoolAddress', 'password', 'confirmPassword', 'rememberMe'];
     let isValid = true;
@@ -21,12 +22,8 @@ document.getElementById('registrationForm').addEventListener('submit', function 
         }
     });
 
-    if (isValid) {
-        alert('Inscription réussie !');
-        fieldIds.forEach(id => {
-            const field = document.getElementById(id);
-            field.type === 'checkbox' ? field.checked = false : field.value = '';
-        });
+    if (!isValid) {
+        event.preventDefault(); // Empêche la soumission du formulaire si des champs sont invalides
     }
 });
 

@@ -26,5 +26,6 @@ Route::post('/demandeinscription',[DemandeInscriptionController::class,'store'])
 Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
 
     Route::get('/',[DashboardController::class,'dashboard']);
+    Route::get('/listedemandeinscription',[DemandeInscriptionController::class,'index'])->name('listedemandeinscription');
 
 });

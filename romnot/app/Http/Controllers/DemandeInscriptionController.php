@@ -14,7 +14,9 @@ class DemandeInscriptionController extends Controller
      */
     public function index()
     {
-        //
+        $listedemandeinscriptions = DemandeInscription::all();
+
+        return view('admin.listedemande.listedemandeinscription',compact('listedemandeinscriptions'));
     }
 
     /**

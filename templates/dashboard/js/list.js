@@ -1,74 +1,59 @@
-// Fonction pour exporter le tableau en format Excel
-function exportTableToExcel() {
-    const table = document.querySelector('table');
-    const rows = Array.from(table.rows);
-    rows.forEach(row => row.deleteCell(-1));
-
-    // Créer un nouveau workbook et une nouvelle feuille de calcul (worksheet)
-    const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.table_to_sheet(table);
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'inscription');
-    XLSX.writeFile(workbook, 'inscription.xlsx');
-    location.reload();
-}
-
-// Exporter le tableau vers PDF
-function exportTableToPDF() {
-    const table = document.querySelector('table');
-    const rows = Array.from(table.rows);
-    rows.forEach(row => row.deleteCell(-1)); // Supprimer la dernière cellule de chaque ligne
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('l');
-
-    doc.autoTable({ html: table });
-
-    doc.save('inscription.pdf');
-
-    location.reload();
-}
-
-// filtre
-function filterTable(subject) {
-    const rows = document.querySelectorAll('#inscriptionTable tr');
-    rows.forEach(row => {
-        const subjectCell = row.cells[5];
-        if (subjectCell) {
-            row.style.display = subject === '' || subjectCell.textContent === subject ? '' : 'none';
-        }
-    });
-    paginateTable();
-}
-
-// recherche
-document.getElementById('searchInput').addEventListener('keyup', function () {
-    const filter = this.value.toLowerCase();
-    const rows = document.querySelectorAll('#inscriptionTable tr');
-    rows.forEach(row => {
-        const cells = row.getElementsByTagName('td');
-        let match = false;
-        for (let i = 0; i < cells.length; i++) {
-            if (cells[i].textContent.toLowerCase().includes(filter)) {
-                match = true;
-                break;
-            }
-        }
-        row.style.display = match ? '' : 'none';
-    });
-    paginateTable();
-});
-
-// 
-document.addEventListener('DOMContentLoaded', function () {
-    const rowsPerPage = 5;
+(function () {
     let currentPage = 1;
+    const rowsPerPage = 5;
 
-    function paginateTable() {
-        const rows = document.querySelectorAll('#inscriptionTable tr');
+    /**
+     * Filtre les lignes du tableau en fonction du sujet donné.
+     * @param {string} subject - Le sujet à filtrer.
+     */
+    function filterTable(subject) {
+        const tables = document.querySelectorAll('tbody');
+        tables.forEach(table => {
+            const rows = table.querySelectorAll('tr');
+            rows.forEach(row => {
+                const subjectCell = row.cells[5];
+                if (subjectCell) {
+                    row.style.display = subject === '' || subjectCell.textContent.trim() === subject ? '' : 'none';
+                }
+            });
+        });
+        paginateTable();
+    }
+
+    /**
+     * Recherche dans les lignes du tableau et filtre en fonction de l'entrée de recherche.
+     * @param {string} tbody - Le sélecteur de l'élément tbody.
+     * @param {string} searchInputId - L'ID de l'élément d'entrée de recherche.
+     */
+    function searchTable(tbody, searchInputId) {
+        const searchInput = document.getElementById(searchInputId);
+        searchInput.addEventListener('keyup', function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll(`${tbody} tr`);
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let match = false;
+                for (let i = 0; i < cells.length; i++) {
+                    if (cells[i].textContent.toLowerCase().includes(filter)) {
+                        match = true;
+                        break;
+                    }
+                }
+                row.style.display = match ? '' : 'none';
+            });
+            paginateTable(tbody);
+        });
+    }
+
+    /**
+     * Paginer les lignes du tableau.
+     * @param {string} tableId - Le sélecteur de l'élément table.
+     */
+    function paginateTable(tableId) {
+        const rows = document.querySelectorAll(`${tableId} tbody tr`);
         const totalRows = rows.length;
         const totalPages = Math.ceil(totalRows / rowsPerPage);
 
-        // Afficher les lignes de la page actuelle
         rows.forEach((row, index) => {
             if (index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) {
                 row.style.display = '';
@@ -77,143 +62,72 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Mettre à jour les boutons de pagination
         document.querySelector('.prev').disabled = currentPage === 1;
         document.querySelector('.next').disabled = currentPage === totalPages;
+
+        document.querySelector('.prev').onclick = () => {
+            if (currentPage > 1) {
+                currentPage--;
+                paginateTable(tableId);
+            }
+        };
+
+        document.querySelector('.next').onclick = () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                paginateTable(tableId);
+            }
+        };
     }
 
-    // Gestion des boutons de pagination
-    document.querySelector('.prev').addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            paginateTable();
-        }
-    });
-
-    document.querySelector('.next').addEventListener('click', () => {
-        const rows = document.querySelectorAll('#inscriptionTable tr');
-        const totalRows = rows.length;
-        const totalPages = Math.ceil(totalRows / rowsPerPage);
-
-        if (currentPage < totalPages) {
-            currentPage++;
-            paginateTable();
-        }
-    });
-
-    paginateTable(); // Initialisation de la pagination lors du chargement de la page
-});
-
-
-
-//
-//
-//
-//
-
-
-// Fonction pour exporter le tableau en format Excel
-function exportTableToExcel() {
-    const table = document.querySelector('table');
-    const rows = Array.from(table.rows);
-    rows.forEach(row => row.deleteCell(-1));
-
-    // Créer un nouveau workbook et une nouvelle feuille de calcul (worksheet)
-    const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.table_to_sheet(table);
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'teacher');
-    XLSX.writeFile(workbook, 'teacher.xlsx');
-    location.reload();
-}
-
-// Exporter le tableau vers PDF
-function exportTableToPDF() {
-    const table = document.querySelector('table');
-    const rows = Array.from(table.rows);
-    rows.forEach(row => row.deleteCell(-1)); // Supprimer la dernière cellule de chaque ligne
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('l');
-
-    doc.autoTable({ html: table });
-
-    doc.save('teacher.pdf');
-
-    location.reload();
-}
-
-// filtre
-function filterTable(subject) {
-    const rows = document.querySelectorAll('#teacherTable tr');
-    rows.forEach(row => {
-        const subjectCell = row.cells[5];
-        if (subjectCell) {
-            row.style.display = subject === '' || subjectCell.textContent === subject ? '' : 'none';
-        }
-    });
-    paginateTable();
-}
-
-// recherche
-document.getElementById('searchInput').addEventListener('keyup', function () {
-    const filter = this.value.toLowerCase();
-    const rows = document.querySelectorAll('#teacherTable tr');
-    rows.forEach(row => {
-        const cells = row.getElementsByTagName('td');
-        let match = false;
-        for (let i = 0; i < cells.length; i++) {
-            if (cells[i].textContent.toLowerCase().includes(filter)) {
-                match = true;
-                break;
-            }
-        }
-        row.style.display = match ? '' : 'none';
-    });
-    paginateTable();
-});
-
-// 
-document.addEventListener('DOMContentLoaded', function () {
-    const rowsPerPage = 5;
-    let currentPage = 1;
-
-    function paginateTable() {
-        const rows = document.querySelectorAll('#teacherTable tr');
-        const totalRows = rows.length;
-        const totalPages = Math.ceil(totalRows / rowsPerPage);
-
-        // Afficher les lignes de la page actuelle
-        rows.forEach((row, index) => {
-            if (index >= (currentPage - 1) * rowsPerPage && index < currentPage * rowsPerPage) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        // Mettre à jour les boutons de pagination
-        document.querySelector('.prev').disabled = currentPage === 1;
-        document.querySelector('.next').disabled = currentPage === totalPages;
+    /**
+     * Exporter le tableau vers un fichier Excel.
+     * @param {string} tableId - Le sélecteur de l'élément table.
+     */
+    function exportTableToExcel(tableId) {
+        const table = document.querySelector(tableId);
+        if (!table) return;
+        const rows = Array.from(table.rows);
+        const pageTitle = document.querySelector('title') ? document.querySelector('title').textContent : 'default';
+        const fileName = pageTitle.trim() || 'data';
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.table_to_sheet(table);
+        XLSX.utils.sheet_add_aoa(worksheet, [[pageTitle]], { origin: 'A1' });
+        const range = XLSX.utils.decode_range(worksheet['!ref']);
+        worksheet['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: range.e.c } }];
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+        XLSX.writeFile(workbook, `${fileName}.xlsx`);
     }
 
-    // Gestion des boutons de pagination
-    document.querySelector('.prev').addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            paginateTable();
-        }
-    });
+    /**
+     * Exporter le tableau vers un fichier PDF.
+     * @param {string} tableId - Le sélecteur de l'élément table.
+     */
+    function exportTableToPDF(tableId) {
+        const table = document.querySelector(tableId);
+        if (!table) return;
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('l');
+        const pageTitle = document.querySelector('title') ? document.querySelector('title').textContent : 'default';
+        const fileName = pageTitle.trim() || 'data';
+        doc.setFontSize(18);
+        doc.text(pageTitle, doc.internal.pageSize.getWidth() / 2, 10, { align: 'center' });
+        doc.autoTable({ html: table, startY: 20 });
+        doc.save(`${fileName}.pdf`);
+    }
 
-    document.querySelector('.next').addEventListener('click', () => {
-        const rows = document.querySelectorAll('#teacherTable tr');
-        const totalRows = rows.length;
-        const totalPages = Math.ceil(totalRows / rowsPerPage);
+    /**
+     * Imprimer la div courante.
+     */
+    function printDiv() {
+        window.print();
+    }
 
-        if (currentPage < totalPages) {
-            currentPage++;
-            paginateTable();
-        }
-    });
-
-    paginateTable(); // Initialisation de la pagination lors du chargement de la page
-});
+    // Exposer les fonctions pour une utilisation globale
+    window.filterTable = filterTable;
+    window.searchTable = searchTable;
+    window.paginateTable = paginateTable;
+    window.exportTableToExcel = exportTableToExcel;
+    window.exportTableToPDF = exportTableToPDF;
+    window.printDiv = printDiv;
+})();

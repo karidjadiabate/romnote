@@ -25,8 +25,6 @@
 @include('admin.include.menu')
 
 
-
-
     <!-- accueil -->
     <!-- titre -->
     <div class="container text-center mt-4">

@@ -66,7 +66,7 @@
                     </li>
                     <!-- tableau de bord -->
                     <li class="nav-item" id="tableau">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
                                     viewBox="0 0 34.798 34.798">

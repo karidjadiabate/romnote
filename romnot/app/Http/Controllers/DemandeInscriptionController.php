@@ -14,7 +14,7 @@ class DemandeInscriptionController extends Controller
      */
     public function index()
     {
-        $listedemandeinscriptions = DemandeInscription::all();
+        $listedemandeinscriptions = DemandeInscription::latest()->get();
 
         return view('admin.listedemande.listedemandeinscription',compact('listedemandeinscriptions'));
     }

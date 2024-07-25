@@ -25,102 +25,108 @@
    @include('admin.include.menu')
     <!-- accueil -->
     <div class="container">
-        <h1 class="mt-4 mb-4">La liste de demande d'inscription</h1>
+        <div class="printableArea"> 
+         <h1 class="mt-4 mb-4">La liste de demande d'inscription</h1>
 
-        <!-- Action buttons -->
-        <div class="d-flex justify-content-between mb-3">
-            <!-- Search bar -->
-            <form class="d-flex search-bar" role="search">
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px; color: #A2ADCF;"></i>
-                        <input type="search" id="searchInput" placeholder="Rechercher..." aria-label="Search"
-                            style="border: none; outline: none;">
-                    </span>
-                </div>
-            </form>
-            <div>
-                <button id="printBtn" class="btn btn-success mr-2"><i class="fa-solid fa-print"></i> Imprimer</button>
+        
+            <div class="d-flex justify-content-between mb-3">
+                <!-- Search bar -->
+                <form class="d-flex search-bar" role="search">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px; color: #A2ADCF;"></i>
+                            <input type="search" id="searchInput" placeholder="Rechercher..." aria-label="Search"
+                                style="border: none; outline: none;">
+                        </span>
+                    </div>
+                </form>
+                <div>
+                    <button id="printBtn" class="btn btn-success mr-2" onclick="printDiv()"><i class="fa-solid fa-print"></i> Imprimer</button>
 
-                <!-- Dropdown for Export options -->
-                <div class="btn-group">
-                    <button type="button" class="btn btn-export dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="fa-solid fa-download "></i> Exporter
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" onclick="exportTableToExcel()">CSV</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="exportTableToPDF()">PDF</a></li>
-                    </ul>
+                    <!-- Dropdown for Export options -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-export dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-download "></i> Exporter
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="exportTableToExcel()">CSV</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportTableToPDF()">PDF</a></li>
+                        </ul>
+                    </div>
                 </div>
+
             </div>
 
+             <!-- Table for listing teachers -->
+            <table class="table" id="inscriptionTable">
+                <thead class="table-aaa">
+                    <tr class="aa">
+                        <th>#</th>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>nomsEtablissement</th>
+                        <th>adressesEtablissement</th>
+                        <th>motPasse</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <!-- Example rows, replace with dynamic data -->
+                    @foreach ($listedemandeinscriptions as $listedemandeinscription)
+                    <tr>
+                        <td>{{$listedemandeinscription->id}}</td>
+                        <td>{{$listedemandeinscription->prenom}}</td>
+                        <td>{{$listedemandeinscription->nom}}</td>
+                        <td>{{$listedemandeinscription->contact}}</td>
+                        <td>{{$listedemandeinscription->email}}</td>
+                        <td>{{$listedemandeinscription->nometablissement}}</td>
+                        <td>{{$listedemandeinscription->adresseetablissement}}</td>
+                        <td>{{$listedemandeinscription->password}}</td>
+                        <td class="no-print">
+                                <button data-bs-toggle="modal" data-bs-target="#validateInscription"
+                                    class="btn btn-outline-success btn-sm"><i class="fa-solid fa-check"></i>
+                                </button>
+                                <button data-bs-toggle="modal" data-bs-target="#rejectInscription"
+                                    class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-times"></i></button>
+                            </td>
+                    </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+
+            <!-- Pagination buttons -->
+            <div class="pagination">
+                <button class="prev">Précédent</button>
+                <button class="next">Suivant</button>
+            </div>
+                
         </div>
-
-        <!-- Table for listing teachers -->
-        <table class="table">
-            <thead class="table-aaa">
-                <tr class="aa">
-                    <th>#</th>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>nomsEtablissement</th>
-                    <th>adressesEtablissement</th>
-                    <th>motPasse</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="inscriptionTable">
-                <!-- Example rows, replace with dynamic data -->
-                @foreach ($listedemandeinscriptions as $listedemandeinscription)
-                <tr>
-                    <td>{{$listedemandeinscription->id}}</td>
-                    <td>{{$listedemandeinscription->prenom}}</td>
-                    <td>{{$listedemandeinscription->nom}}</td>
-                    <td>{{$listedemandeinscription->contact}}</td>
-                    <td>{{$listedemandeinscription->email}}</td>
-                    <td>{{$listedemandeinscription->nometablissement}}</td>
-                    <td>{{$listedemandeinscription->adresseetablissement}}</td>
-                    <td>{{$listedemandeinscription->password}}</td>
-                    <td>
-                        <button data-bs-toggle="modal" data-bs-target="#editInscription"
-                            class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#deleteInscription"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-                @endforeach
-
-            </tbody>
-        </table>
-
-        <!-- Pagination buttons -->
-        <div class="pagination">
-            <button class="prev">Précédent</button>
-            <button class="next">Suivant</button>
-        </div>
+            
     </div>
+   
 
     <!-- Modal de Modification -->
-    <div class="modal " id="editInscription" tabindex="-1" aria-labelledby="editInscriptionLabel" aria-hidden="true">
+    <!-- <div class="modal " id="editInscription" tabindex="-1" aria-labelledby="editInscriptionLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content " wi>
                 <h1 class="text-center">Modifier</h1>
                 <form class="needs-validation" novalidate>
                     <div class="modal-body">
-                        <div class="row g-3">
+                        <div class="row g-3"> -->
                             <!-- Fields for editing teacher details -->
-                            <div class="col-sm-6">
+                            <!-- <div class="col-sm-6">
                                 <input type="text" class="form-control" id="editFirstName" placeholder="Nom" value=""
                                     required>
                                 <div class="invalid-feedback">
                                     Valid first name is required.
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-sm-6">
+                            <!-- <div class="col-sm-6">
                                 <input type="text" class="form-control" id="editLastName" placeholder="Prénoms" value=""
                                     required>
                                 <div class="invalid-feedback">
@@ -173,11 +179,11 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- Modal de Suppression -->
-    <div class="modal " id="deleteInscription" tabindex="-1" aria-labelledby="deleteInscriptionLabel"
+    <!-- <div class="modal " id="deleteInscription" tabindex="-1" aria-labelledby="deleteInscriptionLabel"
         aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
@@ -192,7 +198,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 

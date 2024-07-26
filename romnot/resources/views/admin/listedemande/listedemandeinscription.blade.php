@@ -29,7 +29,7 @@
          <h1 class="mt-4 mb-4">La liste de demande d'inscription</h1>
 
         
-            <div class="d-flex justify-content-between mb-3">
+            <div class="d-flex justify-content-between mb-3 no-print">
                 <!-- Search bar -->
                 <form class="d-flex search-bar" role="search">
                     <div class="input-group">
@@ -50,8 +50,8 @@
                             <i class="fa-solid fa-download "></i> Exporter
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" onclick="exportTableToExcel()">CSV</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="exportTableToPDF()">PDF</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportTableToExcel('#inscriptionTable')">CSV</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="exportTableToPDF('#inscriptionTable')">PDF</a></li>
                         </ul>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
             </table>
 
             <!-- Pagination buttons -->
-            <div class="pagination">
+            <div class="pagination no-print">
                 <button class="prev">Précédent</button>
                 <button class="next">Suivant</button>
             </div>
@@ -183,7 +183,7 @@
 
 
     <!-- Modal de Suppression -->
-    <div class="modal " id="deleteInscription" tabindex="-1" aria-labelledby="deleteInscriptionLabel"
+    <!-- <div class="modal " id="deleteInscription" tabindex="-1" aria-labelledby="deleteInscriptionLabel"
         aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
@@ -199,8 +199,14 @@
             </div>
         </div>
     </div>
-  
+   -->
+   <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            searchTable('#inscriptionTable', 'searchInput');
+            paginateTable('#inscriptionTable');
+        });
 
+    </script>
     <script src="{{asset('frontend/dashboard/js/list.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -209,3 +215,7 @@
 </body>
 
 </html>
+
+
+
+

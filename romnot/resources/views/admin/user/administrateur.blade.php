@@ -80,14 +80,15 @@
                 </thead>
                 <tbody>
                     <!-- Example rows, replace with dynamic data -->
+                    @foreach ($administrateurs as $administrateur)
                     <tr>
-                        <td>01</td>
-                        <td>Dani</td>
-                        <td>Marc</td>
-                        <td>0707532281</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>DaniMark</td>
-                        <td>Pigier</td>
+                        <td>{{$administrateur->id}}</td>
+                        <td>{{$administrateur->nom}}</td>
+                        <td>{{$administrateur->prenom}}</td>
+                        <td>{{$administrateur->contact}}</td>
+                        <td>{{$administrateur->email}}</td>
+                        <td>{{$administrateur->username}}</td>
+                        <td>{{$administrateur->nometablissement}}</td>
                         <td class="no-print">
                             <button data-bs-toggle="modal" data-bs-target="#editAdmin"
                                 class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
@@ -95,81 +96,8 @@
                                 data-bs-target="#deleteAdmin"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>02</td>
-                        <td>Ani</td>
-                        <td>axel</td>
-                        <td>0507532281</td>
-                        <td>ani@gmail.com</td>
-                        <td>Aniaxel</td>
-                        <td>UVCI</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editAdmin"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteAdmin"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>03</td>
-                        <td>N'Dri</td>
-                        <td>Julien</td>
-                        <td>0102535524</td>
-                        <td>julien@gmail.com</td>
-                        <td>Julienndri</td>
-                        <td>UCAO</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editAdmin"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteAdmin"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>03</td>
-                        <td>N'Dri</td>
-                        <td>Julien</td>
-                        <td>0102535524</td>
-                        <td>julien@gmail.com</td>
-                        <td>Julienndri</td>
-                        <td>UCAO</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editAdmin"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteAdmin"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>03</td>
-                        <td>N'Dri</td>
-                        <td>Julien</td>
-                        <td>0102535524</td>
-                        <td>julien@gmail.com</td>
-                        <td>Julienndri</td>
-                        <td>UCAO</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editAdmin"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteAdmin"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>03</td>
-                        <td>N'Dri</td>
-                        <td>Julien</td>
-                        <td>0102535524</td>
-                        <td>julien@gmail.com</td>
-                        <td>Julienndri</td>
-                        <td>UCAO</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editAdmin"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteAdmin"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
+                    @endforeach
+
 
                 </tbody>
             </table>
@@ -234,16 +162,40 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="etablissement" placeholder="Etablissement"
-                                    value="" required>
+                                <select name="role_id" id="role_id" class="form-control">
+                                    @foreach ($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->nomrole}}</option>
+                                    @endforeach
+
+                                </select>
                                 <div class="invalid-feedback">
                                     Valid class is required.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <select name="etablissement_id" id="etablissement_id" class="form-control">
+                                    @foreach ($etablissements as $etablissement)
+                                        <option value="{{$etablissement->id}}">{{$etablissement->nometablissement}}</option>
+                                    @endforeach
+
+                                </select>
+                                <div class="invalid-feedback">
+                                    Valid class is required.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" value=""
+                                    required>
+                                <div class="invalid-feedback">
+                                    Valid subject is required.
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-around">
-                        <button type="button" class="btn btn-success">Sauvegarder</button>
+                        <button type="submit" class="btn btn-success">Sauvegarder</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
                     </div>
                 </form>

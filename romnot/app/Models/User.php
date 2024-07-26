@@ -19,7 +19,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nom',
+        'prenom',
+        'username',
+        'matricule',
+        'role_id',
+        'classe_id',
+        'matiere_id',
+        'etablissement_id',
+        'contact',
         'email',
         'password',
     ];
@@ -49,7 +57,7 @@ class User extends Authenticatable
         $administrateurs = DB::table('users AS u')
             ->join('etablissements AS e', 'e.id', '=', 'u.etablissement_id')
             ->where('u.role_id', '=', 3)
-            ->select('u.id', 'u.nom','u.prenom','u.image', 'e.nometablissement','u.email','u.username','u.password')
+            ->select('u.id', 'u.nom','u.prenom','u.image', 'u.contact', 'e.nometablissement','u.email','u.username','u.password')
             ->get();
 
         return $administrateurs;

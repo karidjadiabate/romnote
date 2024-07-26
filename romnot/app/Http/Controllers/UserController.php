@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classe;
 use App\Models\Etablissement;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -17,9 +18,24 @@ class UserController extends Controller
 
         $etablissements = Etablissement::all();
 
+        $roles = Role::all();
+
+        $connectedUserRole = auth()->user()->role_id;
+
+        if ($connectedUserRole === 4) {
+            // Superadmin
+            $roles = Role::whereIn('id', [3])->get();
+        } elseif ($connectedUserRole === 3) {
+            // Utilisateur avec enseignement supérieur
+            $roles = Role::whereIn('id', [1,2])->get();
+        } else {
+            // Autres utilisateurs
+            $roles = Role::whereIn('id', [1,2])->get();
+        }
+
         $administrateurs = $fadministrateur->administrateur();
 
-        return view('admin.user.administrateur',compact('administrateurs','etablissements'));
+        return view('admin.user.administrateur',compact('administrateurs','etablissements','roles'));
     }
 
     public function store(Request $request)
@@ -43,7 +59,7 @@ class UserController extends Controller
             'image' => $name,
             'role_id' => $request->role_id,
             'matiere_id' => $request->matiere_id,
-            'etablissement_id' => $request->ecole_id,
+            'etablissement_id' => $request->etablissement_id,
             'classe_id' => $request->classe_id,
             'username' => $request->username,
             'matricule' => $request->matricule,
@@ -61,9 +77,9 @@ class UserController extends Controller
 
         $adminEcoleId = null;
         if ($isSuperUser) {
-            $adminEcoleId = $request->ecole_id;
+            $adminEcoleId = $request->etablissement_id;
         } elseif (auth()->user()->role_id === 3) {
-            $adminEcoleId = auth()->user()->ecole_id;
+            $adminEcoleId = auth()->user()->etablissement_id;
         }
 
         $data['etablissement_id'] = $adminEcoleId;

@@ -69,3 +69,24 @@ span:hover {
 span {
     font-size: 7px;
 }
+
+.nav-item .nav-link {
+    display: block;
+    text-decoration: none;
+}
+
+.nav-item .nav-link.active .icon-text-container svg path {
+    fill: #38B293;
+}
+
+.nav-item .nav-link.active span {
+    color: #38B293;
+}
+
+.nav-item:hover svg path {
+    fill: #38B293;
+}
+
+.nav-item:hover span {
+    color: #38B293;
+}

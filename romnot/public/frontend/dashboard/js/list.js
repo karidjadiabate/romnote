@@ -131,3 +131,4 @@
     window.exportTableToPDF = exportTableToPDF;
     window.printDiv = printDiv;
 })();
+

@@ -29,7 +29,7 @@
          <h1 class="mt-4 mb-4">La liste de demande d'inscription</h1>
 
         
-            <div class="d-flex justify-content-between mb-3 no-print">
+            <div class="d-flex justify-content-between mb-3 ">
                 <!-- Search bar -->
                 <form class="d-flex search-bar" role="search">
                     <div class="input-group">

@@ -24,7 +24,7 @@
     <!-- header -->
    @include('admin.include.menu')
     <!-- accueil -->
-    <div class="container">
+    <div class="container" >
         <div class="printableArea"> 
          <h1 class="mt-4 mb-4">La liste de demande d'inscription</h1>
 
@@ -118,15 +118,15 @@
                     <div class="modal-body">
                         <div class="row g-3"> -->
                             <!-- Fields for editing teacher details -->
-                            <!-- <div class="col-sm-6">
-                                <input type="text" class="form-control" id="editFirstName" placeholder="Nom" value=""
+                            <!-- <div class="col-sm-6"> -->
+                                <!-- <input type="text" class="form-control" id="editFirstName" placeholder="Nom" value=""
                                     required>
                                 <div class="invalid-feedback">
                                     Valid first name is required.
                                 </div>
-                            </div> -->
+                            </div>
 
-                            <!-- <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" id="editLastName" placeholder="Prénoms" value=""
                                     required>
                                 <div class="invalid-feedback">
@@ -183,7 +183,7 @@
 
 
     <!-- Modal de Suppression -->
-    <!-- <div class="modal " id="deleteInscription" tabindex="-1" aria-labelledby="deleteInscriptionLabel"
+    <div class="modal " id="deleteInscription" tabindex="-1" aria-labelledby="deleteInscriptionLabel"
         aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
@@ -198,9 +198,8 @@
                 </div>
             </div>
         </div>
-    </div> -->
-
-
+    </div>
+  
 
     <script src="{{asset('frontend/dashboard/js/list.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -7,14 +7,15 @@
             aria-expanded="false" aria-label="Toggle navigation">
             <form class="d-flex search-bar" id="sea" role="search">
                 <div class="input-group">
-                    <span class="input-group-text"
+                    <!-- <span class="input-group-text"
                         style="background-color:white; border: 1px solid white; border-radius: 30px; padding: 5px 6px;">
                         <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px;color: initial;"></i>
                         <input class="form-control" type="search" placeholder="Rechercher..." aria-label="Search"
                             style="border: none; outline: none; height: 30px; font-size: 12px;">
-                    </span>
+                    </span> -->
                 </div>
-            </form>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </form>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <li class="nav-item dropdown" id="noti">
                 <a class="nav-link" href="#" role="" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-bell fa-fw"></i>
@@ -109,7 +110,7 @@
 
                     <!-- demande d'inscription -->
                     <li class="nav-item" id="inscription">
-                        <a class="nav-link" href="{{route('listedemandeinscription')}}">
+                        <a class="nav-link" href="{{route('listedemandeinscription')}}" >
                             <div class="icon-text-container">
                             <svg data-name="Layer 1" id="Layer_1" fill="#fff" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">

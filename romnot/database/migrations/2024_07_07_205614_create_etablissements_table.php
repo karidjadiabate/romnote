@@ -14,13 +14,13 @@ return new class extends Migration
     {
         Schema::create('etablissements', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
+            $table->string('code')->unique()->nullable();
             $table->string('nometablissement');
-            $table->string('anneefondation');
             $table->string('adresse');
-            $table->string('description');
+            $table->string('contact');
             $table->string('nomresponsable');
-            $table->foreignIdFor(TypeEtablissement::class);
+            $table->string('prenomresponsable');
+            //$table->foreignIdFor(TypeEtablissement::class);
             $table->string('image')->nullable();
             $table->timestamps();
         });

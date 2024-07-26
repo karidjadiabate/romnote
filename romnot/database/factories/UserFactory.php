@@ -18,7 +18,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'superadmin',
+            'nom' => 'superadmin',
+            'prenom' => 'superadmin',
             'username' => 'superadmin',
             'email' => 'superadmin@gmail.com',
             'email_verified_at' => now(),

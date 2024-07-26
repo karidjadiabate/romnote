@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Etablissement;
 use App\Http\Requests\StoreEtablissementRequest;
 use App\Http\Requests\UpdateEtablissementRequest;
+use Illuminate\Support\Facades\Storage;
 
 class EtablissementController extends Controller
 {
@@ -13,7 +14,9 @@ class EtablissementController extends Controller
      */
     public function index()
     {
-        //
+        $etablissements = Etablissement::all();
+
+        return view('admin.etablissement.listeetablissement',compact('etablissements'));
     }
 
     /**
@@ -29,7 +32,21 @@ class EtablissementController extends Controller
      */
     public function store(StoreEtablissementRequest $request)
     {
-        //
+        $media = $request->file('file');
+        $name = null;
+
+        if ($media) {
+            $name = $media->hashName();
+            $media->storeAs('public/logo', $name);
+        }
+
+        $ecoleData = $request->only(['code', 'nomresponsable', 'prenomresponsable', 'nometablissement','contact', 'adresse']);
+        $ecoleData['image'] = $name;
+
+        $ecole = Etablissement::create($ecoleData);
+
+        return redirect()->route('etablissement.index')->with('success','Etablissement ajoutée avec succès!');
+
     }
 
     /**
@@ -51,16 +68,46 @@ class EtablissementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEtablissementRequest $request, Etablissement $etablissement)
+    public function update(UpdateEtablissementRequest $request, $id)
     {
-        //
+        $ecole = Etablissement::find($id);
+
+        if ($request->hasFile('file')) {
+            $media = $request->file('file');
+            $name = $media->hashName();
+            $path = $media->storeAs('public/logo', $name);
+
+            // Supprimer l'ancienne image de profil si elle existe
+            if ($ecole->image) {
+                Storage::delete('public/logo/' . $ecole->image);
+            }
+
+            // Mettre à jour les informations du fichier
+            $ecole->image = $name;
+        }
+
+        // Mettre à jour les autres champs de l'école
+        $ecole->code = $request->code;
+        $ecole->nomresponsable = $request->input('nomresponsable');
+        $ecole->prenomresponsable = $request->input('prenomresponsable');
+        $ecole->nometablissement = $request->input('nometablissement');
+        $ecole->contact = $request->input('contact');
+        $ecole->adresse = $request->input('adresse');
+
+        $ecole->save();
+
+        return redirect()->route('etablissement.index')->with('warning', 'Etablissement modifiée avec succès');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Etablissement $etablissement)
+    public function destroy($id)
     {
-        //
+        $ecole = Etablissement::findOrFail($id);
+
+        $ecole->delete();
+
+        return to_route('etablissement.index')->with('Etablissement','Ecole supprimée avec success!');
     }
 }

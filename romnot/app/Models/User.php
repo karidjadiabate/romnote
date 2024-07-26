@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -41,4 +42,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //Liste des administrateurs de chaque école
+    public function administrateur()
+    {
+        $administrateurs = DB::table('users AS u')
+            ->join('etablissements AS e', 'e.id', '=', 'u.etablissement_id')
+            ->where('u.role_id', '=', 3)
+            ->select('u.id', 'u.nom','u.prenom','u.image', 'e.nometablissement','u.email','u.username','u.password')
+            ->get();
+
+        return $administrateurs;
+    }
 }

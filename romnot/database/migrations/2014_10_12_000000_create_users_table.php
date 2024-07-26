@@ -16,10 +16,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nom');
+            $table->string('prenom');
             $table->string('username')->unique()->nullable();
             $table->string('matricule')->unique()->nullable();
             $table->string('email')->unique();
+            $table->string('contact')->nullable();
             $table->foreignIdFor(Classe::class)->nullable();
             $table->foreignIdFor(Role::class);
             $table->foreignIdFor(Etablissement::class)->onDelete('cascade')->nullable();

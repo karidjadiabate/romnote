@@ -66,8 +66,9 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     </li>
                     <!-- tableau de bord -->
+                    @if(auth()->user()->role_id === 4)
                     <li class="nav-item" id="tableau">
-                        <a class="nav-link" href="">
+                        <a class="nav-link" href="/superadmin">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
                                     viewBox="0 0 34.798 34.798">
@@ -79,6 +80,36 @@
                             </div>
                         </a>
                     </li>
+                    @elseif (auth()->user()->role_id === 3)
+                    <li class="nav-item" id="tableau">
+                        <a class="nav-link" href="admin">
+                            <div class="icon-text-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
+                                    viewBox="0 0 34.798 34.798">
+                                    <path id="Tracé_366" data-name="Tracé 366"
+                                        d="M3,20.4a1.933,1.933,0,0,0,1.933,1.933h11.6A1.933,1.933,0,0,0,18.466,20.4V4.933A1.933,1.933,0,0,0,16.533,3H4.933A1.933,1.933,0,0,0,3,4.933ZM3,35.865A1.933,1.933,0,0,0,4.933,37.8h11.6a1.933,1.933,0,0,0,1.933-1.933V28.132A1.933,1.933,0,0,0,16.533,26.2H4.933A1.933,1.933,0,0,0,3,28.132Zm19.332,0A1.933,1.933,0,0,0,24.265,37.8h11.6A1.933,1.933,0,0,0,37.8,35.865V20.4a1.933,1.933,0,0,0-1.933-1.933h-11.6A1.933,1.933,0,0,0,22.332,20.4ZM24.265,3a1.933,1.933,0,0,0-1.933,1.933v7.733A1.933,1.933,0,0,0,24.265,14.6h11.6A1.933,1.933,0,0,0,37.8,12.666V4.933A1.933,1.933,0,0,0,35.865,3Z"
+                                        transform="translate(-3 -3)" fill="#fff" />
+                                </svg>
+                                <span>Tableau de Bord</span>
+                            </div>
+                        </a>
+                    </li>
+                    @elseif(auth()->user()->role_id === 2)
+
+                    <li class="nav-item" id="tableau">
+                        <a class="nav-link" href="admin">
+                            <div class="icon-text-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
+                                    viewBox="0 0 34.798 34.798">
+                                    <path id="Tracé_366" data-name="Tracé 366"
+                                        d="M3,20.4a1.933,1.933,0,0,0,1.933,1.933h11.6A1.933,1.933,0,0,0,18.466,20.4V4.933A1.933,1.933,0,0,0,16.533,3H4.933A1.933,1.933,0,0,0,3,4.933ZM3,35.865A1.933,1.933,0,0,0,4.933,37.8h11.6a1.933,1.933,0,0,0,1.933-1.933V28.132A1.933,1.933,0,0,0,16.533,26.2H4.933A1.933,1.933,0,0,0,3,28.132Zm19.332,0A1.933,1.933,0,0,0,24.265,37.8h11.6A1.933,1.933,0,0,0,37.8,35.865V20.4a1.933,1.933,0,0,0-1.933-1.933h-11.6A1.933,1.933,0,0,0,22.332,20.4ZM24.265,3a1.933,1.933,0,0,0-1.933,1.933v7.733A1.933,1.933,0,0,0,24.265,14.6h11.6A1.933,1.933,0,0,0,37.8,12.666V4.933A1.933,1.933,0,0,0,35.865,3Z"
+                                        transform="translate(-3 -3)" fill="#fff" />
+                                </svg>
+                                <span>Tableau de Bord</span>
+                            </div>
+                        </a>
+                    </li>
+                    @endif
                     <!-- role -->
                     @if(auth()->user()->role_id === 4)
                        {{--  <li class="nav-item" id="role">
@@ -93,20 +124,6 @@
                                 </div>
                             </a>
                         </li> --}}
-
-                    <!-- utilisateurs -->
-                    <li class="nav-item" id="users">
-                        <a class="nav-link" href="#">
-                            <div class="icon-text-container">
-                            <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M24 8c-4.42 0-8 3.58-8 8 0 4.41 3.58 8 8 8s8-3.59 8-8c0-4.42-3.58-8-8-8zm0 20c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z" />
-                                        <path d="M0 0h48v48h-48z" fill="#fff" />
-                                    </svg>
-                                <span>admin</span>
-                            </div>
-                        </a>
-                    </li>
 
                     <!-- demande d'inscription -->
                     <li class="nav-item" id="inscription">
@@ -132,7 +149,7 @@
 
                     <!-- school -->
                     <li class="nav-item" id="school">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{route('etablissement.index')}}">
                             <div class="icon-text-container">
                             <svg height="52" fill="#fff" viewBox="0 0 512 512" width="48"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -146,6 +163,22 @@
                             </div>
                         </a>
                     </li>
+
+                    <!-- utilisateurs -->
+                    <li class="nav-item" id="users">
+                        <a class="nav-link" href="{{route('administrateur')}}">
+                            <div class="icon-text-container">
+                            <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M24 8c-4.42 0-8 3.58-8 8 0 4.41 3.58 8 8 8s8-3.59 8-8c0-4.42-3.58-8-8-8zm0 20c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z" />
+                                        <path d="M0 0h48v48h-48z" fill="#fff" />
+                                    </svg>
+                                <span>admin</span>
+                            </div>
+                        </a>
+                    </li>
+
+
                     @endif
 
                     @if(auth()->user()->role_id === 3)

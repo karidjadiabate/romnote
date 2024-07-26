@@ -33,4 +33,13 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::get('/listedemandeinscription',[DemandeInscriptionController::class,'index'])->name('listedemandeinscription');
     Route::get('/administrateur',[UserController::class,'administrateur'])->name('administrateur');
     Route::resource('etablissement',EtablissementController::class);
+
+});
+
+
+ //ADMIN
+ Route::prefix('admin')->middleware('admin')->group(function () {
+
+    Route::get('/',[DashboardController::class,'dashboard']);
+
 });

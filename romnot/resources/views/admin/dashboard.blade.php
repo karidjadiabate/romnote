@@ -37,6 +37,8 @@
     <!-- la suite -->
     <div class="container text-center mt-4">
         <!-- les  cartes-->
+
+        @if (auth()->user()->role_id === 3)
         <div class="row text-start">
             <div class="col-md-3 col-12 mb-4">
                 <div class="card">
@@ -96,9 +98,73 @@
                 </div>
             </div>
         </div>
+        @elseif (auth()->user()->role_id === 4)
+
+
+        <div class="row text-start">
+            <div class="col-md-3 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <svg class="icon small-icon" xmlns="http://www.w3.org/2000/svg" width="43.75" height="35"
+                            viewBox="0 0 43.75 35">
+                            <path id="users-solid"
+                                d="M9.844,0A5.469,5.469,0,1,1,4.375,5.469,5.469,5.469,0,0,1,9.844,0ZM35,0a5.469,5.469,0,1,1-5.469,5.469A5.469,5.469,0,0,1,35,0ZM0,20.419a7.3,7.3,0,0,1,7.294-7.294h2.919a7.333,7.333,0,0,1,3.049.663,8.6,8.6,0,0,0-.13,1.524,8.753,8.753,0,0,0,2.96,6.562H1.456A1.462,1.462,0,0,1,0,20.419Zm27.706,1.456h-.048a8.729,8.729,0,0,0,2.96-6.562,9.362,9.362,0,0,0-.13-1.524,7.227,7.227,0,0,1,3.049-.663h2.919a7.3,7.3,0,0,1,7.294,7.294,1.457,1.457,0,0,1-1.456,1.456ZM15.313,15.313a6.562,6.562,0,1,1,6.562,6.562A6.562,6.562,0,0,1,15.313,15.313ZM8.75,33.175a9.114,9.114,0,0,1,9.112-9.112h8.025A9.114,9.114,0,0,1,35,33.175,1.825,1.825,0,0,1,33.175,35h-22.6A1.825,1.825,0,0,1,8.75,33.175Z"
+                                fill="#fff" />
+                        </svg>
+                        <h5 class="card-title">Nombre d'etablissements acceptés</h5>
+                        <p class="card-text">{{$nbetablissementaccepte}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <svg class="icon small-icon" xmlns="http://www.w3.org/2000/svg" width="30.448" height="34.798"
+                            viewBox="0 0 30.448 34.798">
+                            <path id="user-tie-solid"
+                                d="M6.525,8.7a8.7,8.7,0,1,0,8.7-8.7A8.7,8.7,0,0,0,6.525,8.7Zm6.423,13.607,1.264,2.107-2.263,8.421L9.5,22.85a1.006,1.006,0,0,0-1.217-.768A10.961,10.961,0,0,0,0,32.711,2.087,2.087,0,0,0,2.087,34.8H28.362a2.087,2.087,0,0,0,2.087-2.087,10.961,10.961,0,0,0-8.285-10.63,1.016,1.016,0,0,0-1.217.768L18.5,32.834l-2.263-8.421L17.5,22.306a1.086,1.086,0,0,0-.931-1.645H13.885a1.087,1.087,0,0,0-.931,1.645Z"
+                                fill="#fff" />
+                        </svg>
+                        <h5 class="card-title">Nombre d'etablissements refusés</h5>
+                        <p class="card-text">{{$nbetablissementrefuse}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <svg class="icon small-icon" xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
+                            viewBox="0 0 31.318 34.798">
+                            <path id="Tracé_381" data-name="Tracé 381"
+                                d="M34.318,5.48H9.96a3.48,3.48,0,0,0,0,6.96H34.318V35.058a1.74,1.74,0,0,1-1.74,1.74H9.96A6.96,6.96,0,0,1,3,29.838V8.96A6.96,6.96,0,0,1,9.96,2H32.578a1.74,1.74,0,0,1,1.74,1.74Zm-1.74,5.22H9.96a1.74,1.74,0,0,1,0-3.48H32.578Z"
+                                transform="translate(-3 -2)" fill="#fff" />
+                        </svg>
+                        <h5 class="card-title">Nombre d'administrateurs</h5>
+                        <p class="card-text">{{$nbadmin}}</p>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <svg class="icon small-icon" xmlns="http://www.w3.org/2000/svg" width="35" height="35"
+                            viewBox="0 0 35 35">
+                            <path id="Soustraction_4" data-name="Soustraction 4"
+                                d="M27.223,35H7.777A7.786,7.786,0,0,1,0,27.223V7.777A7.786,7.786,0,0,1,7.777,0H27.223A7.786,7.786,0,0,1,35,7.777V27.223A7.786,7.786,0,0,1,27.223,35Zm-3.89-13.608a1.944,1.944,0,1,0,1.944,1.944A1.946,1.946,0,0,0,23.333,21.392Zm-11.665,0a1.944,1.944,0,1,0,1.944,1.944A1.946,1.946,0,0,0,11.667,21.392Zm11.665-5.833A1.944,1.944,0,1,0,25.277,17.5,1.946,1.946,0,0,0,23.333,15.559Zm-11.665,0A1.944,1.944,0,1,0,13.611,17.5,1.946,1.946,0,0,0,11.667,15.559ZM23.333,9.725a1.945,1.945,0,1,0,1.944,1.946A1.947,1.947,0,0,0,23.333,9.725Zm-11.665,0a1.945,1.945,0,1,0,1.944,1.946A1.947,1.947,0,0,0,11.667,9.725Z"
+                                fill="#fff" />
+                        </svg>
+
+                        <h5 class="card-title">Nombre total de sujets générés</h5>
+                        <p class="card-text">250</p>
+                    </div>
+                </div>
+            </div> --}}
+        </div>
+        @endif
 
         <!--  -->
 
+        @if (auth()->user()->role_id === 3)
         <div class="container mt-5 ">
             <div class="row ">
                 <!-- Première section -->
@@ -202,6 +268,8 @@
 
             </div>
         </div>
+        @endif
+
 
 
 

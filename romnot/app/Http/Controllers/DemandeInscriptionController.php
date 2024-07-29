@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\DemandeInscription;
 use App\Http\Requests\StoreDemandeInscriptionRequest;
 use App\Http\Requests\UpdateDemandeInscriptionRequest;
+use App\Models\Etablissement;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Support\Facades\Session;
 
 class DemandeInscriptionController extends Controller
@@ -32,20 +37,75 @@ class DemandeInscriptionController extends Controller
      */
     public function store(StoreDemandeInscriptionRequest $request)
     {
-        DemandeInscription::create([
-            'prenom' => $request->prenom,
-            'nom' => $request->nom,
-            'contact' => $request->contact,
-            'email' => $request->email,
-            'nometablissement' => $request->nometablissement,
-            'adresseetablissement' => $request->adresseetablissement,
-            'password' => $request->password,
-            'password_confirm' => $request->password_confirm
+        $demandeData = $request->only([
+            'prenom',
+            'nom',
+            'contact',
+            'email',
+            'nometablissement',
+            'adresseetablissement',
+            'password',
+            'password_confirm'
         ]);
+
+        // Assurez-vous que les champs 'accepted' et 'rejected' sont définis à false par défaut
+        $demandeData['accepted'] = false;
+        $demandeData['rejected'] = false;
+
+        DemandeInscription::create($demandeData);
 
         Session::flash('success', 'Votre demande d\'inscription a bien été soumise !');
 
         return to_route('home');
+    }
+
+    public function accept(Request $request, $id)
+    {
+        $demande = DemandeInscription::find($id);
+
+        if (!$demande) {
+            return response()->json(['success' => false, 'message' => 'Demande non trouvée.']);
+        }
+
+        // Valider les données
+        $data = [
+            'code' => $demande->code,
+            'nomresponsable' => $demande->nom,
+            'prenomresponsable' => $demande->prenom,
+            'nometablissement' => $demande->nometablissement,
+            'contact' => $demande->contact,
+            'adresse' => $demande->adresseetablissement,
+            'logo' => null,
+        ];
+
+        Log::info('Données à insérer dans l\'établissement:', $data);
+
+        try {
+            $ecole = Etablissement::create($data);
+        } catch (Exception $e) {
+            Log::error('Erreur lors de la création de l\'établissement: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Erreur lors de la création de l\'établissement.']);
+        }
+
+        // Marquer la demande comme acceptée
+        $demande->accepted = true;
+        $demande->rejected = false;
+        $demande->save();
+
+        return response()->json(['success' => true, 'message' => 'Demande acceptée et établissement créé avec succès!']);
+    }
+
+    public function reject($id)
+    {
+        $demande = DemandeInscription::find($id);
+        if ($demande) {
+            $demande->accepted = false;
+            $demande->rejected = true;
+            $demande->save();
+
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false]);
     }
 
     /**

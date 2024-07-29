@@ -25,11 +25,15 @@
      * @param {string} tbody - Le sélecteur de l'élément tbody.
      * @param {string} searchInputId - L'ID de l'élément d'entrée de recherche.
      */
-    function searchTable(tbody, searchInputId) {
+    function searchTable(tbodyId, searchInputId, noResultsId) {
         const searchInput = document.getElementById(searchInputId);
+        const noResultsMessage = document.getElementById(noResultsId);
+
         searchInput.addEventListener('keyup', function () {
             const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll(`${tbody} tr`);
+            const rows = document.querySelectorAll(`${tbodyId} tr`);
+            let found = false;  // Initialisation de la variable found
+
             rows.forEach(row => {
                 const cells = row.getElementsByTagName('td');
                 let match = false;
@@ -40,10 +44,16 @@
                     }
                 }
                 row.style.display = match ? '' : 'none';
+                if (match) {
+                    found = true;
+                }
             });
-            paginateTable(tbody);
+
+            noResultsMessage.style.display = found ? 'none' : 'block';
+            paginateTable(tbodyId);
         });
     }
+
 
     /**
      * Paginer les lignes du tableau.

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('adresseetablissement');
             $table->string('password');
             $table->string('password_confirm');
+            $table->boolean('accepted')->default(false);
+            $table->boolean('rejected')->default(false);
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="../js/list.js"></script>
+    <script src="{{asset('frontend/dashboard/js/list.js')}}"></script>
     <link rel="stylesheet" href="{{asset('frontend/dashboard/css/dash.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/dashboard/css/list.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/dashboard/html/admin.css')}}">
@@ -181,8 +181,8 @@
                     </div>
 
                     <!-- Modal for deleting establishment -->
-                    <div class="modal fade" id="deleteEtablissementModal{{$etablissement->id}}" tabindex="-1" aria-labelledby="deleteEtablissementModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                    <div class="modal" id="deleteEtablissementModal{{$etablissement->id}}" tabindex="-1" aria-labelledby="deleteEtablissementModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-body text-center">
                                     <img src="{{asset('frontend/dashboard/images/images.png')}}" width="150" height="150" alt=""><br><br>

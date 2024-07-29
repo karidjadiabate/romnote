@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Matiere;
 use App\Http\Requests\StoreMatiereRequest;
 use App\Http\Requests\UpdateMatiereRequest;
+use Illuminate\Http\Request;
 
 class MatiereController extends Controller
 {
@@ -13,7 +14,11 @@ class MatiereController extends Controller
      */
     public function index()
     {
-        //
+        $fmatiere = new Matiere();
+
+        $matieres = $fmatiere->listematierebyecole();
+
+        return view('admin.matiere.listematiere',compact('matieres'));
     }
 
     /**
@@ -27,9 +32,14 @@ class MatiereController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMatiereRequest $request)
+    public function store(Request $request)
     {
-        //
+        Matiere::create([
+            'nommatiere' => $request->nommatiere,
+            'etablissement_id' => auth()->user()->etablissement_id,
+        ]);
+
+        return to_route('matiere.index')->with('success','Matière ajoutée avec success!');
     }
 
     /**
@@ -53,14 +63,23 @@ class MatiereController extends Controller
      */
     public function update(UpdateMatiereRequest $request, Matiere $matiere)
     {
-        //
+        $matiere->update([
+            'nommatiere' => $request->nommatiere,
+            'etablissement_id' => auth()->user()->etablissement_id,
+        ]);
+
+        return to_route('matiere.index')->with('warning', 'Matière modifiée avec succès!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Matiere $matiere)
+    public function destroy($id)
     {
-        //
+        $matiere = Matiere::findOrFail($id);
+
+        $matiere->delete();
+
+        return to_route('matiere.index')->with('danger','Matière supprimée avec success!');
     }
 }

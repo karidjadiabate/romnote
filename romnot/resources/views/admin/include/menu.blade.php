@@ -82,7 +82,7 @@
                     </li>
                     @elseif (auth()->user()->role_id === 3)
                     <li class="nav-item" id="tableau">
-                        <a class="nav-link" href="admin">
+                        <a class="nav-link" href="/admin">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
                                     viewBox="0 0 34.798 34.798">
@@ -97,7 +97,7 @@
                     @elseif(auth()->user()->role_id === 2)
 
                     <li class="nav-item" id="tableau">
-                        <a class="nav-link" href="admin">
+                        <a class="nav-link" href="/admin">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
                                     viewBox="0 0 34.798 34.798">
@@ -220,7 +220,7 @@
 
                     <!-- filieres -->
                     <li class="nav-item" id="Filiere">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{route('filiere.index')}}">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
                                     viewBox="0 0 31.318 34.798">
@@ -232,9 +232,23 @@
                             </div>
                         </a>
                     </li>
+
+                    <li class="nav-item" id="Filiere">
+                        <a class="nav-link" href="{{route('matiere.index')}}">
+                            <div class="icon-text-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
+                                    viewBox="0 0 31.318 34.798">
+                                    <path id="Tracé_381" data-name="Tracé 381"
+                                        d="M34.318,5.48H9.96a3.48,3.48,0,0,0,0,6.96H34.318V35.058a1.74,1.74,0,0,1-1.74,1.74H9.96A6.96,6.96,0,0,1,3,29.838V8.96A6.96,6.96,0,0,1,9.96,2H32.578a1.74,1.74,0,0,1,1.74,1.74Zm-1.74,5.22H9.96a1.74,1.74,0,0,1,0-3.48H32.578Z"
+                                        transform="translate(-3 -2)" fill="#fff" />
+                                </svg>
+                                <span>Matiere</span>
+                            </div>
+                        </a>
+                    </li>
                     <!-- classe -->
                     <li class="nav-item" id="classe">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{route('classe.index')}}">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="38.889" height="35"
                                     viewBox="0 0 38.889 35">

@@ -60,42 +60,42 @@
 
 
             <!-- Modal pour Accepter -->
-<div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="acceptModalLabel">Accepter la demande</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="acceptModalLabel">Accepter la demande</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Êtes-vous sûr de vouloir accepter cette demande et créer l'établissement ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-success" id="confirmAccept">Accepter</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                Êtes-vous sûr de vouloir accepter cette demande et créer l'établissement ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-success" id="confirmAccept">Accepter</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Modal pour Refuser -->
-<div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="rejectModalLabel">Refuser la demande</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- Modal pour Refuser -->
+            <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="rejectModalLabel">Refuser la demande</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Êtes-vous sûr de vouloir refuser cette demande ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-danger" id="confirmReject">Refuser</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                Êtes-vous sûr de vouloir refuser cette demande ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-danger" id="confirmReject">Refuser</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
              <!-- Table for listing teachers -->
@@ -103,6 +103,7 @@
                 <thead class="table-aaa">
                     <tr class="aa">
                         <th>#</th>
+                        <th>Date</th>
                         <th>Prénom</th>
                         <th>Nom</th>
                         <th>Contact</th>
@@ -115,9 +116,13 @@
                 </thead>
                 <tbody >
                     <!-- Example rows, replace with dynamic data -->
+                    @php
+                        $num = 1;
+                    @endphp
                     @foreach ($listedemandeinscriptions as $listedemandeinscription)
                     <tr>
-                        <td>{{$listedemandeinscription->id}}</td>
+                        <td>{{ $num++ }}</td>
+                        <td>{{ $listedemandeinscription->created_at->diffForHumans() }}</td>
                         <td>{{$listedemandeinscription->prenom}}</td>
                         <td>{{$listedemandeinscription->nom}}</td>
                         <td>{{$listedemandeinscription->contact}}</td>

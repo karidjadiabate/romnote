@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemandeInscriptionController;
 use App\Http\Controllers\EtablissementController;
+use App\Http\Controllers\FiliereController;
+use App\Http\Controllers\MatiereController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +38,7 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::resource('etablissement',EtablissementController::class);
 
     Route::post('/accept/{id}', [DemandeInscriptionController::class, 'accept'])->name('demande.accept');
-Route::post('/reject/{id}', [DemandeInscriptionController::class, 'reject'])->name('demande.reject');
+    Route::post('/reject/{id}', [DemandeInscriptionController::class, 'reject'])->name('demande.reject');
 
 });
 
@@ -44,5 +47,7 @@ Route::post('/reject/{id}', [DemandeInscriptionController::class, 'reject'])->na
  Route::prefix('admin')->middleware('admin')->group(function () {
 
     Route::get('/',[DashboardController::class,'dashboard']);
-
+    Route::resource('matiere', MatiereController::class);
+    Route::resource('filiere', FiliereController::class);
+    Route::resource('classe', ClasseController::class);
 });

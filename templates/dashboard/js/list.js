@@ -141,3 +141,13 @@
     window.exportTableToPDF = exportTableToPDF;
     window.printDiv = printDiv;
 })();
+
+function setActive(event, id) {
+    event.preventDefault();
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    document.getElementById(id).classList.add('active');
+}

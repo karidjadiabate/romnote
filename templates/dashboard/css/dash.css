@@ -69,3 +69,11 @@ span:hover {
 span {
     font-size: 7px;
 }
+
+.nav-item.active .nav-link {
+    color: #38B293;
+}
+
+.nav-item.active .nav-link svg path {
+    fill: #38B293;
+}

@@ -179,7 +179,7 @@
                         <div class="modal-dialog ">
                             <div class="modal-content">
                                 <div class="modal-body text-center">
-                                    <img src="../images/images.png" width="150" height="150" alt=""><br><br>
+                                    <img src="{{asset('frontend/dashboard/images/images.png')}}" width="150" height="150" alt=""><br><br>
                                     <p id="sure">Êtes-vous sûr?</p>
                                     <p>supprimer cette matière ?</p>
                                 </div>

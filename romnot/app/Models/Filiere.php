@@ -10,7 +10,7 @@ class Filiere extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['code','nomfiliere','etablissement_id'];
+    protected $fillable = ['code','nomfiliere','niveau_id','etablissement_id'];
 
     public function listefilierebyecole()
     {

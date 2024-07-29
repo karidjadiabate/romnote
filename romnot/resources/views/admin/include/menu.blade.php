@@ -182,25 +182,10 @@
                     @endif
 
                     @if(auth()->user()->role_id === 3)
-                    <!-- Enseignants -->
-                    <li class="nav-item" id="enseignants">
-                        <a class="nav-link" href="list-ensignants.html">
-                            <div class="icon-text-container">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30.448" height="34.798"
-                                    viewBox="0 0 30.448 34.798">
-                                    <path id="user-tie-solid"
-                                        d="M6.525,8.7a8.7,8.7,0,1,0,8.7-8.7A8.7,8.7,0,0,0,6.525,8.7Zm6.423,13.607,1.264,2.107-2.263,8.421L9.5,22.85a1.006,1.006,0,0,0-1.217-.768A10.961,10.961,0,0,0,0,32.711,2.087,2.087,0,0,0,2.087,34.8H28.362a2.087,2.087,0,0,0,2.087-2.087,10.961,10.961,0,0,0-8.285-10.63,1.016,1.016,0,0,0-1.217.768L18.5,32.834l-2.263-8.421L17.5,22.306a1.086,1.086,0,0,0-.931-1.645H13.885a1.087,1.087,0,0,0-.931,1.645Z"
-                                        fill="#fff" />
-                                </svg>
-                                <span>Enseignants</span>
-                            </div>
-                        </a>
-                    </li>
-                    <!-- etudiants -->
 
-                    @elseif(auth()->user()->role_id === 3 || auth()->user()->role_id === 2)
+                    <!-- etudiants -->
                     <li class="nav-item" id="etudiants">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{route('etudiant')}}">
                             <div class="icon-text-container">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="43.75" height="35"
@@ -214,7 +199,25 @@
                             </div>
                         </a>
                     </li>
+
+
+                    <!-- Enseignants -->
+                    <li class="nav-item" id="enseignants">
+                        <a class="nav-link" href="{{route('professeur')}}">
+                            <div class="icon-text-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30.448" height="34.798"
+                                    viewBox="0 0 30.448 34.798">
+                                    <path id="user-tie-solid"
+                                        d="M6.525,8.7a8.7,8.7,0,1,0,8.7-8.7A8.7,8.7,0,0,0,6.525,8.7Zm6.423,13.607,1.264,2.107-2.263,8.421L9.5,22.85a1.006,1.006,0,0,0-1.217-.768A10.961,10.961,0,0,0,0,32.711,2.087,2.087,0,0,0,2.087,34.8H28.362a2.087,2.087,0,0,0,2.087-2.087,10.961,10.961,0,0,0-8.285-10.63,1.016,1.016,0,0,0-1.217.768L18.5,32.834l-2.263-8.421L17.5,22.306a1.086,1.086,0,0,0-.931-1.645H13.885a1.087,1.087,0,0,0-.931,1.645Z"
+                                        fill="#fff" />
+                                </svg>
+                                <span>Enseignants</span>
+                            </div>
+                        </a>
+                    </li>
+
                     @endif
+
 
                     @if (auth()->user()->role_id === 3)
 
@@ -267,8 +270,13 @@
                         </a>
                     </li>
 
-                    <!-- calendrier -->
-                    <li class="nav-item" id="calendrier">
+
+                    @endif
+
+                    @if (auth()->user()->role_id === 3 || auth()->user()->role_id === 2)
+
+                     <!-- calendrier -->
+                     <li class="nav-item" id="calendrier">
                         <a class="nav-link" href="#">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
@@ -288,9 +296,6 @@
                             </div>
                         </a>
                     </li>
-                    @endif
-
-                    @if (auth()->user()->role_id === 3 || auth()->user()->role_id === 2)
 
                     <!-- sujet -->
                     <li class="nav-item" id="sujet">

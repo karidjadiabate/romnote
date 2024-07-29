@@ -7,6 +7,7 @@ use App\Http\Controllers\DemandeInscriptionController;
 use App\Http\Controllers\EtablissementController;
 use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\MatiereController;
+use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,4 +51,16 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::resource('matiere', MatiereController::class);
     Route::resource('filiere', FiliereController::class);
     Route::resource('classe', ClasseController::class);
+    Route::resource('niveau', NiveauController::class);
+    Route::get('/professeur',[UserController::class,'professeur'])->name('professeur');
+    Route::get('/etudiant',[UserController::class,'etudiant'])->name('etudiant');
+
+});
+
+
+//Professeur
+Route::prefix('professeur')->middleware('professeur')->group(function () {
+
+    Route::get('/',[DashboardController::class,'dashboard']);
+
 });

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('prenom');
             $table->string('username')->unique()->nullable();
             $table->string('matricule')->unique()->nullable();
+            $table->date('datenaiss')->nullable();
+            $table->string('genre')->nullable();
             $table->string('email')->unique();
             $table->string('contact')->nullable();
             $table->foreignIdFor(Classe::class)->nullable();

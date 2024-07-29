@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nomresponsable');
             $table->string('prenomresponsable');
             //$table->foreignIdFor(TypeEtablissement::class);
-            $table->string('image')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

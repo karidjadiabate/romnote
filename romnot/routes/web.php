@@ -34,6 +34,9 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::get('/administrateur',[UserController::class,'administrateur'])->name('administrateur');
     Route::resource('etablissement',EtablissementController::class);
 
+    Route::post('/accept/{id}', [DemandeInscriptionController::class, 'accept'])->name('demande.accept');
+Route::post('/reject/{id}', [DemandeInscriptionController::class, 'reject'])->name('demande.reject');
+
 });
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Etablissement;
 use App\Http\Requests\StoreEtablissementRequest;
 use App\Http\Requests\UpdateEtablissementRequest;
+use App\Models\DemandeInscription;
 use Illuminate\Support\Facades\Storage;
 
 class EtablissementController extends Controller
@@ -41,13 +42,16 @@ class EtablissementController extends Controller
         }
 
         $ecoleData = $request->only(['code', 'nomresponsable', 'prenomresponsable', 'nometablissement','contact', 'adresse']);
-        $ecoleData['image'] = $name;
+        $ecoleData['logo'] = $name;
 
         $ecole = Etablissement::create($ecoleData);
 
         return redirect()->route('etablissement.index')->with('success','Etablissement ajoutée avec succès!');
 
     }
+
+
+
 
     /**
      * Display the specified resource.

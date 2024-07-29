@@ -306,7 +306,7 @@
     <!-- accueil -->
     <div class="container">
         <div class="printableArea">
-            <h1 class="mt-4 mb-4 text-center">Liste des enseignants</h1>
+            <h1 class="mt-4 mb-4 text-center">Liste des classes</h1>
 
             <!-- Action buttons -->
             <div class="d-flex justify-content-between mb-3 no-print">
@@ -332,16 +332,16 @@
                             <i class="fa-solid fa-download "></i> Exporter
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"
-                                    onclick="exportTableToExcel('#teacherTable')">Excel</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="exportTableToPDF('#teacherTable')">PDF</a>
+                            <li><a class="dropdown-item" href="#" onclick="exportTableToExcel('#classeTable')">Excel</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#" onclick="exportTableToPDF('#classeTable')">PDF</a>
                             </li>
                         </ul>
                     </div>
-                    <button class="btn btn-ajout mr-2" data-bs-toggle="modal" data-bs-target="#enseignant"><i
-                            class="fa-solid fa-plus"></i> Ajouter un enseignant</button>
+                    <button class="btn btn-ajout mr-2" data-bs-toggle="modal" data-bs-target="#Classes"><i
+                            class="fa-solid fa-plus"></i> Ajouter une classe</button>
                 </div>
-                <div class="btn-group">
+                <!-- <div class="btn-group">
                     <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="fa-solid fa-filter"></i> Filtrer par
@@ -355,191 +355,89 @@
                         </li>
                         <li><a class="dropdown-item" href="#" onclick="filterTable('')">Toutes les matières</a></li>
                     </ul>
-                </div>
+                </div> -->
 
             </div>
             <div id="noResults">Aucun résultat trouvé</div>
             <!-- Table for listing teachers -->
-            <table class="table" id="teacherTable">
+            <table class="table" id="classeTable">
                 <thead class="table-aaa">
                     <tr class="aa">
-                        <th>Identifiant</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                        <th>Matière</th>
-                        <th>Classes</th>
+                        <th>#</th>
+                        <th>Nom de la Classe</th>
+                        <th>Nom de la filière</th>
                         <th class="no-print">Action</th>
                     </tr>
                 </thead>
-                <tbody id="teachersTables">
+                <tbody id="classeTables">
                     <!-- Example rows, replace with dynamic data -->
                     <tr>
-                        <td>001</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Informatique</td>
-                        <td>INF1A-RHCOMA1-CF2A-RGLIC</td>
+                        <td>01</td>
+                        <td>R1</td>
+                        <td>Reseaux et sécurité Informatique </td>
                         <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
+                            <button data-bs-toggle="modal" data-bs-target="#editClasse"
                                 class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
+                                data-bs-target="#deleteclasse"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
-                        <td>002</td>
-                        <td>N'Dri</td>
-                        <td>Julien</td>
-                        <td>NdriJulien@gmail.com</td>
-                        <td>0102535524</td>
-                        <td>Économie</td>
-                        <td>CF1A-CF1B-CF1C-CF2A-CF2B</td>
+                        <td>02</td>
+                        <td>S1</td>
+                        <td>Developpement d'Application </td>
                         <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
+                            <button data-bs-toggle="modal" data-bs-target="#editClasse"
                                 class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
+                                data-bs-target="#deleteclasse"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
-                        <td>003</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Comptabilité</td>
-                        <td>MA1A-RHCOMA1-CF2A-RGLIC</td>
+                        <td>03</td>
+                        <td>R2</td>
+                        <td>Reseaux et sécurité Informatique </td>
                         <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
+                            <button data-bs-toggle="modal" data-bs-target="#editClasse"
                                 class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
+                                data-bs-target="#deleteclasse"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
-                        <td>004</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Informatique</td>
-                        <td>INF1A-RHCOMA1-CF2A-RGLIC</td>
+                        <td>04</td>
+                        <td>AT1</td>
+                        <td>Reseaux et sécurité Informatique </td>
                         <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
+                            <button data-bs-toggle="modal" data-bs-target="#editClasse"
                                 class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
+                                data-bs-target="#deleteclasse"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
-                        <td>005</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Informatique</td>
-                        <td>INF1A-RHCOMA1-CF2A-RGLIC</td>
+                        <td>05</td>
+                        <td>R4</td>
+                        <td>Reseaux et sécurité Informatique </td>
                         <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
+                            <button data-bs-toggle="modal" data-bs-target="#editClasses"
                                 class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
+                                data-bs-target="#deleteclasse"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                     <tr>
-                        <td>006</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Informatique</td>
-                        <td>INF1A-RHCOMA1-CF2A-RGLIC</td>
+                        <td>06</td>
+                        <td>RSI</td>
+                        <td>Reseaux et sécurité Informatique </td>
                         <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
+                            <button data-bs-toggle="modal" data-bs-target="#editClasse"
                                 class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
+                                data-bs-target="#deleteclasse"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>007</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Informatique</td>
-                        <td>INF1A-RHCOMA1-CF2A-RGLIC</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
-                                class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>008</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Informatique</td>
-                        <td>INF1A-RHCOMA1-CF2A-RGLIC</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>009</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Informatique</td>
-                        <td>INF1A-RHCOMA1-CF2A-RGLIC</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>010</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Informatique</td>
-                        <td>INF1A-RHCOMA1-CF2A-RGLIC</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>011</td>
-                        <td>Koffi</td>
-                        <td>Marc Brice</td>
-                        <td>KoffiMarc@gmail.com</td>
-                        <td>0707532281</td>
-                        <td>Informatique</td>
-                        <td>INF1A-RHCOMA1-CF2A-RGLIC</td>
-                        <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editTeacher"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTeacher"><i class="fa-solid fa-trash"></i></button>
-                        </td>
+
                     </tr>
                 </tbody>
             </table>
@@ -564,7 +462,7 @@
                             <label for="fileInput" class="form-label">Choisissez un fichier à importer</label>
                             <input type="file" class="form-control" id="fileInput" name="importedFile" required>
                             <div class="invalid-feedback">
-                                Veuillez sélectionner un fichier.
+                                Veuillez sélectionner un fichier excel.
                             </div>
                         </div>
                     </div>
@@ -578,60 +476,62 @@
     </div>
     <!-- Modal ajout -->
 
+    <div class="modal " id="Classes" tabindex="-1" aria-labelledby="editClasseLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content " wi>
+                <h1 class="text-center">Ajouter</h1>
+                <form class="needs-validation" novalidate>
+                    <div class="modal-body">
+                        <div class="row g-3">
 
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="editLastName" placeholder="Nom de la classe"
+                                    value="" required>
+                                <div class="invalid-feedback">
+                                    Valid last name is required.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="editLastName"
+                                    placeholder="Nom de la filière" value="" required>
+                                <div class="invalid-feedback">
+                                    Valid last name is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-success">Sauvegarder</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal de Modification -->
-    <div class="modal " id="editTeacher" tabindex="-1" aria-labelledby="editTeacherLabel" aria-hidden="true">
+    <div class="modal " id="editClasse" tabindex="-1" aria-labelledby="editFiliereLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content " wi>
                 <h1 class="text-center">Modifier</h1>
                 <form class="needs-validation" novalidate>
                     <div class="modal-body">
                         <div class="row g-3">
-                            <!-- Fields for editing teacher details -->
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="editFirstName" placeholder="Nom" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
-                                </div>
-                            </div>
 
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="editLastName" placeholder="Prénoms" value=""
-                                    required>
+                                <input type="text" class="form-control" id="editLastName" placeholder="Nom de la classe"
+                                    value="" required>
                                 <div class="invalid-feedback">
                                     Valid last name is required.
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <input type="email" class="form-control" id="editEmail" placeholder="Email" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid email is required.
-                                </div>
-                            </div>
 
                             <div class="col-sm-6">
-                                <input type="tel" class="form-control" id="editContact" placeholder="Contacts" value=""
-                                    required>
+                                <input type="text" class="form-control" id="editLastName"
+                                    placeholder="Nom de la filière" value="" required>
                                 <div class="invalid-feedback">
-                                    Valid contact is required.
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="editSubject" placeholder="Matière" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid subject is required.
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="editClasses" placeholder="Classe" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid classes is required.
+                                    Valid last name is required.
                                 </div>
                             </div>
                         </div>
@@ -647,13 +547,13 @@
 
 
     <!-- Modal de Suppression -->
-    <div class="modal " id="deleteTeacher" tabindex="-1" aria-labelledby="deleteTeacherLabel" aria-hidden="true">
+    <div class="modal " id="deleteclasse" tabindex="-1" aria-labelledby="deleteclasseLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-body text-center">
                     <img src="../images/images.png" width="150" height="150" alt=""><br><br>
                     <p id="sure">Êtes-vous sûr?</p>
-                    <p>supprimer cet enseignant ?</p>
+                    <p>supprimer cette classe ?</p>
                 </div>
                 <div class="d-flex justify-content-around">
                     <button type="button" class="btn btn-danger" id="confirmDelete">Supprimer</button>
@@ -664,8 +564,8 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            searchTable('#teachersTables', 'searchInput', 'noResults');
-            paginateTable('#teacherTable');
+            searchTable('#classeTables', 'searchInput', 'noResults');
+            paginateTable('#classeTable');
         });
 
     </script>

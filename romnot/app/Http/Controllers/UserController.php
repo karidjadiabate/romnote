@@ -168,7 +168,7 @@ class UserController extends Controller
             $user->classe_id = $request->classe_id;
             $user->save();
 
-            return redirect()->route('admin.etudiant')->with('success', 'Etudiant ajouté avec succès');
+            return redirect()->route('etudiant')->with('success', 'Etudiant ajouté avec succès');
         } elseif ($user->role_id == 2) {
             // Si le rôle est professeur, vous pouvez traiter les classes sélectionnées ici
             $classes = $request->classe_id;
@@ -220,7 +220,7 @@ class UserController extends Controller
         if ($user->role_id == 1) {
             $user->classe_id = $request->classe_id;
             $user->matricule = $request->matricule;
-            $user->role_id = $request->role_id;
+            //$user->role_id = $request->role_id;
             $user->genre = $request->genre;
             $user->datenaiss = $request->datenaiss;
         } elseif ($user->role_id == 2) {
@@ -233,6 +233,7 @@ class UserController extends Controller
             $user->prenom = $request->prenom;
             $user->email = $request->email;
             $user->matricule = $request->matricule;
+            $user->contact = $request->contact;
             $classes = $request->classe_id;
             if (is_array($classes)) {
                 $user->selected_classes = json_encode($classes);
@@ -248,7 +249,7 @@ class UserController extends Controller
 
         // Redirection en fonction du rôle de l'utilisateur
         if ($user->role_id == 1) {
-            return redirect()->route('admin.etudiant')->with('warning', 'Étudiant modifié avec succès');
+            return redirect()->route('etudiant')->with('warning', 'Étudiant modifié avec succès');
         } elseif ($user->role_id == 2) {
             return redirect()->route('professeur')->with('warning', 'Professeur modifié avec succès');
         }

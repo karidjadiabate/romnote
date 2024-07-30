@@ -16,11 +16,12 @@ class Filiere extends Model
     {
         $ecoleId = auth()->user()->etablissement_id;
 
-        $listematiere = DB::table('filieres')
-            ->where('etablissement_id','=', $ecoleId)
-            ->select('id','nomfiliere','code')
+        $listefiliere = DB::table('filieres AS f')
+            ->join('niveaux AS n','n.id','=','f.niveau_id')
+            ->where('f.etablissement_id','=', $ecoleId)
+            ->select('f.id','nomfiliere','f.code','n.nomniveau','f.niveau_id')
             ->get();
 
-        return  $listematiere;
+        return  $listefiliere;
     }
 }

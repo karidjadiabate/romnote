@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Filiere;
 use App\Http\Requests\StoreFiliereRequest;
 use App\Http\Requests\UpdateFiliereRequest;
+use App\Models\Niveau;
 use Illuminate\Http\Request;
 
 class FiliereController extends Controller
@@ -14,11 +15,16 @@ class FiliereController extends Controller
      */
     public function index()
     {
+
         $filiere = new Filiere();
 
         $filieres = $filiere->listefilierebyecole();
 
-        return view('admin.filiere.listefiliere',compact('filieres'));
+        $fniveau = new Niveau();
+
+        $niveaux = $fniveau->listeniveauxbyecole();
+
+        return view('admin.filiere.listefiliere',compact('filieres','niveaux'));
     }
 
     /**
@@ -37,6 +43,7 @@ class FiliereController extends Controller
         Filiere::create([
             'code' => $request->code,
             'nomfiliere' => $request->nomfiliere,
+            'niveau_id' => $request->niveau_id,
             'etablissement_id' => auth()->user()->etablissement_id,
         ]);
 
@@ -67,6 +74,7 @@ class FiliereController extends Controller
         $filiere->update([
             'code' => $request->code,
             'nomfiliere' => $request->nomfiliere,
+            'niveau_id' => $request->niveau_id,
             'etablissement_id' => auth()->user()->etablissement_id,
         ]);
 

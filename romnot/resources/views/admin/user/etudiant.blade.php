@@ -93,12 +93,124 @@
                         <td>{{$etudiant->email}}</td>
                         <td>{{$etudiant->nomclasse}}</td>
                         <td class="no-print">
-                            <button data-bs-toggle="modal" data-bs-target="#editAdmin"
-                                class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-outline-primary btn-sm"
+                                data-bs-toggle="modal" data-bs-target="#editEtudiant{{$etudiant->id}}"
+                                data-id="{{$etudiant->id}}"
+                                data-nom="{{$etudiant->nom}}"
+                                data-prenom="{{$etudiant->prenom}}"
+                                data-email="{{$etudiant->email}}"
+                                data-datenaiss="{{$etudiant->datenaiss}}"
+                                >
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteAdmin"><i class="fa-solid fa-trash"></i></button>
+                                data-bs-target="#deleteEtudiant{{$etudiant->id}}">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
+
+                     <!-- Modal de Modification -->
+                     <div class="modal fade" id="editEtudiant{{$etudiant->id}}" tabindex="-1" aria-labelledby="editAdminLabel{{$etudiant->id}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <h1 class="text-center">Modifier</h1>
+                                <form action="{{route('user.update', $etudiant->id)}}" method="POST" class="needs-validation" novalidate>
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <!-- Fields for editing teacher details -->
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="editNom{{$etudiant->id}}" name="matricule" placeholder="Matricule" value="{{$etudiant->matricule}}"
+                                                    required>
+                                                <div class="invalid-feedback">
+                                                    Nom est requis.
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="editNom{{$etudiant->id}}" name="nom" placeholder="Nom" value="{{$etudiant->nom}}"
+                                                    required>
+                                                <div class="invalid-feedback">
+                                                    Nom est requis.
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="editPrenom{{$etudiant->id}}" name="prenom" placeholder="Prénoms" value="{{$etudiant->prenom}}"
+                                                    required>
+                                                <div class="invalid-feedback">
+                                                    Prénom est requis.
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <select class="select2-multiple form-control" name="classe_id" style="width: 100%" id="select2Multiple">
+                                                    @foreach ($classes as $classe)
+                                                        <option value="{{ $classe->id }}" @if ($classe->id == $etudiant->classe_id) selected @endif>{{ $classe->nomclasse }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Valid class is required.
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <input type="email" class="form-control" id="editEmail{{$etudiant->id}}" name="email" placeholder="Email" value="{{$etudiant->email}}"
+                                                    required>
+                                                <div class="invalid-feedback">
+                                                    Email est requis.
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <input type="tel" class="form-control" id="editContact{{$etudiant->id}}" name="contact" placeholder="Contact" value="{{$etudiant->contact}}"
+                                                    required>
+                                                <div class="invalid-feedback">
+                                                    Contact est requis.
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <input type="date" class="form-control" id="editDatenaiss{{$etudiant->id}}" name="datenaiss" placeholder="datenaiss" value="{{$etudiant->datenaiss}}"
+                                                    required>
+                                                <div class="invalid-feedback">
+                                                    Contact est requis.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-around">
+                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Modal de Suppression -->
+                    <div class="modal fade" id="deleteEtudiant{{$etudiant->id}}" tabindex="-1" aria-labelledby="deleteEtudiantLabel{{$etudiant->id}}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body text-center">
+                                    <img src="{{asset('frontend/dashboard/images/images.png')}}" width="150" height="150" alt=""><br><br>
+                                    <p id="sure">Êtes-vous sûr?</p>
+                                    <p>Supprimer cet etudiant ?</p>
+                                </div>
+                                <div class="d-flex justify-content-around">
+                                    <form action="{{route('user.destroy', $etudiant->id)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    </form>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
 
 
@@ -126,7 +238,7 @@
                             <!-- Fields for adding teacher details -->
 
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="firstName" name="matricule" placeholder="Matricule" value=""
+                                <input type="text" class="form-control" id="matricule" name="matricule" placeholder="Matricule" value=""
                                     required>
                                 <div class="invalid-feedback">
                                     Valid first name is required.
@@ -201,7 +313,19 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" value=""
+                                <select name="classe_id" id="classe_id" class="form-control">
+                                    <option value="">Selectionnez la classe</option>
+                                    @foreach ($classes as $classe)
+                                        <option value="{{$classe->id}}">{{$classe->nomclasse}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                    Valid class is required.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6" style="display: none">
+                                <input type="password" class="form-control" id="password" name="password" value="password" placeholder="Password" value=""
                                     required>
                                 <div class="invalid-feedback">
                                     Valid subject is required.

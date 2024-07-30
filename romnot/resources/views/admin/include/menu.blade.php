@@ -29,7 +29,7 @@
              <!-- Search bar -->
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <li class="nav-item dropdown" id="noti">
-                <a class="nav-link" href="#" role=""onclick="setActive(event, 'noti')" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link" href="#" role="" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-bell fa-fw"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -43,7 +43,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
             <li class="nav-item dropdown" id="profi">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"onclick="setActive(event, 'profi')">
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{{asset('frontend/dashboard/images/kad.jpg')}}" alt="User" class="rounded-circle"
                         style="width: 50px; height: 40px; margin-right: 10px; margin-top: -9px;"></a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -80,7 +80,7 @@
                     <!-- tableau de bord -->
                     @if(auth()->user()->role_id === 4)
                     <li class="nav-item" id="tableau">
-                        <a class="nav-link" href="/superadmin"onclick="setActive(event, 'tableau')">
+                        <a class="nav-link" href="/superadmin">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
                                     viewBox="0 0 34.798 34.798">
@@ -94,7 +94,7 @@
                     </li>
                     @elseif (auth()->user()->role_id === 3)
                     <li class="nav-item" id="tableau">
-                        <a class="nav-link" href="/admin"onclick="setActive(event, 'tableau')">
+                        <a class="nav-link" href="/admin">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
                                     viewBox="0 0 34.798 34.798">
@@ -108,8 +108,8 @@
                     </li>
                     @elseif(auth()->user()->role_id === 2)
 
-                    <li class="nav-item" id="tableau"onclick="setActive(event, 'tableau')">
-                        <a class="nav-link" href="/admin">
+                    <li class="nav-item" id="tableau">
+                        <a class="nav-link" href="/professeur">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
                                     viewBox="0 0 34.798 34.798">
@@ -139,7 +139,7 @@
 
                     <!-- demande d'inscription -->
                     <li class="nav-item" id="inscription">
-                        <a class="nav-link" href="{{route('listedemandeinscription')}}"onclick="setActive(event, 'inscription')" >
+                        <a class="nav-link" href="{{route('listedemandeinscription')}}">
                             <div class="icon-text-container">
                             <svg data-name="Layer 1" id="Layer_1" fill="#fff" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -161,7 +161,7 @@
 
                     <!-- school -->
                     <li class="nav-item" id="school">
-                        <a class="nav-link" href="{{route('etablissement.index')}}"onclick="setActive(event, 'school')">
+                        <a class="nav-link" href="{{route('etablissement.index')}}">
                             <div class="icon-text-container">
                             <svg height="52" fill="#fff" viewBox="0 0 512 512" width="48"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -178,7 +178,7 @@
 
                     <!-- utilisateurs -->
                     <li class="nav-item" id="users">
-                        <a class="nav-link" href="{{route('administrateur')}}"onclick="setActive(event, 'users')">
+                        <a class="nav-link" href="{{route('administrateur')}}">
                             <div class="icon-text-container">
                             <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -195,9 +195,9 @@
 
                     @if(auth()->user()->role_id === 3)
 
-                    <!-- etudiants -->
-                    <li class="nav-item" id="etudiants">
-                        <a class="nav-link" href="{{route('etudiant')}}"onclick="setActive(event, 'etudiants')">
+                     <!-- niveaux -->
+                     <li class="nav-item" id="niveaux">
+                        <a class="nav-link" href="{{route('niveau.index')}}">
                             <div class="icon-text-container">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="43.75" height="35"
@@ -206,36 +206,16 @@
                                             d="M9.844,0A5.469,5.469,0,1,1,4.375,5.469,5.469,5.469,0,0,1,9.844,0ZM35,0a5.469,5.469,0,1,1-5.469,5.469A5.469,5.469,0,0,1,35,0ZM0,20.419a7.3,7.3,0,0,1,7.294-7.294h2.919a7.333,7.333,0,0,1,3.049.663,8.6,8.6,0,0,0-.13,1.524,8.753,8.753,0,0,0,2.96,6.562H1.456A1.462,1.462,0,0,1,0,20.419Zm27.706,1.456h-.048a8.729,8.729,0,0,0,2.96-6.562,9.362,9.362,0,0,0-.13-1.524,7.227,7.227,0,0,1,3.049-.663h2.919a7.3,7.3,0,0,1,7.294,7.294,1.457,1.457,0,0,1-1.456,1.456ZM15.313,15.313a6.562,6.562,0,1,1,6.562,6.562A6.562,6.562,0,0,1,15.313,15.313ZM8.75,33.175a9.114,9.114,0,0,1,9.112-9.112h8.025A9.114,9.114,0,0,1,35,33.175,1.825,1.825,0,0,1,33.175,35h-22.6A1.825,1.825,0,0,1,8.75,33.175Z"
                                             fill="#fff" />
                                     </svg>
-                                    <span>Etudiants</span>
+                                    <span>Niveau</span>
                                 </div>
                             </div>
                         </a>
                     </li>
 
 
-                    <!-- Enseignants -->
-                    <li class="nav-item" id="enseignants">
-                        <a class="nav-link" href="{{route('professeur')}}"onclick="setActive(event, 'enseignants')">
-                            <div class="icon-text-container">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30.448" height="34.798"
-                                    viewBox="0 0 30.448 34.798">
-                                    <path id="user-tie-solid"
-                                        d="M6.525,8.7a8.7,8.7,0,1,0,8.7-8.7A8.7,8.7,0,0,0,6.525,8.7Zm6.423,13.607,1.264,2.107-2.263,8.421L9.5,22.85a1.006,1.006,0,0,0-1.217-.768A10.961,10.961,0,0,0,0,32.711,2.087,2.087,0,0,0,2.087,34.8H28.362a2.087,2.087,0,0,0,2.087-2.087,10.961,10.961,0,0,0-8.285-10.63,1.016,1.016,0,0,0-1.217.768L18.5,32.834l-2.263-8.421L17.5,22.306a1.086,1.086,0,0,0-.931-1.645H13.885a1.087,1.087,0,0,0-.931,1.645Z"
-                                        fill="#fff" />
-                                </svg>
-                                <span>Enseignants</span>
-                            </div>
-                        </a>
-                    </li>
-
-                    @endif
-
-
-                    @if (auth()->user()->role_id === 3)
-
                     <!-- filieres -->
                     <li class="nav-item" id="Filiere">
-                        <a class="nav-link" href="{{route('filiere.index')}}"onclick="setActive(event, 'Filiere')">
+                        <a class="nav-link" href="{{route('filiere.index')}}">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
                                     viewBox="0 0 31.318 34.798">
@@ -249,7 +229,7 @@
                     </li>
 
                     <li class="nav-item" id="Filiere">
-                        <a class="nav-link" href="{{route('matiere.index')}}"onclick="setActive(event, 'Filiere')">
+                        <a class="nav-link" href="{{route('matiere.index')}}">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
                                     viewBox="0 0 31.318 34.798">
@@ -263,7 +243,7 @@
                     </li>
                     <!-- classe -->
                     <li class="nav-item" id="classe">
-                        <a class="nav-link" href="{{route('classe.index')}}"onclick="setActive(event, 'classe')">
+                        <a class="nav-link" href="{{route('classe.index')}}">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="38.889" height="35"
                                     viewBox="0 0 38.889 35">
@@ -282,13 +262,48 @@
                         </a>
                     </li>
 
+                    <!-- etudiants -->
+                    <li class="nav-item" id="etudiants">
+                        <a class="nav-link" href="{{route('etudiant')}}">
+                            <div class="icon-text-container">
+                                <div class="icon-text-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="43.75" height="35"
+                                        viewBox="0 0 43.75 35">
+                                        <path id="users-solid"
+                                            d="M9.844,0A5.469,5.469,0,1,1,4.375,5.469,5.469,5.469,0,0,1,9.844,0ZM35,0a5.469,5.469,0,1,1-5.469,5.469A5.469,5.469,0,0,1,35,0ZM0,20.419a7.3,7.3,0,0,1,7.294-7.294h2.919a7.333,7.333,0,0,1,3.049.663,8.6,8.6,0,0,0-.13,1.524,8.753,8.753,0,0,0,2.96,6.562H1.456A1.462,1.462,0,0,1,0,20.419Zm27.706,1.456h-.048a8.729,8.729,0,0,0,2.96-6.562,9.362,9.362,0,0,0-.13-1.524,7.227,7.227,0,0,1,3.049-.663h2.919a7.3,7.3,0,0,1,7.294,7.294,1.457,1.457,0,0,1-1.456,1.456ZM15.313,15.313a6.562,6.562,0,1,1,6.562,6.562A6.562,6.562,0,0,1,15.313,15.313ZM8.75,33.175a9.114,9.114,0,0,1,9.112-9.112h8.025A9.114,9.114,0,0,1,35,33.175,1.825,1.825,0,0,1,33.175,35h-22.6A1.825,1.825,0,0,1,8.75,33.175Z"
+                                            fill="#fff" />
+                                    </svg>
+                                    <span>Etudiants</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+
+                    <!-- Enseignants -->
+                    <li class="nav-item" id="enseignants">
+                        <a class="nav-link" href="{{route('professeur')}}">
+                            <div class="icon-text-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30.448" height="34.798"
+                                    viewBox="0 0 30.448 34.798">
+                                    <path id="user-tie-solid"
+                                        d="M6.525,8.7a8.7,8.7,0,1,0,8.7-8.7A8.7,8.7,0,0,0,6.525,8.7Zm6.423,13.607,1.264,2.107-2.263,8.421L9.5,22.85a1.006,1.006,0,0,0-1.217-.768A10.961,10.961,0,0,0,0,32.711,2.087,2.087,0,0,0,2.087,34.8H28.362a2.087,2.087,0,0,0,2.087-2.087,10.961,10.961,0,0,0-8.285-10.63,1.016,1.016,0,0,0-1.217.768L18.5,32.834l-2.263-8.421L17.5,22.306a1.086,1.086,0,0,0-.931-1.645H13.885a1.087,1.087,0,0,0-.931,1.645Z"
+                                        fill="#fff" />
+                                </svg>
+                                <span>Enseignants</span>
+                            </div>
+                        </a>
+                    </li>
 
                     @endif
+
+
+
 
                     @if (auth()->user()->role_id === 3 || auth()->user()->role_id === 2)
 
                      <!-- calendrier -->
-                     <li class="nav-item" id="calendrier"onclick="setActive(event, 'calendrier')">
+                     <li class="nav-item" id="calendrier">
                         <a class="nav-link" href="#">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
@@ -311,7 +326,7 @@
 
                     <!-- sujet -->
                     <li class="nav-item" id="sujet">
-                        <a class="nav-link" href="#"onclick="setActive(event, 'sujet')">
+                        <a class="nav-link" href="#"">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35">
                                     <path id="Soustraction_4" data-name="Soustraction 4"
@@ -326,7 +341,7 @@
                     </li>
                     <!-- correction -->
                     <li class="nav-item" id="correction">
-                        <a class="nav-link" href="#"onclick="setActive(event, 'correction')">
+                        <a class="nav-link" href="#">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="38.889" height="35"
                                     viewBox="0 0 38.889 35">
@@ -400,12 +415,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
 
-      
-function setActive(event, id) {
+
+/* function setActive(event, id) {
     event.preventDefault();
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
     });
     // Ajouter la classe
-}
+} */
 </script>

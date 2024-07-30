@@ -28,7 +28,7 @@
     <!-- accueil -->
     <!-- titre -->
     <div class="container text-center mt-4">
-        <h1>Bienvenue sur notre plateforme</h1>
+        <h1>Bienvenue <i>{{auth()->user()->etablissement->nometablissement}}</i></h1>
     </div>
     <!-- banniere -->
     <div class="banner">
@@ -50,7 +50,7 @@
                                 fill="#fff" />
                         </svg>
                         <h5 class="card-title">Effectif des Etudiants</h5>
-                        <p class="card-text">3065</p>
+                        <p class="card-text">{{$nbetudiant}}</p>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                                 fill="#fff" />
                         </svg>
                         <h5 class="card-title">Effectif des Enseignants</h5>
-                        <p class="card-text">55</p>
+                        <p class="card-text">{{$nbprofesseur}}</p>
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                                 transform="translate(-3 -2)" fill="#fff" />
                         </svg>
                         <h5 class="card-title">Nombre total de filieres</h5>
-                        <p class="card-text">10</p>
+                        <p class="card-text">{{$nbfiliere}}</p>
                     </div>
                 </div>
             </div>
@@ -276,7 +276,7 @@
 
     </div>
     </div>
-   
+
 
     <script src="{{asset('frontend/dashboard/html/graph.js')}}"></script>
     <script src="{{asset('frontend/dashboard/js/calendrier.js')}}"></script>

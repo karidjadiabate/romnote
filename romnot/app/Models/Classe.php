@@ -12,7 +12,6 @@ class Classe extends Model
 
     protected $fillable = ['code','nomclasse','filiere_id','etablissement_id'];
 
-
     public function listeclassbyecole()
     {
         $ecoleId = auth()->user()->etablissement_id;
@@ -20,7 +19,8 @@ class Classe extends Model
         $listeclasse = DB::table('classes AS cl')
             ->where('cl.etablissement_id','=', $ecoleId)
             ->join('filieres AS f','f.id','=','cl.filiere_id')
-            ->select('cl.id','f.nomfiliere','cl.code','nomclasse','cl.filiere_id')
+            ->join('niveaux AS n','n.id','=','f.niveau_id')
+            ->select('cl.id','f.nomfiliere','cl.code','nomclasse','cl.filiere_id','n.nomniveau')
             ->get();
 
         return $listeclasse;

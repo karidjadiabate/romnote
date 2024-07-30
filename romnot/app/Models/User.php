@@ -54,6 +54,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function etablissement()
+    {
+        return $this->belongsTo(Etablissement::class);
+    }
+
     //Liste des administrateurs de chaque école
     public function administrateur()
     {
@@ -98,11 +103,47 @@ class User extends Authenticatable
 
         $etudiants = DB::table('users AS u')
             ->join('etablissements AS e', 'e.id', '=', 'u.etablissement_id')
+            ->join('classes AS c','c.id','=','u.classe_id')
             ->where('u.role_id', '=', 1)
             ->where('u.etablissement_id', '=', $ecoleId)
-            ->select('u.id', 'u.nom','u.prenom','u.image', 'u.contact', 'e.nometablissement','u.email','u.username','u.password')
+            ->select('u.id', 'u.nom','u.prenom','u.image', 'u.contact', 'e.nometablissement','u.email','u.username','u.password',
+            'u.matricule','c.nomclasse','u.datenaiss','u.classe_id')
             ->get();
 
         return $etudiants;
+    }
+
+    // Requête pour récupérer le nombre d'étudiants en fonction de l'admin de l'école
+    public function nbetudiantparecole()
+    {
+        $ecoleId = auth()->user()->etablissement_id;
+
+        $nbetudiant =  User::where('role_id', 1)
+            ->where('etablissement_id', $ecoleId)
+            ->count();
+
+        return $nbetudiant;
+    }
+
+    //Requête pour récup le nombre de prof en fonction de l'admin de l'école connectée
+    public function nbprofesseurparecole()
+    {
+        $ecoleId = auth()->user()->etablissement_id;
+
+        $nbprofesseur = User::where('role_id', 2)
+            ->where('etablissement_id', $ecoleId)
+            ->count();
+
+        return $nbprofesseur;
+    }
+
+    public function nbfiliereparecole()
+    {
+        $ecoleId = auth()->user()->etablissement_id;
+
+        $nbfiliere = Filiere::where('etablissement_id', $ecoleId)
+            ->count();
+
+        return $nbfiliere;
     }
 }

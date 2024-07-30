@@ -115,7 +115,7 @@
                         <td>{{ $num++ }}</td>
                         <td>{{$classe->code}}</td>
                         <td>{{$classe->nomclasse}}</td>
-                        <td>{{$classe->nomfiliere}}</td>
+                        <td>{{$classe->nomfiliere}} ({{$classe->nomniveau}})</td>
                         <td class="no-print">
                             <button class="btn btn-outline-primary btn-sm"
                                 data-bs-toggle="modal" data-bs-target="#editClasse{{$classe->id}}"
@@ -160,11 +160,11 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-12">
                                                 <select name="filiere_id" id="editLastName" name="filiere_id" class="form-control">
                                                     <option value="">Selectionnez une filière</option>
                                                     @foreach ($filieres as $filiere)
-                                                        <option value="{{$filiere->id}}" @if ($filiere->id == $classe->filiere_id) selected @endif>{{$filiere->nomfiliere}}</option>
+                                                        <option value="{{$filiere->id}}" @if ($filiere->id == $classe->filiere_id) selected @endif>{{$filiere->nomfiliere}} ({{$filiere->nomniveau}})</option>
                                                     @endforeach
                                                 </select>
                                                 <div class="invalid-feedback">
@@ -267,11 +267,11 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <select name="filiere_id" id="editLastName" class="form-control">
                                     <option value="">Selectionnez une filière</option>
                                     @foreach ($filieres as $filiere)
-                                        <option value="{{$filiere->id}}">{{$filiere->nomfiliere}}</option>
+                                        <option value="{{$filiere->id}}">{{$filiere->nomfiliere}} ({{$filiere->nomniveau}})</option>
                                     @endforeach
                                 </select>
                                 <div class="invalid-feedback">

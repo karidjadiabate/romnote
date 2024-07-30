@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/3c4b920158.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
@@ -175,7 +175,7 @@
 
 
                     <!-- Modal de Suppression -->
-                    <div class="modal " id="deleteMatiere{{$matiere->id}}" tabindex="-1" aria-labelledby="deleteMatiereLabel" aria-hidden="true">
+                    <div class="modal " id="deletematiere{{$matiere->id}}" tabindex="-1" aria-labelledby="deleteMatiereLabel" aria-hidden="true">
                         <div class="modal-dialog ">
                             <div class="modal-content">
                                 <div class="modal-body text-center">

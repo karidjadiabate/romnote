@@ -119,6 +119,7 @@
                         <th>#</th>
                         <th>Code(Abreviation)</th>
                         <th>Nom de la filière</th>
+                        <th>Niveau</th>
                         <th class="no-print">Action</th>
                     </tr>
                 </thead>
@@ -132,6 +133,7 @@
                         <td>{{ $num++ }}</td>
                         <td>{{$filiere->code}}</td>
                         <td>{{$filiere->nomfiliere}}</td>
+                        <td>{{$filiere->nomniveau}}</td>
                         <td class="no-print">
                             <button class="btn btn-outline-primary btn-sm"
                                 data-bs-toggle="modal" data-bs-target="#editFiliere{{$filiere->id}}"
@@ -175,6 +177,23 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <!-- Fields for editing teacher details -->
+                                            <div class="col-sm-6">
+                                                <select name="niveau_id" class="form-control" id="" disabled>
+                                                    @foreach ($niveaux as $niveau)
+                                                        <option value="{{$niveau->id}}" @if ($niveau->id == $filiere->niveau_id) selected @endif>{{$niveau->nomniveau}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Valid first name is required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="d-flex justify-content-around">
                                         <button type="submit" class="btn btn-success">Sauvegarder</button>
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
@@ -270,6 +289,24 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <!-- Fields for editing teacher details -->
+                            <div class="col-sm-6">
+                                <select name="niveau_id" class="form-control" id="niveau_id">
+                                    <option value="">Selectionnez le niveau</option>
+                                    @foreach ($niveaux as $niveau)
+                                        <option value="{{$niveau->id}}">{{$niveau->nomniveau}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                    Valid first name is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="d-flex justify-content-around">
                         <button type="submit" class="btn btn-success">Sauvegarder</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>

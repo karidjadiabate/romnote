@@ -12,10 +12,34 @@
 
 </head>
 <style>
-    .modal {
-        background-color: blueviolet;
-        opacity: 0.2;
+     .modal-content {
+        background-color: #4a3dbb;
+            border-radius: 0;
+            color: white;
+        }
+        .modal-header, .modal-body, .modal-footer {
+            border: none;
+        }
+        .modal-body p {
+            font-size: 1em;
+        }
+        .modal-header h1{
+            font-size:20px;
+            text-align:center
+        }
+        @media (max-width: 768px) {
+        .hero-section {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .item-left,
+        .item-right {
+            width: 100%;
+            margin-bottom: 20px;
+        }
     }
+      
 </style>
 
 <body>
@@ -50,48 +74,41 @@
         </nav>
     </header>
 
-    <div class="pt-5">
+   
+    <div class="pt-5 text-center">
 
-        @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">
-            {{ Session::get('success') }}
-        </div>
-        @endif
-    </div>
+@if(Session::has('success'))
+<div class="alert alert-success" role="alert">
+    {{ Session::get('success') }}
+</div>
+@endif
+</div>
 
+<!--  -->
+<section class="hero-section">
 
-    <section class="hero-section">
-        <div class="row d-flex">
-            <div class="col-md-6">
-                <div class="item-left d-flex justify-content-center align-items-flex-start flex-column">
-                    <h1>Lorem ipsum dolor sit amet.</h1>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat, eveniet?</p>
-                    <form class="d-flex mb-3">
-                        <a href="{{route('demandeinscription')}}" id="btnInscription" type="submit"
+        <img src="{{asset('frontend/img/Fichier 6@9x.png')}} " alt="Foreground Image" class="foreground-image active">
+        <img src="{{asset('frontend/img/ste.png')}} " alt="Foreground Image" class="foreground-image">
+        <img src="{{asset('frontend/img/ti.png')}} "alt="Foreground Image" class="foreground-image">
+        <div class="content">
+            <h1>Lorem ipsum dolor sit amet.</h1>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat, eveniet?</p>
+            <form class="d-flex mb-3">
+                <a href="{{route('demandeinscription')}}" id="btnInscription" type="submit"
                             class="btn btn-custom">Inscrivez-vous</a>
-                        <a href="#demo" class="btn btn-outline-success btn-no-rounded">
-                            <i class="fa-solid fa-play" style="color: #f8f9fc; margin-right: 2px;"></i> Regardez un démo
-                        </a>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="item-right d-flex justify-content-center align-items-center mb-2">
-                    <div class="cercle">
-                        <img src="{{asset('frontend/img/im1.png')}}" alt="" class="active">
-                        <img src="{{asset('frontend/img/im2.png')}}" alt="">
-                        <img src="{{asset('frontend/img/im3.png')}}" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="bouton">
-                <span class="btn-small" data-index="0"></span>
-                <span class="btn-small" data-index="1"></span>
-                <span class="btn-small" data-index="2"></span>
-            </div>
+                <a href="#demo" class="btn btn-outline-success btn-no-rounded">
+                    <i class="fa-solid fa-play" style="color: #f8f9fc; margin-right: 2px;"></i> Regardez un démo
+                </a>
+            </form>
         </div>
+        <div class="bouton">
+            <span class="btn-small" data-index="0"></span>
+            <span class="btn-small" data-index="1"></span>
+            <span class="btn-small" data-index="2"></span>
         </div>
     </section>
+    <!--  -->
+  
     <section class="feature-section text-center">
         <div class="container">
             <h2 id="feature-heading">AKP ROM Note en bref</h2><br><br>
@@ -122,7 +139,7 @@
                 </div>
                 <div class="row justify-content-center text-align-center">
                     <a href="#" class="btn btn-primary mt-3" data-bs-toggle="modal"
-                        data-bs-target="#freeTrialModal">Demander un essai gratuit</a>
+                        data-bs-target="#essai">Demander un essai gratuit</a>
 
                 </div>
             </div>
@@ -130,6 +147,25 @@
     </section>
 
     <!-- Modal -->
+    <div class="modal" id="essai" tabindex="-1" aria-labelledby="essaiLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-center" id="essaiLabel">Bienvenue sur<a class="navbar-brand" href="#"> AKP <span>ROM-Note</span></a></h1>
+                </div>
+                <div class="modal-body text-start"> 
+                    <p>Inscrivez-vous dès maintenant pour profiter de notre essai gratuit exclusif et découvrir toutes les fonctionnalités incroyables que Romnote a à offrir. Ne manquez pas cette opportunité de transformer votre expérience d'apprentissage !</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                <form class="d-flex mb-3">
+                <a href="{{route('demandeinscription')}}" id="btnInscription" type="submit"
+                            class="btn btn-custom">Inscrivez-vous</a>
+                
+            </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
 
 
@@ -195,10 +231,10 @@
                 <div class="col-md-4 logo-info mb-3 mb-md-0 mx-auto">
                     <h2 class="text-start">Nos autres solutions:</h2>
                     <div class="row ">
-                        <div class="col-6 mb-3"><img src="{{asset('frontend/img/kpany.png')}}" alt="KPANY" class="img-fluid"></div>
-                        <div class="col-6 mb-3"><img src="{{asset('frontend/img/kpany2.png')}}" alt="KPANY" class="img-fluid"></div>
-                        <div class="col-6 mb-3"><img src="{{asset('frontend/img/femilia.png')}}" alt="FEMILIA" class="img-fluid"></div>
-                        <div class="col-6 mb-3"><img src="{{asset('frontend/img/vemisters.png')}}" alt="VEMISTERS" class="img-fluid"></div>
+                        <div class="col-6 "><img  src="{{asset('frontend/img/logo boodruch 2.png')}}" alt="KPANY" class="img-fluid"></div>
+                        <div class="col-6 mb-3"><img src="{{asset('frontend/img/familia pro.png')}}" alt="KPANY" class="img-fluid"></div>
+                        <div class="col-6 mb-3"><img src="{{asset('frontend/img/Log1.png')}}" alt="FEMILIA" class="img-fluid"></div>
+                        <div class="col-6 mb-3"><img src="{{asset('frontend/img/Log4.png')}}" alt="VEMISTERS" class="img-fluid"></div>
                         <div class="col-6 mb-3"><img src="{{asset('frontend/img/bodruch.png')}}" alt="BODRUCH" class="img-fluid"></div>
                     </div>
                 </div>
@@ -210,10 +246,10 @@
                     <p><i class="fas fa-phone-alt"></i> +225 05-46-35-22-31</p>
                     <p><i class="fas fa-envelope"></i> infos@akpany.ci</p>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
                 </div>
             </div>
         </div>
@@ -224,10 +260,11 @@
             <p>© 2024 Tous Droits Réservés. AKPANY, Software & Media Solution</p>
         </div>
     </section>
-    <script>
 
-        document.getElementById('btnSignup').addEventListener('click', function () {
-            window.location.href = 'signup.html'; // Redirige vers la page d'inscription
+    
+    <script>
+        $(document).ready(function() {
+            $('#essai').modal('show');
         });
     </script>
     <script src="{{asset('frontend/js/landing.js')}}"></script>

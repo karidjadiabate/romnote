@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{asset('frontend/dashboard/css/dash.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/dashboard/css/list.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/dashboard/html/admin.css')}}">
-    <title>admin</title>
+    <title>demande_d'inscription</title>
 </head>
 <style>
 
@@ -28,7 +28,6 @@
         <div class="printableArea">
          <h1 class="mt-4 mb-4">La liste de demande d'inscription</h1>
             <div class="d-flex justify-content-between mb-3 no-print">
-
                 <!-- Search bar -->
                 <form class="d-flex search-bar" role="search">
                     <div class="input-group">
@@ -98,62 +97,65 @@
 
 
              <!-- Table for listing teachers -->
-            <table class="table" id="inscriptionTable">
-                <thead class="table-aaa">
-                    <tr class="aa">
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>Prénom</th>
-                        <th>Nom</th>
-                        <th>Contact</th>
-                        <th>Email</th>
-                        <th>nomsEtablissement</th>
-                        <th>adressesEtablissement</th>
-                        <th>motPasse</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody >
-                    <!-- Example rows, replace with dynamic data -->
-                    @php
-                        $num = 1;
-                    @endphp
-                    @foreach ($listedemandeinscriptions as $listedemandeinscription)
-                    <tr>
-                        <td>{{ $num++ }}</td>
-                        <td>{{ $listedemandeinscription->created_at->diffForHumans() }}</td>
-                        <td>{{$listedemandeinscription->prenom}}</td>
-                        <td>{{$listedemandeinscription->nom}}</td>
-                        <td>{{$listedemandeinscription->contact}}</td>
-                        <td>{{$listedemandeinscription->email}}</td>
-                        <td>{{$listedemandeinscription->nometablissement}}</td>
-                        <td>{{$listedemandeinscription->adresseetablissement}}</td>
-                        <td>{{$listedemandeinscription->password}}</td>
-                        <td class="no-print">
-                            @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
-                                <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal" data-bs-target="#acceptModal" class="btn btn-outline-success btn-sm btn-accept">
-                                    <i class="fa-solid fa-check"></i>
-                                </button>
-                                <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn btn-outline-danger btn-sm btn-reject">
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            @elseif ($listedemandeinscription->accepted)
-                                <button class="btn btn-success btn-sm" disabled>
-                                    <i class="fa-solid fa-check"></i>
-                                </button>
-                            @elseif ($listedemandeinscription->rejected)
-                                <button class="btn btn-danger btn-sm" disabled>
-                                    <i class="fa-solid fa-times"></i>
-                                </button>
-                            @endif
-                        </td>
+             <div id="noResults">Aucun résultat trouvé</div>
+            <div class="table-responsive text-center">
+                <table class="table" id="inscriptionTable">
+                    <thead class="table-aaa" >
+                        <tr class="aa">
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Contact</th>
+                            <th>Email</th>
+                            <th>noms de l'Etablissement</th>
+                            <th>adresses de  l'Etablissement</th>
+                            <th>mote de Passe</th>
+                            <th class="no-print">Action</th> 
+                        </tr>
+                    </thead>
+                    <tbody id="inscriptionTables">
+                        <!-- Example rows, replace with dynamic data -->
+                        @php
+                            $num = 1;
+                        @endphp
+                        @foreach ($listedemandeinscriptions as $listedemandeinscription)
+                        <tr>
+                            <td>{{ $num++ }}</td>
+                            <td>{{ $listedemandeinscription->created_at->diffForHumans() }}</td>
+                            <td>{{$listedemandeinscription->prenom}}</td>
+                            <td>{{$listedemandeinscription->nom}}</td>
+                            <td>{{$listedemandeinscription->contact}}</td>
+                            <td>{{$listedemandeinscription->email}}</td>
+                            <td>{{$listedemandeinscription->nometablissement}}</td>
+                            <td>{{$listedemandeinscription->adresseetablissement}}</td>
+                            <td>{{$listedemandeinscription->password}}</td>
+                            <td class="no-print">
+                                @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
+                                    <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal" data-bs-target="#acceptModal" class="btn btn-outline-success btn-sm btn-accept">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                    <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn btn-outline-danger btn-sm btn-reject">
+                                        <i class="fa-solid fa-times"></i>
+                                    </button>
+                                @elseif ($listedemandeinscription->accepted)
+                                    <button class="btn btn-success btn-sm" disabled>
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                @elseif ($listedemandeinscription->rejected)
+                                    <button class="btn btn-danger btn-sm" disabled>
+                                        <i class="fa-solid fa-times"></i>
+                                    </button>
+                                @endif
+                            </td>
 
 
-                    </tr>
-                    @endforeach
+                        </tr>
+                        @endforeach
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Pagination buttons -->
             <div class="pagination no-print">
@@ -166,100 +168,10 @@
     </div>
 
 
-    <!-- Modal de Modification -->
-    <!-- <div class="modal " id="editInscription" tabindex="-1" aria-labelledby="editInscriptionLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content " wi>
-                <h1 class="text-center">Modifier</h1>
-                <form class="needs-validation" novalidate>
-                    <div class="modal-body">
-                        <div class="row g-3"> -->
-                            <!-- Fields for editing teacher details -->
-                            <!-- <div class="col-sm-6"> -->
-                                <!-- <input type="text" class="form-control" id="editFirstName" placeholder="Nom" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="editLastName" placeholder="Prénoms" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid last name is required.
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="email" class="form-control" id="editEmail" placeholder="Email" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid email is required.
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <input type="tel" class="form-control" id="editContact" placeholder="Contacts" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid contact is required.
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="editContact" placeholder="Nom Etablissement"
-                                    value="" required>
-                                <div class="invalid-feedback">
-                                    Valid contact is required.
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <input type="tel" class="form-control" id="editContact"
-                                    placeholder="adresse Etablissement" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid contact is required.
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="editContact" placeholder="mot de passe"
-                                    value="" required>
-                                <div class="invalid-feedback">
-                                    Valid contact is required.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-around">
-                        <button type="button" class="btn btn-success">Sauvegarder</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> -->
-
-
-    <!-- Modal de Suppression -->
-    <!-- <div class="modal " id="deleteInscription" tabindex="-1" aria-labelledby="deleteInscriptionLabel"
-        aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <img src="../images/images.png" width="150" height="150" alt=""><br><br>
-                    <p id="sure">Êtes-vous sûr?</p>
-                    <p>supprimer cett demande ?</p>
-                </div>
-                <div class="d-flex justify-content-around">
-                    <button type="button" class="btn btn-danger" id="confirmDelete">Supprimer</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   -->
+   
    <script>
         document.addEventListener('DOMContentLoaded', function () {
-            searchTable('#inscriptionTable', 'searchInput');
+            searchTable('#inscriptionTables', 'searchInput','noResults');
             paginateTable('#inscriptionTable');
         });
 

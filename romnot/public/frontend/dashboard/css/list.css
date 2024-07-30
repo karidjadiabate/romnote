@@ -34,6 +34,7 @@
     max-width: auto;
     margin: 0 auto;
     padding: 20px;
+    width: 100%;
 }
 
 .btn {
@@ -147,6 +148,13 @@ h1 {
 
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+
+}
+
 .table-aaa .aa th {
     background-color: #F1F4FE;
     color: #293D7A;
@@ -215,6 +223,10 @@ h1 {
     margin-top: 10px;
 }
 
+.option {
+    margin-left: 100px
+}
+
 /* .modal.fa-triangle-exclamation {
     color: #ffca0a;
     height: 150;
@@ -222,20 +234,11 @@ h1 {
 } */
 
 /* Responsive adjustments */
+
 @media (max-width: 768px) {
-    .btn {
+    .option {
         width: 100%;
-        margin-bottom: 5px;
+        margin-left: 50%;
     }
-}
 
-
-
-
-@media (min-width: 576px) {
-    .modal-dialog {
-        max-width: 700px;
-        margin-right: auto;
-        margin-left: auto;
-    }
 }

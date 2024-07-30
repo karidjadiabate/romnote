@@ -1,3 +1,14 @@
+<style>
+    /* Style pour l'élément actif */
+.nav-item.active .nav-link {
+    color: #38B293;
+}
+
+.nav-item.active .nav-link svg path {
+    fill: #38B293;
+}
+
+</style>
 <nav class="navbar navbar-expand-lg  ">
     <div class="container-fluid">
         <!-- logo -->
@@ -5,19 +16,20 @@
         <!-- menu -->
         <button class="navbar-toggler" type="button" id="toggleButton" aria-controls="offcanvasScrolling"
             aria-expanded="false" aria-label="Toggle navigation">
-            <form class="d-flex search-bar" id="sea" role="search">
+            <!-- <form class="d-flex search-bar" id="sea" role="search">
                 <div class="input-group">
-                    <!-- <span class="input-group-text"
-                        style="background-color:white; border: 1px solid white; border-radius: 30px; padding: 5px 6px;">
+                    <span class="input-group-text"
+                        style="background-color:white; border: 1px solid white; border-radius:6px; padding: 5px 6px;">
                         <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px;color: initial;"></i>
                         <input class="form-control" type="search" placeholder="Rechercher..." aria-label="Search"
                             style="border: none; outline: none; height: 30px; font-size: 12px;">
-                    </span> -->
+                    </span>
                 </div>
-            </form>
+            </form> -->
+             <!-- Search bar -->
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <li class="nav-item dropdown" id="noti">
-                <a class="nav-link" href="#" role="" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link" href="#" role=""onclick="setActive(event, 'noti')" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-bell fa-fw"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -31,7 +43,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
             <li class="nav-item dropdown" id="profi">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                    data-bs-toggle="dropdown" aria-expanded="false"onclick="setActive(event, 'profi')">
                     <img src="{{asset('frontend/dashboard/images/kad.jpg')}}" alt="User" class="rounded-circle"
                         style="width: 50px; height: 40px; margin-right: 10px; margin-top: -9px;"></a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -68,7 +80,7 @@
                     <!-- tableau de bord -->
                     @if(auth()->user()->role_id === 4)
                     <li class="nav-item" id="tableau">
-                        <a class="nav-link" href="/superadmin">
+                        <a class="nav-link" href="/superadmin"onclick="setActive(event, 'tableau')">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
                                     viewBox="0 0 34.798 34.798">
@@ -82,7 +94,7 @@
                     </li>
                     @elseif (auth()->user()->role_id === 3)
                     <li class="nav-item" id="tableau">
-                        <a class="nav-link" href="/admin">
+                        <a class="nav-link" href="/admin"onclick="setActive(event, 'tableau')">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
                                     viewBox="0 0 34.798 34.798">
@@ -96,7 +108,7 @@
                     </li>
                     @elseif(auth()->user()->role_id === 2)
 
-                    <li class="nav-item" id="tableau">
+                    <li class="nav-item" id="tableau"onclick="setActive(event, 'tableau')">
                         <a class="nav-link" href="/admin">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="34.798" height="34.798"
@@ -113,7 +125,7 @@
                     <!-- role -->
                     @if(auth()->user()->role_id === 4)
                        {{--  <li class="nav-item" id="role">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#"onclick="setActive(event, 'role')">
                                 <div class="icon-text-container">
                                 <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" rect fill="#fff"
                                         height="31.318" width="34.798">
@@ -127,7 +139,7 @@
 
                     <!-- demande d'inscription -->
                     <li class="nav-item" id="inscription">
-                        <a class="nav-link" href="{{route('listedemandeinscription')}}" >
+                        <a class="nav-link" href="{{route('listedemandeinscription')}}"onclick="setActive(event, 'inscription')" >
                             <div class="icon-text-container">
                             <svg data-name="Layer 1" id="Layer_1" fill="#fff" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -149,7 +161,7 @@
 
                     <!-- school -->
                     <li class="nav-item" id="school">
-                        <a class="nav-link" href="{{route('etablissement.index')}}">
+                        <a class="nav-link" href="{{route('etablissement.index')}}"onclick="setActive(event, 'school')">
                             <div class="icon-text-container">
                             <svg height="52" fill="#fff" viewBox="0 0 512 512" width="48"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -166,7 +178,7 @@
 
                     <!-- utilisateurs -->
                     <li class="nav-item" id="users">
-                        <a class="nav-link" href="{{route('administrateur')}}">
+                        <a class="nav-link" href="{{route('administrateur')}}"onclick="setActive(event, 'users')">
                             <div class="icon-text-container">
                             <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -185,7 +197,7 @@
 
                     <!-- etudiants -->
                     <li class="nav-item" id="etudiants">
-                        <a class="nav-link" href="{{route('etudiant')}}">
+                        <a class="nav-link" href="{{route('etudiant')}}"onclick="setActive(event, 'etudiants')">
                             <div class="icon-text-container">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="43.75" height="35"
@@ -203,7 +215,7 @@
 
                     <!-- Enseignants -->
                     <li class="nav-item" id="enseignants">
-                        <a class="nav-link" href="{{route('professeur')}}">
+                        <a class="nav-link" href="{{route('professeur')}}"onclick="setActive(event, 'enseignants')">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30.448" height="34.798"
                                     viewBox="0 0 30.448 34.798">
@@ -223,7 +235,7 @@
 
                     <!-- filieres -->
                     <li class="nav-item" id="Filiere">
-                        <a class="nav-link" href="{{route('filiere.index')}}">
+                        <a class="nav-link" href="{{route('filiere.index')}}"onclick="setActive(event, 'Filiere')">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
                                     viewBox="0 0 31.318 34.798">
@@ -237,7 +249,7 @@
                     </li>
 
                     <li class="nav-item" id="Filiere">
-                        <a class="nav-link" href="{{route('matiere.index')}}">
+                        <a class="nav-link" href="{{route('matiere.index')}}"onclick="setActive(event, 'Filiere')">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
                                     viewBox="0 0 31.318 34.798">
@@ -251,7 +263,7 @@
                     </li>
                     <!-- classe -->
                     <li class="nav-item" id="classe">
-                        <a class="nav-link" href="{{route('classe.index')}}">
+                        <a class="nav-link" href="{{route('classe.index')}}"onclick="setActive(event, 'classe')">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="38.889" height="35"
                                     viewBox="0 0 38.889 35">
@@ -276,7 +288,7 @@
                     @if (auth()->user()->role_id === 3 || auth()->user()->role_id === 2)
 
                      <!-- calendrier -->
-                     <li class="nav-item" id="calendrier">
+                     <li class="nav-item" id="calendrier"onclick="setActive(event, 'calendrier')">
                         <a class="nav-link" href="#">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
@@ -299,7 +311,7 @@
 
                     <!-- sujet -->
                     <li class="nav-item" id="sujet">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="#"onclick="setActive(event, 'sujet')">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35">
                                     <path id="Soustraction_4" data-name="Soustraction 4"
@@ -314,7 +326,7 @@
                     </li>
                     <!-- correction -->
                     <li class="nav-item" id="correction">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="#"onclick="setActive(event, 'correction')">
                             <div class="icon-text-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="38.889" height="35"
                                     viewBox="0 0 38.889 35">
@@ -342,3 +354,58 @@
         </div>
     </div>
 </nav>
+
+<script >
+
+document.addEventListener('DOMContentLoaded', function () {
+            var menuIcon = document.getElementById('menuIcon');
+            var offcanvasElement = document.getElementById('offcanvasScrolling');
+            var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+
+            // Basculer l'affichage du menu offcanvas lorsque le menuIcon est cliqué
+            menuIcon.addEventListener('click', function (event) {
+                if (offcanvasElement.classList.contains('show')) {
+                    offcanvas.hide();
+                } else {
+                    offcanvas.show();
+                }
+            });
+
+            // Empêcher l'affichage du menu offcanvas lors du clic sur d'autres parties du bouton
+            document.getElementById('toggleButton').addEventListener('click', function (event) {
+                if (event.target !== menuIcon && !menuIcon.contains(event.target)) {
+                    event.stopPropagation();
+                }
+            });
+
+            // Écoute l'événement de soumission du formulaire de recherche
+            document.getElementById('sea').addEventListener('submit', function (event) {
+                event.preventDefault(); // Empêche le formulaire de se soumettre normalement
+                let searchTerm = document.getElementById('sea').querySelector('input[type="search"]').value.trim();
+                if (!searchTerm) {
+                    alert('Veuillez saisir un terme de recherche.');
+                    return;
+                }
+
+                alert('Vous avez recherché : ' + searchTerm);
+                fetch('/votre-endpoint-de-recherche?query=' + encodeURIComponent(searchTerm))
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Résultats de la recherche :', data);
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la recherche :', error);
+                    });
+            });
+        });
+
+
+      
+function setActive(event, id) {
+    event.preventDefault();
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    // Ajouter la classe
+}
+</script>

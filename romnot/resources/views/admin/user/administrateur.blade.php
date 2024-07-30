@@ -65,142 +65,145 @@
             </div>
 
             <!-- Table for listing teachers -->
-            <table class="table" id="adminTable">
-                <thead class="table-aaa">
-                    <tr class="aa">
-                        <th>#</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>contact</th>
-                        <th>Email</th>
-                        <th>Usermane</th>
-                        <th>Etablissement</th>
-                        <th class="no-print">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Example rows, replace with dynamic data -->
-                    @php
-                        $num = 1;
-                    @endphp
-                    @foreach ($administrateurs as $administrateur)
-                    <tr>
-                        <td>{{ $num++ }}</td>
-                        <td>{{$administrateur->nom}}</td>
-                        <td>{{$administrateur->prenom}}</td>
-                        <td>{{$administrateur->contact}}</td>
-                        <td>{{$administrateur->email}}</td>
-                        <td>{{$administrateur->username}}</td>
-                        <td>{{$administrateur->nometablissement}}</td>
-                        <td class="no-print">
-                            <button class="btn btn-outline-primary btn-sm"
-                                data-bs-toggle="modal" data-bs-target="#editAdmin{{$administrateur->id}}"
-                                data-id="{{$administrateur->id}}"
-                                data-nom="{{$administrateur->nom}}"
-                                data-prenom="{{$administrateur->prenom}}"
-                                data-email="{{$administrateur->email}}"
-                                data-etablissement_id="{{$administrateur->etablissement_id}}"
-                                >
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteAdmin{{$administrateur->id}}">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+            <div id="noResults">Aucun résultat trouvé</div>
+            <div class="table-responsive">
+                <table class="table" id="adminTables">
+                    <thead class="table-aaa">
+                        <tr class="aa">
+                            <th>#</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>contact</th>
+                            <th>Email</th>
+                            <th>Usermane</th>
+                            <th>Etablissement</th>
+                            <th class="no-print">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example rows, replace with dynamic data -->
+                        @php
+                            $num = 1;
+                        @endphp
+                        @foreach ($administrateurs as $administrateur)
+                        <tr>
+                            <td>{{ $num++ }}</td>
+                            <td>{{$administrateur->nom}}</td>
+                            <td>{{$administrateur->prenom}}</td>
+                            <td>{{$administrateur->contact}}</td>
+                            <td>{{$administrateur->email}}</td>
+                            <td>{{$administrateur->username}}</td>
+                            <td>{{$administrateur->nometablissement}}</td>
+                            <td class="no-print">
+                                <button class="btn btn-outline-primary btn-sm"
+                                    data-bs-toggle="modal" data-bs-target="#editAdmin{{$administrateur->id}}"
+                                    data-id="{{$administrateur->id}}"
+                                    data-nom="{{$administrateur->nom}}"
+                                    data-prenom="{{$administrateur->prenom}}"
+                                    data-email="{{$administrateur->email}}"
+                                    data-etablissement_id="{{$administrateur->etablissement_id}}"
+                                    >
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#deleteAdmin{{$administrateur->id}}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
 
-                    <!-- Modal de Modification -->
-                    <div class="modal fade" id="editAdmin{{$administrateur->id}}" tabindex="-1" aria-labelledby="editAdminLabel{{$administrateur->id}}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <h1 class="text-center">Modifier</h1>
-                                <form action="{{route('user.update', $administrateur->id)}}" method="POST" class="needs-validation" novalidate>
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-body">
-                                        <div class="row g-3">
-                                            <!-- Fields for editing teacher details -->
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="editNom{{$administrateur->id}}" name="nom" placeholder="Nom" value="{{$administrateur->nom}}"
-                                                    required>
-                                                <div class="invalid-feedback">
-                                                    Nom est requis.
+                        <!-- Modal de Modification -->
+                        <div class="modal fade" id="editAdmin{{$administrateur->id}}" tabindex="-1" aria-labelledby="editAdminLabel{{$administrateur->id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <h1 class="text-center">Modifier</h1>
+                                    <form action="{{route('user.update', $administrateur->id)}}" method="POST" class="needs-validation" novalidate>
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body">
+                                            <div class="row g-3">
+                                                <!-- Fields for editing teacher details -->
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control" id="editNom{{$administrateur->id}}" name="nom" placeholder="Nom" value="{{$administrateur->nom}}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                        Nom est requis.
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="editPrenom{{$administrateur->id}}" name="prenom" placeholder="Prénoms" value="{{$administrateur->prenom}}"
-                                                    required>
-                                                <div class="invalid-feedback">
-                                                    Prénom est requis.
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control" id="editPrenom{{$administrateur->id}}" name="prenom" placeholder="Prénoms" value="{{$administrateur->prenom}}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                        Prénom est requis.
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="email" class="form-control" id="editEmail{{$administrateur->id}}" name="email" placeholder="Email" value="{{$administrateur->email}}"
-                                                    required>
-                                                <div class="invalid-feedback">
-                                                    Email est requis.
+                                                <div class="col-sm-6">
+                                                    <input type="email" class="form-control" id="editEmail{{$administrateur->id}}" name="email" placeholder="Email" value="{{$administrateur->email}}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                        Email est requis.
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-sm-6">
-                                                <input type="tel" class="form-control" id="editContact{{$administrateur->id}}" name="contact" placeholder="Contact" value="{{$administrateur->contact}}"
-                                                    required>
-                                                <div class="invalid-feedback">
-                                                    Contact est requis.
+                                                <div class="col-sm-6">
+                                                    <input type="tel" class="form-control" id="editContact{{$administrateur->id}}" name="contact" placeholder="Contact" value="{{$administrateur->contact}}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                        Contact est requis.
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-sm-6">
-                                                <select class="select2-multiple form-control w-100" name="etablissement_id" id="select2Multiple">
-                                                    @foreach ($etablissements as $etablissement)
-                                                        <option value="{{ $etablissement->id }}" @if ($etablissement->id == $administrateur->etablissement_id) selected @endif>
-                                                            {{ $etablissement->nometablissement }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Contact est requis.
+                                                <div class="col-sm-6">
+                                                    <select class="select2-multiple form-control w-100" name="etablissement_id" id="select2Multiple">
+                                                        @foreach ($etablissements as $etablissement)
+                                                            <option value="{{ $etablissement->id }}" @if ($etablissement->id == $administrateur->etablissement_id) selected @endif>
+                                                                {{ $etablissement->nometablissement }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Contact est requis.
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="d-flex justify-content-around">
+                                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal de Suppression -->
+                        <div class="modal fade" id="deleteAdmin{{$administrateur->id}}" tabindex="-1" aria-labelledby="deleteAdminLabel{{$administrateur->id}}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <img src="{{asset('frontend/dashboard/images/images.png')}}" width="150" height="150" alt=""><br><br>
+                                        <p id="sure">Êtes-vous sûr?</p>
+                                        <p>Supprimer cet enseignant ?</p>
                                     </div>
                                     <div class="d-flex justify-content-around">
-                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                                        <form action="{{route('user.destroy', $administrateur->id)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Modal de Suppression -->
-                    <div class="modal fade" id="deleteAdmin{{$administrateur->id}}" tabindex="-1" aria-labelledby="deleteAdminLabel{{$administrateur->id}}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body text-center">
-                                    <img src="{{asset('frontend/dashboard/images/images.png')}}" width="150" height="150" alt=""><br><br>
-                                    <p id="sure">Êtes-vous sûr?</p>
-                                    <p>Supprimer cet enseignant ?</p>
-                                </div>
-                                <div class="d-flex justify-content-around">
-                                    <form action="{{route('user.destroy', $administrateur->id)}}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                                    </form>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    @endforeach
+                        @endforeach
 
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Pagination buttons -->
             <div class="pagination no-print">
@@ -308,7 +311,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            searchTable('#adminTable', 'searchInput');
+            searchTable('#adminTables', 'searchInput', 'noResults');
             paginateTable('#adminTable');
         });
 

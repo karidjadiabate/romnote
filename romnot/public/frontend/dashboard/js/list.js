@@ -97,17 +97,22 @@
     function exportTableToExcel(tableId) {
         const table = document.querySelector(tableId);
         if (!table) return;
-        const rows = Array.from(table.rows);
-        const pageTitle = document.querySelector('title') ? document.querySelector('title').textContent : 'default';
+
+        const pageTitle = document.querySelector('h1') ? document.querySelector('h1').textContent : 'default';
         const fileName = pageTitle.trim() || 'data';
         const workbook = XLSX.utils.book_new();
-        const worksheet = XLSX.utils.table_to_sheet(table);
+        const rows = Array.from(table.rows).map(row => {
+            const cells = Array.from(row.cells);
+            return cells.filter((cell, index) => index !== cells.length - 1).map(cell => cell.textContent);
+        });
+        const worksheet = XLSX.utils.aoa_to_sheet(rows);
         XLSX.utils.sheet_add_aoa(worksheet, [[pageTitle]], { origin: 'A1' });
         const range = XLSX.utils.decode_range(worksheet['!ref']);
         worksheet['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: range.e.c } }];
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
         XLSX.writeFile(workbook, `${fileName}.xlsx`);
     }
+
 
     /**
      * Exporter le tableau vers un fichier PDF.
@@ -118,7 +123,7 @@
         if (!table) return;
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('l');
-        const pageTitle = document.querySelector('title') ? document.querySelector('title').textContent : 'default';
+        const pageTitle = document.querySelector('h1') ? document.querySelector('h1').textContent : 'default';
         const fileName = pageTitle.trim() || 'data';
         doc.setFontSize(18);
         doc.text(pageTitle, doc.internal.pageSize.getWidth() / 2, 10, { align: 'center' });
@@ -142,3 +147,12 @@
     window.printDiv = printDiv;
 })();
 
+function setActive(event, id) {
+    event.preventDefault();
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    document.getElementById(id).classList.add('active');
+}

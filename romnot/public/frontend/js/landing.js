@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const images = document.querySelectorAll('.cercle img');
+    const images = document.querySelectorAll('.foreground-image');
     const buttons = document.querySelectorAll('.btn-small');
 
     buttons.forEach(button => {
@@ -17,4 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
             button.classList.add('active');
         });
     });
+});
+
+// alerte
+document.addEventListener('DOMContentLoaded', function () {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+        setTimeout(function () {
+            alert.classList.add('fade-out');
+        }, 2000); // 
+    }
 });

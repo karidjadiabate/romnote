@@ -126,7 +126,7 @@
                     <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="{{ asset('frontend/dashboard/images/kad.jpg') }}" alt="User"
-                            class="rounded-circle" style="width: 40px; height: 40px;">
+                            class="rounded-circle" style="width: 40px; height: 30px;">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end custom-profile-dropdown">
                         <li class="dropdown-header text-center">

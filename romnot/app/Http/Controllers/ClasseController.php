@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Classe;
 use App\Http\Requests\StoreClasseRequest;
 use App\Http\Requests\UpdateClasseRequest;
+use App\Models\Filiere;
+use Illuminate\Http\Request;
 
 class ClasseController extends Controller
 {
@@ -13,7 +15,15 @@ class ClasseController extends Controller
      */
     public function index()
     {
-        //
+        $fclasse = new Classe();
+
+        $filiere = new Filiere();
+
+        $filieres = $filiere->listefilierebyecole();
+
+        $classes = $fclasse->listeclassbyecole();
+
+        return view('admin.classe.listeclasse',compact('classes','filieres'));
     }
 
     /**
@@ -27,9 +37,16 @@ class ClasseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreClasseRequest $request)
+    public function store(Request $request)
     {
-        //
+        Classe::create([
+            'code' => $request->code,
+            'nomclasse' => $request->nomclasse,
+            'filiere_id' => $request->filiere_id,
+            'etablissement_id' => auth()->user()->etablissement_id,
+        ]);
+
+        return to_route('classe.index')->with('success','Classe ajoutée avec success!');
     }
 
     /**
@@ -53,14 +70,24 @@ class ClasseController extends Controller
      */
     public function update(UpdateClasseRequest $request, Classe $classe)
     {
-        //
+        $classe->update([
+            'code' => $request->code,
+            'nomclasse' => $request->nomclasse,
+            'filiere_id' => $request->filiere_id,
+            'etablissement_id' => auth()->user()->etablissement_id,
+        ]);
+
+        return to_route('classe.index')->with('warning', 'Classe modifiée avec succès!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Classe $classe)
+    public function destroy($id)
     {
-        //
+        $classe = Classe::findOrFail($id);
+        $classe->delete();
+
+        return to_route('classe.index')->with('danger','Classe supprimé avec success');
     }
 }

@@ -28,7 +28,10 @@
     <!-- accueil -->
     <!-- titre -->
     <div class="container text-center mt-4">
+    @if(auth()->user()->role_id==2 || auth()->user()->role_id==3)
+
         <h1>Bienvenue <i>{{auth()->user()->etablissement->nometablissement}}</i></h1>
+        @endif
     </div>
     <!-- banniere -->
     <div class="banner">

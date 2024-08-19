@@ -15,7 +15,7 @@
     background-color: #e9ecef;
 }
 
-.search-bar .input-group .input-group-prepend .input-group-text {
+/* .search-bar .input-group .input-group-prepend .input-group-text {
     background-color: #e0d7f6;
     border: none;
     border-top-left-radius: 50px;
@@ -31,10 +31,11 @@
     box-shadow: none;
 }
 
-.search-bar .input-group .form-control:focus {
+*/
+/* .search-bar .input-group .form-control:focus {
     border-color: #e0d7f6;
     box-shadow: none;
-}
+} */
 
 button.navbar-toggler {
     border-left-style: none;
@@ -48,24 +49,33 @@ button.navbar-toggler {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    margin-top: 20px;
 
 }
+
+
+
 
 button.navbar-toggler:focus {
     outline: none;
     box-shadow: none;
 }
 
-.navbar-toggler .fa-bars {
-    font-size: 30px;
-    color: white;
-    text-align: center;
+.input-group-text {
+    max-width: 250px;
+    background-color: white;
+    padding: 0rem 0.7rem 0rem 0.7rem;
+    height: 80%;
+    width: 100%;
+    border-color: #A2ADCF;
+    color: #A2ADCF;
 }
 
-.perfo {
-    background-color: #F1F4FE;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+#profi img {
+    width: 50px;
+    height: 40px;
+    margin-right: 10px;
+    margin-top: -9px;
 }
 
 .dropdown-item:hover {
@@ -287,11 +297,13 @@ h4 {
     #toggleButton {
         display: flex !important;
         align-items: center;
+        left: 0;
         order: 2;
     }
 
     #menuIcon {
         display: none;
+
     }
 
     #profi img {
@@ -315,11 +327,24 @@ h4 {
         /* Adjust spacing between items */
     }
 
+    /* #toggleButton {
+        left: 0;
+    }
+
+    #menuIcon {
+        /* display: none; */
+
     .navbar-nav {
         display: flex;
         align-items: start;
         justify-content: flex-start;
     }
+
+    .navbar-toggler {
+        margin-left: 50px;
+
+    }
+
 
     span {
         font-size: 14px;
@@ -328,7 +353,7 @@ h4 {
 
     .icon-text-container {
         display: flex;
-        flex-direction: row;
+        /* flex-direction: row; */
 
     }
 
@@ -340,6 +365,16 @@ h4 {
         justify-content: flex-start;
 
     }
+
+    #offcanvasScrolling {
+        width: 65%;
+        max-width: 400px;
+    }
+
+
+
+    /*  */
+
 
 
 }

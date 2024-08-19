@@ -11,9 +11,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <link rel="stylesheet" href="{{asset('frontend/dashboard/css/dash.css')}}">
-    <link rel="stylesheet" href="{{asset('frontend/dashboard/css/list.css')}}">
-    <link rel="stylesheet" href="{{asset('frontend/dashboard/html/admin.css')}}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/list.css') }}">
     <title>demande_d'inscription</title>
 </head>
 <style>
@@ -22,11 +22,11 @@
 
 <body>
     <!-- header -->
-   @include('admin.include.menu')
+    @include('admin.include.menu')
     <!-- accueil -->
-    <div class="container" >
+    <div class="container">
         <div class="printableArea">
-         <h1 class="mt-4 mb-4">La liste de demande d'inscription</h1>
+            <h1 class="mt-4 mb-4">La liste de demande d'inscription</h1>
             <div class="d-flex justify-content-between mb-3 no-print">
                 <!-- Search bar -->
                 <form class="d-flex search-bar" role="search">
@@ -39,7 +39,8 @@
                     </div>
                 </form>
                 <div>
-                    <button id="printBtn" class="btn btn-success mr-2" onclick="printDiv()"><i class="fa-solid fa-print"></i> Imprimer</button>
+                    <button id="printBtn" class="btn btn-success mr-2" onclick="printDiv()"><i
+                            class="fa-solid fa-print"></i> Imprimer</button>
 
                     <!-- Dropdown for Export options -->
                     <div class="btn-group">
@@ -48,8 +49,10 @@
                             <i class="fa-solid fa-download "></i> Exporter
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" onclick="exportTableToExcel('#inscriptionTable')">CSV</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="exportTableToPDF('#inscriptionTable')">PDF</a></li>
+                            <li><a class="dropdown-item" href="#"
+                                    onclick="exportTableToExcel('#inscriptionTable')">CSV</a></li>
+                            <li><a class="dropdown-item" href="#"
+                                    onclick="exportTableToPDF('#inscriptionTable')">PDF</a></li>
                         </ul>
                     </div>
                 </div>
@@ -58,12 +61,14 @@
 
 
             <!-- Modal pour Accepter -->
-            <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
+            <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="acceptModalLabel">Accepter la demande</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             Êtes-vous sûr de vouloir accepter cette demande et créer l'établissement ?
@@ -77,12 +82,14 @@
             </div>
 
             <!-- Modal pour Refuser -->
-            <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+            <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="rejectModalLabel">Refuser la demande</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             Êtes-vous sûr de vouloir refuser cette demande ?
@@ -96,11 +103,11 @@
             </div>
 
 
-             <!-- Table for listing teachers -->
-             <div id="noResults">Aucun résultat trouvé</div>
+            <!-- Table for listing teachers -->
+            <div id="noResults">Aucun résultat trouvé</div>
             <div class="table-responsive text-center">
                 <table class="table" id="inscriptionTable">
-                    <thead class="table-aaa" >
+                    <thead class="table-aaa">
                         <tr class="aa">
                             <th>#</th>
                             <th>Date</th>
@@ -109,9 +116,9 @@
                             <th>Contact</th>
                             <th>Email</th>
                             <th>noms de l'Etablissement</th>
-                            <th>adresses de  l'Etablissement</th>
+                            <th>adresses de l'Etablissement</th>
                             <th>mote de Passe</th>
-                            <th class="no-print">Action</th> 
+                            <th class="no-print">Action</th>
                         </tr>
                     </thead>
                     <tbody id="inscriptionTables">
@@ -120,37 +127,41 @@
                             $num = 1;
                         @endphp
                         @foreach ($listedemandeinscriptions as $listedemandeinscription)
-                        <tr>
-                            <td>{{ $num++ }}</td>
-                            <td>{{ $listedemandeinscription->created_at->diffForHumans() }}</td>
-                            <td>{{$listedemandeinscription->prenom}}</td>
-                            <td>{{$listedemandeinscription->nom}}</td>
-                            <td>{{$listedemandeinscription->contact}}</td>
-                            <td>{{$listedemandeinscription->email}}</td>
-                            <td>{{$listedemandeinscription->nometablissement}}</td>
-                            <td>{{$listedemandeinscription->adresseetablissement}}</td>
-                            <td>{{$listedemandeinscription->password}}</td>
-                            <td class="no-print">
-                                @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
-                                    <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal" data-bs-target="#acceptModal" class="btn btn-outline-success btn-sm btn-accept">
-                                        <i class="fa-solid fa-check"></i>
-                                    </button>
-                                    <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn btn-outline-danger btn-sm btn-reject">
-                                        <i class="fa-solid fa-times"></i>
-                                    </button>
-                                @elseif ($listedemandeinscription->accepted)
-                                    <button class="btn btn-success btn-sm" disabled>
-                                        <i class="fa-solid fa-check"></i>
-                                    </button>
-                                @elseif ($listedemandeinscription->rejected)
-                                    <button class="btn btn-danger btn-sm" disabled>
-                                        <i class="fa-solid fa-times"></i>
-                                    </button>
-                                @endif
-                            </td>
+                            <tr>
+                                <td>{{ $num++ }}</td>
+                                <td>{{ $listedemandeinscription->created_at->diffForHumans() }}</td>
+                                <td>{{ $listedemandeinscription->prenom }}</td>
+                                <td>{{ $listedemandeinscription->nom }}</td>
+                                <td>{{ $listedemandeinscription->contact }}</td>
+                                <td>{{ $listedemandeinscription->email }}</td>
+                                <td>{{ $listedemandeinscription->nometablissement }}</td>
+                                <td>{{ $listedemandeinscription->adresseetablissement }}</td>
+                                <td>{{ $listedemandeinscription->password }}</td>
+                                <td class="no-print">
+                                    @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
+                                        <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal"
+                                            data-bs-target="#acceptModal"
+                                            class="btn btn-outline-success btn-sm btn-accept">
+                                            <i class="fa-solid fa-check"></i>
+                                        </button>
+                                        <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal"
+                                            data-bs-target="#rejectModal"
+                                            class="btn btn-outline-danger btn-sm btn-reject">
+                                            <i class="fa-solid fa-times"></i>
+                                        </button>
+                                    @elseif ($listedemandeinscription->accepted)
+                                        <button class="btn btn-success btn-sm" disabled>
+                                            <i class="fa-solid fa-check"></i>
+                                        </button>
+                                    @elseif ($listedemandeinscription->rejected)
+                                        <button class="btn btn-danger btn-sm" disabled>
+                                            <i class="fa-solid fa-times"></i>
+                                        </button>
+                                    @endif
+                                </td>
 
 
-                        </tr>
+                            </tr>
                         @endforeach
 
                     </tbody>
@@ -168,23 +179,22 @@
     </div>
 
 
-   
-   <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            searchTable('#inscriptionTables', 'searchInput','noResults');
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            searchTable('#inscriptionTables', 'searchInput', 'noResults');
             paginateTable('#inscriptionTable');
         });
-
     </script>
-    <script src="{{asset('frontend/dashboard/js/list.js')}}"></script>
+    <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
 
     <script>
-           $(document).ready(function() {
+        $(document).ready(function() {
             let selectedId = null;
 
             const routeAccept = '{{ route('demande.accept', ['id' => 'ID']) }}';
@@ -222,7 +232,8 @@
                             }
                         },
                         error: function(xhr) {
-                            alert('Une erreur est survenue lors de la requête: ' + xhr.status + ' ' + xhr.statusText);
+                            alert('Une erreur est survenue lors de la requête: ' + xhr.status +
+                                ' ' + xhr.statusText);
                         }
                     });
                 }
@@ -245,13 +256,13 @@
                             }
                         },
                         error: function(xhr) {
-                            alert('Une erreur est survenue lors de la requête: ' + xhr.status + ' ' + xhr.statusText);
+                            alert('Une erreur est survenue lors de la requête: ' + xhr.status +
+                                ' ' + xhr.statusText);
                         }
                     });
                 }
             });
         });
-
     </script>
 
 
@@ -259,7 +270,3 @@
 </body>
 
 </html>
-
-
-
-

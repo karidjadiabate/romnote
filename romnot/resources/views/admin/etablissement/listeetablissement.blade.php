@@ -14,6 +14,7 @@
     <script src="{{asset('frontend/dashboard/js/list.js')}}"></script>
     <link rel="stylesheet" href="{{asset('frontend/dashboard/css/dash.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/dashboard/css/list.css')}}">
+     <link rel="stylesheet" href="{{asset('frontend/dashboard/css/messageError.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/dashboard/html/admin.css')}}">
     <title>Liste_des_Etablissements</title>
     <style>
@@ -91,7 +92,7 @@
             <!-- Table for listing establishments -->
             <div id="noResults">Aucun résultat trouvé</div>
             <div class="table-responsive">
-                <table class="table " id="etablissementTables">
+                <table class="table " id="etablissementTable">
                     <thead class="table-aaa">
                         <tr class="aa">
                             <th>#</th>
@@ -104,7 +105,7 @@
                             <th class="no-print">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="etablissementTables">
                         @foreach ($etablissements as $etablissement)
                         <tr>
                             <td>{{$etablissement->id}}</td>
@@ -135,10 +136,10 @@
 
                         <!-- Modal for editing establishment -->
                         <div class="modal fade" id="editEtablissementModal{{$etablissement->id}}" tabindex="-1" aria-labelledby="editEtablissementModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <h1 class="text-center">Modifier</h1>
-                                    <form action="{{route('etablissement.update', $etablissement->id)}}" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+                                    <form id="editEtablissementForm{{$etablissement->id}}" action="{{route('etablissement.update', $etablissement->id)}}" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
                                         @csrf
                                         @method('PUT')
                                         <div class="modal-body">
@@ -188,7 +189,8 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                            </div>
+
 
                         <!-- Modal for deleting establishment -->
                         <div class="modal" id="deleteEtablissementModal{{$etablissement->id}}" tabindex="-1" aria-labelledby="deleteEtablissementModalLabel" aria-hidden="true">
@@ -286,6 +288,7 @@
             paginateTable('#etablissementTable');
         });
     </script>
+    <script src="{{asset('frontend/dashboard/js/messageError.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

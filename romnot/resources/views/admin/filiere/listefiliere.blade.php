@@ -11,10 +11,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="{{asset('frontend/dashboard/js/list.js')}}"></script>
-    <link rel="stylesheet" href="{{asset('frontend/dashboard/css/dash.css')}}">
-    <link rel="stylesheet" href="{{asset('frontend/dashboard/css/list.css')}}">
-    <link rel="stylesheet" href="{{asset('frontend/dashboard/html/admin.css')}}">
+    <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/list.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
     <title>filiere</title>
 </head>
 <style>
@@ -87,7 +87,8 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#"
                                     onclick="exportTableToExcel('#filiereTable')">Excel</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="exportTableToPDF('#filiereTable')">PDF</a>
+                            <li><a class="dropdown-item" href="#"
+                                    onclick="exportTableToPDF('#filiereTable')">PDF</a>
                             </li>
                         </ul>
                     </div>
@@ -118,8 +119,9 @@
                     <tr class="aa">
                         <th>#</th>
                         <th>Code(Abreviation)</th>
-                        <th>Nom de la filière</th>
+                        <th>Description</th>
                         <th>Niveau</th>
+                        <th>Nombre de classes</th>
                         <th class="no-print">Action</th>
                     </tr>
                 </thead>
@@ -129,101 +131,111 @@
                         $num = 1;
                     @endphp
                     @foreach ($filieres as $filiere)
-                    <tr>
-                        <td>{{ $num++ }}</td>
-                        <td>{{$filiere->code}}</td>
-                        <td>{{$filiere->nomfiliere}}</td>
-                        <td>{{$filiere->nomniveau}}</td>
-                        <td class="no-print">
-                            <button class="btn btn-outline-primary btn-sm"
-                                data-bs-toggle="modal" data-bs-target="#editFiliere{{$filiere->id}}"
-                                data-id="{{$filiere->id}}"
-                                data-code="{{$filiere->code}}"
-                                data-nomfiliere="{{$filiere->nomfiliere}}">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deletefiliere{{$filiere->id}}">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ $num++ }}</td>
+                            <td>{{ $filiere->code }}</td>
+                            <td>{{ $filiere->nomfiliere }}</td>
+                            <td>{{ $filiere->nomniveau }}</td>
+                            <td class="text-center">{{ $filiere->nbclasse }}</td>
+                            <td class="no-print">
+                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#editFiliere{{ $filiere->id }}" data-id="{{ $filiere->id }}"
+                                    data-code="{{ $filiere->code }}" data-nomfiliere="{{ $filiere->nomfiliere }}">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#deletefiliere{{ $filiere->id }}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
 
-                    <!-- Modal de Modification -->
-                    <div class="modal " id="editFiliere{{$filiere->id}}" tabindex="-1" aria-labelledby="editFiliereLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content " wi>
-                                <h1 class="text-center">Modifier</h1>
-                                <form action="{{route('filiere.update', $filiere->id)}}" method="POST" class="needs-validation" novalidate>
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-body">
-                                        <div class="row g-3">
-                                            <!-- Fields for editing teacher details -->
-                                            <div class="col-sm-6">
-                                                <input type="text" name="code" class="form-control" id="editFirstName"
-                                                    placeholder="Code(Abreviation)" value="{{$filiere->code}}" required>
-                                                <div class="invalid-feedback">
-                                                    Valid first name is required.
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6">
-                                                <input type="text" name="nomfiliere" class="form-control" id="editLastName"
-                                                    placeholder="Nom de la filière" value="{{$filiere->nomfiliere}}" required>
-                                                <div class="invalid-feedback">
-                                                    Valid last name is required.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <div class="row g-3">
-                                            <!-- Fields for editing teacher details -->
-                                            <div class="col-sm-6">
-                                                <select name="niveau_id" class="form-control" id="" disabled>
-                                                    @foreach ($niveaux as $niveau)
-                                                        <option value="{{$niveau->id}}" @if ($niveau->id == $filiere->niveau_id) selected @endif>{{$niveau->nomniveau}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Valid first name is required.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-around">
-                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Modal de Suppression -->
-                    <div class="modal " id="deletefiliere{{$filiere->id}}" tabindex="-1" aria-labelledby="deletefiliereLabel" aria-hidden="true">
-                        <div class="modal-dialog ">
-                            <div class="modal-content">
-                                <div class="modal-body text-center">
-                                    <img src="{{asset('frontend/dashboard/images/images.png')}}" width="150" height="150" alt=""><br><br>
-                                    <p id="sure">Êtes-vous sûr?</p>
-                                    <p>supprimer cette filière ?</p>
-                                </div>
-                                <div class="d-flex justify-content-around">
-                                    <form action="{{route('filiere.destroy', $filiere->id)}}" method="POST">
+                        <!-- Modal de Modification -->
+                        <div class="modal " id="editFiliere{{ $filiere->id }}" tabindex="-1"
+                            aria-labelledby="editFiliereLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content " wi>
+                                    <h1 class="text-center">Modifier</h1>
+                                    <form action="{{ route('filiere.update', $filiere->id) }}" method="POST"
+                                        class="needs-validation" novalidate>
                                         @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        @method('PUT')
+                                        <div class="modal-body">
+                                            <div class="row g-3">
+                                                <!-- Fields for editing teacher details -->
+                                                <div class="col-sm-6">
+                                                    <input type="text" name="code" class="form-control"
+                                                        id="editFirstName" placeholder="Code(Abreviation)"
+                                                        value="{{ $filiere->code }}" required>
+                                                    <div class="invalid-feedback">
+                                                        Valid first name is required.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="text" name="nomfiliere" class="form-control"
+                                                        id="editLastName" placeholder="Nom de la filière"
+                                                        value="{{ $filiere->nomfiliere }}" required>
+                                                    <div class="invalid-feedback">
+                                                        Valid last name is required.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="row g-3">
+                                                <!-- Fields for editing teacher details -->
+                                                <div class="col-sm-6">
+                                                    <select name="niveau_id" class="form-control" id=""
+                                                        disabled>
+                                                        @foreach ($niveaux as $niveau)
+                                                            <option value="{{ $niveau->id }}"
+                                                                @if ($niveau->id == $filiere->niveau_id) selected @endif>
+                                                                {{ $niveau->nomniveau }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Valid first name is required.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-around">
+                                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                            <button type="button" class="btn btn-danger"
+                                                data-bs-dismiss="modal">Annuler</button>
+                                        </div>
                                     </form>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+
+                        <!-- Modal de Suppression -->
+                        <div class="modal " id="deletefiliere{{ $filiere->id }}" tabindex="-1"
+                            aria-labelledby="deletefiliereLabel" aria-hidden="true">
+                            <div class="modal-dialog ">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <img src="{{ asset('frontend/dashboard/images/images.png') }}" width="150"
+                                            height="150" alt=""><br><br>
+                                        <p id="sure">Êtes-vous sûr?</p>
+                                        <p>supprimer cette filière ?</p>
+                                    </div>
+                                    <div class="d-flex justify-content-around">
+                                        <form action="{{ route('filiere.destroy', $filiere->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Annuler</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
 
                 </tbody>
@@ -267,7 +279,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content " wi>
                 <h1 class="text-center">Ajouter</h1>
-                <form action="{{route('filiere.store')}}" method="POST" class="needs-validation" novalidate>
+                <form action="{{ route('filiere.store') }}" method="POST" class="needs-validation" novalidate>
                     @csrf
                     <div class="modal-body">
                         <div class="row g-3">
@@ -297,7 +309,7 @@
                                 <select name="niveau_id" class="form-control" id="niveau_id">
                                     <option value="">Selectionnez le niveau</option>
                                     @foreach ($niveaux as $niveau)
-                                        <option value="{{$niveau->id}}">{{$niveau->nomniveau}}</option>
+                                        <option value="{{ $niveau->id }}">{{ $niveau->nomniveau }}</option>
                                     @endforeach
                                 </select>
                                 <div class="invalid-feedback">
@@ -318,17 +330,16 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             searchTable('#filiereTables', 'searchInput', 'noResults');
             paginateTable('#filiereTable');
         });
-
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

@@ -25,6 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (alert) {
         setTimeout(function () {
             alert.classList.add('fade-out');
-        }, 2000); // 
+        }, 2000); //
     }
 });

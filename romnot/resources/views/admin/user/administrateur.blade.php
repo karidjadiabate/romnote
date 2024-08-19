@@ -277,7 +277,7 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <select name="etablissement_id" id="etablissement_id" class="form-control">
+                                <select name="etablissement_id" id="etablissement_id" class="form-control" required>
                                     <option value="">Selectionnez un établissement</option>
                                     @foreach ($etablissements as $etablissement)
                                         <option value="{{$etablissement->id}}">{{$etablissement->nometablissement}}</option>

@@ -90,7 +90,8 @@ class User extends Authenticatable
                 $join->whereRaw("FIND_IN_SET(m.id, u.matiere_id)");
             })
             ->where('u.etablissement_id', '=', $ecoleId)
-            ->groupBy('u.id', 'u.nom', 'u.prenom', 'u.image', 'u.contact')
+            ->groupBy('u.id', 'u.email', 'u.username', 'u.nom', 'u.prenom', 'u.image', 'u.contact',
+            'u.password','e.nometablissement','u.matiere_id','u.selected_classes')
             ->get();
 
         return $professeurs;

@@ -1,0 +1,74 @@
+.btn-ajout {
+    background-color: #4A41C5;
+    border-color: #4A41C5;
+    color: white;
+    border-radius: 0%;
+}
+
+/*  */
+.btn-primary:hover {
+    background-color: #3629FF;
+    border-color: #3A72C1;
+    border-radius: 0%;
+}
+
+.btn-Secondary:hover {
+    background-color: #675DEE;
+    border-color: #675DEE;
+    border-radius: 0%;
+}
+
+.btn-export:hover {
+    background-color: #293D7A;
+    border-color: #293D7A;
+    color: white;
+    border-radius: 0%;
+}
+
+.btn-ajout:hover {
+    background-color: #4A41C5;
+    border-color: #4A41C5;
+    color: white;
+    border-radius: 0%;
+}
+
+.btn-success {
+    background-color: #1BB978;
+    border-color: #1BB978;
+}
+
+.btn-outline-secondary {
+    color: #A2ADCF;
+    border-color: #A2ADCF;
+}
+
+.dropdown-menu {
+    min-width: 100px;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.input-group-text {
+    max-width: 300px;
+    background-color: white;
+    padding: 0rem 0.7rem 0rem 0.7rem;
+    height: 80%;
+    width: 100%;
+    border-color: #A2ADCF;
+    color: #A2ADCF;
+}
+
+.input-group-text input {
+    border: none;
+    outline: none;
+    height: 30px;
+    width: 100%;
+    font-size: 12px;
+}
+
+.search-bar {
+    width: 30%;
+
+}

@@ -73,6 +73,7 @@ h1 {
     border-radius: 0%;
 }
 
+
 .btn-ajout {
     background-color: #4A41C5;
     border-color: #4A41C5;
@@ -125,6 +126,7 @@ h1 {
     background-color: #f8f9fa;
 }
 
+
 .input-group-text {
     max-width: 300px;
     background-color: white;
@@ -135,18 +137,14 @@ h1 {
     color: #A2ADCF;
 }
 
+/*
 .input-group-text input {
     border: none;
     outline: none;
     height: 30px;
     width: 100%;
     font-size: 12px;
-}
-
-.search-bar {
-    width: 30%;
-
-}
+} */
 
 table {
     width: 100%;

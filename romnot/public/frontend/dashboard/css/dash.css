@@ -79,6 +79,19 @@ span {
     fill: #38B293;
 }
 
+/* .nav-item .nav-link.active svg path {
+    fill: #38B293;
+} */
+
+.nav-item .nav-link.active {
+    color: #38B293;
+}
+
+.nav-item .nav-link.active svg path {
+    fill: #38B293;
+}
+
+
 .nav-item .nav-link.active span {
     color: #38B293;
 }

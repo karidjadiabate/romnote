@@ -88,7 +88,7 @@
             <span class="border"></span>
           </div>
         </div>
-        
+
         <div class="">
           <a href="#" class="btn btn-next width-24 ml-auto">Suivant</a>
         </div>
@@ -101,9 +101,9 @@
           <input type="text" class="note-value">
           <a class="valid-not">Valider</a>
         </div>
-        
+
         <div class="frm" style="display: none;">
-  
+
           <div class="sa">
             <div class="input-group ">
               <input type="text" name="phone" id="phone" placeholder="Sous titre 1" required/>
@@ -114,7 +114,7 @@
               <input type="file" id="file-input" name="" style="display: none;">
             </div>
           </div>
-  
+
           <div class="section-container">
             <div class="sectio-container">
               <div class="btnas-end">
@@ -139,32 +139,76 @@
                         </div>
                       </div>
                       <div class="input-group">
-                          <ol class="circle-list">
-                              <li>
-                                  <input type="text" class="heckbox-reponce" id="checkbox1" name="" required placeholder="reponse 1"/>
-                                  <select name="" id="">
-                                      <option value="" disabled selected hidden>resultat</option>
-                                      <option value="Manager">Mauvaise réponse</option>
-                                      <option value="Designer">Bonne réponse</option>
-                                  </select>
-                                  <input type="number" id="point" class="point" name="" required placeholder="not 1"/>
-                                  <i class="fa-regular fa-trash-can delete delete-btn"></i>
-                              </li>
-                          </ol>
-                          <a class="add-response" href="#"><input type="radio"><p>Ajouter une autre proposition de réponse ou <span>ajouter '' Autre ''</span></p></a>
-                      </div>
+                        <ol class="circle-list">
+                          <li>
+                            <input
+                              type="text"
+                              class="heckbox-reponce"
+                              id="checkbox1"
+                              name=""
+                              required
+                              placeholder="reponse 1"
+                            />
+                            <select name="" id="mySelect" class="Select">
+                              <option value="" disabled selected hidden>
+                                resultat
+                              </option>
+                              <option
+                                value="Manager"
+                                class="yellow"
+                                data-target="1"
+                              >
+                                Mauvaise réponse
+                              </option>
+                              <option
+                                value="Managers"
+                                class="red"
+                                data-target="2"
+                              >
+                                Mauvaise réponse(-)
+                              </option>
+                              <option
+                                value="Designer"
+                                class="green"
+                                data-target="3"
+                              >
+                                Bonne réponse
+                              </option>
+                            </select>
+                            <input
+                              type="number"
+                              id="point"
+                              class="point"
+                              name=""
+                              required
+                              placeholder="not 1"
+                            />
+                            <i
+                              class="fa-regular fa-trash-can delete delete-btn"
+                            ></i>
+                          </li>
+                        </ol>
+                        <a class="add-response" href="#"
+                          ><input type="radio" />
+                          <p>
+                            Ajouter une autre proposition de réponse ou
+                            <span>ajouter '' Autre ''</span>
+                          </p></a
+                        >
+                        </div>
+
                     </div>
                 </div>
                 <a href="#" class="Ajouter-question">Ajouter une question</a>
               </div>
             </div>
-            
+
           </div>
-        
+
           <div class="btns-end">
               <a href="#" class="Ajouter-section">Ajouter une section</a>
           </div>
-  
+
           <div class="btns-group">
             <a href="#" class="btn-prev">Précédent</a>
             <a href="#" class="btn btn-next">Suivant</a>

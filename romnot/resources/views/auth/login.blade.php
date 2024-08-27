@@ -1,82 +1,125 @@
-<!DOCTYPE html>
-<html lang="fr">
+@include('frontend.header')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/3c4b920158.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{asset('frontend/css/login.css')}}">
-    <title>login</title>
-</head>
-<style>
+@section('title', 'AKP ROM-Note - Connexion')
 
-</style>
-
-<body>
-    <div class="container-fluid">
-        <div class="row no-gutters">
-            <!-- welcome message -->
-            <div class="col-md-6 welcome-section">
-                <div class="text-align-center text-white p-5">
-                    <h1>Bienvenue</h1>
+<main id="main">
+    <!-- ======= Connexion Section ======= -->
+    <section class="conn" data-aos=" fade-up" data-aos-easing="ease-in-out" data-aos-duration="500" style="height: 55vh;">
+        <div class="conn-child d-flex justify-content-between align-items-center">
+            <div class="col-lg-6 d-flex align-items-center justify-content-center box-conn">
+                <div class="col-lg-12 text-center conn-text">
+                    <h1 class="conn-title">Bienvenue</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                         laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
             </div>
-            <!--  -->
-            <!-- start login -->
 
-            <div class="col-md-6 d-flex flex-column align-items-end" style="position:relative">
-                <div class="mb-3" style="position:static">
-                    <a href="{{route('home')}}" id="btnRetour" class="btn btn-retour">Retour</a>
+            <div class="col-lg-6 position-relative d-flex align-items-center justify-content-center flex-column">
+                <div class="col-md-12 d-flex align-items-end justify-content-end conn-return p-3">
+                    <a href="{{ route('home') }}" class="btn btn-custom">Retour</a>
                 </div>
-                <div class="login-form text-center">
-                    <h2 class="mb-4"><span class="mdp">AKP</span> ROM-Note</h2>
-                    <h3 class="mb-4 fw-bold">Connexion</h3>
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <div class="form-group position-relative">
-                            <label for="email" class="fw-bold">Username</label>
-                            <i class="fas fa-envelope position-absolute" id="emailIcon"
-                                style="top: 35px; left: 10px;"></i>
-                            <input type="text" class="form-control" name="username" id="username" placeholder="" required>
+
+                <div class="col-md-12 text-center logo-reg logo-reg-desktop p-3">
+                    <h1 class="text-light logo-text"><a href="{{ route('login') }}"><span
+                                class="akp-title navbar-title">AKP</span> <span class="akp-title">ROM-Note</span></a>
+                    </h1>
+                </div>
+
+                <div class="row col-md-12 mobile-head" style="display:none">
+                    <div class="col-md-12 p-3 d-flex align-items-center justify-content-between">
+                        <div class="col-md-6 text-center logo-reg d-flex justify-content-start p-3">
+                            <h1 class="text-light logo-text"><a href="{{ route('login') }}"><span
+                                        class="akp-title navbar-title">AKP</span> <span
+                                        class="akp-title">ROM-Note</span></a></h1>
                         </div>
-                        <br>
-                        <div class="form-group position-relative">
-                            <label for="password" class="fw-bold">Mot de passe</label>
-                            <i class="fas fa-lock position-absolute" id="lockIcon" style="top: 35px; left: 10px;"></i>
-                            <input type="password" name="password" class="form-control" id="password" placeholder="" required>
-                            <i class="fas fa-eye-slash position-absolute" id="togglePassword"
-                                style="cursor: pointer; right: 10px; top: 35px;"></i>
-                        </div><br>
-                        <div class="form-group d-flex align-items-center justify-content-between">
-                            <div class="form-check mr-3">
-                                <input type="checkbox" class="form-check-input" id="rememberMe">
-                                <label id="et" class="form-check-label" for="rememberMe">Se souvenir de moi</label>
-                            </div>
-                            &nbsp;&nbsp;&nbsp;
-                            <div class="text-right " id="mdp">
-                                <a href="#" id="forgotPassword">Mot de passe oublié ?</a>
-                            </div>
-                        </div><br><br>
-                        <button id="connect" type="submit" class="btn btn-primary btn-block">Se connecter</button>
-                    </form>
-                    <div class="mt-3">
-                        <p>Vous n'avez pas de compte ? <a href="{{route('demandeinscription')}}" id="btnInscription">Cliquez ici</a>
-                        </p>
+                        <div class="col-md-6 d-flex justify-content-end">
+                            <a href="{{ route('home') }}" class="btn btn-custom">Retour</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- end login -->
-        </div>
-    </div>
-    <script src="{{asset('frontend/js/login.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-</body>
 
-</html>
+                <div class="col-md-12 text-center conn-subtitle p-3">
+                    <h2 class="logo-text">Connexion</h2>
+                </div>
+
+                <!-- Formulaire de connexion -->
+                <form action="{{ route('login') }}" method="post" role="form" id="form-contain-conn">
+                    @csrf <!-- Ajout du jeton CSRF obligatoire -->
+                    <div class="form-row">
+                        <div class="col-md-12 form-group form-email">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" class="form-control conn-input" id="email"
+                                placeholder="Entrez votre adresse email" data-rule="Email" />
+                            <i class="fa-regular fa-envelope"></i>
+                            <div class="validate"></div>
+                        </div>
+                        <div class="col-md-12 form-group form-pwd">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" class="form-control conn-input" name="password" id="password"
+                                placeholder="Entrez votre mot de passe" data-rule="password" />
+                            <i class="fa-solid fa-lock"></i>
+                            <span class="pwd-conn" onclick="togglePassword0()">
+                                <i class="fa-regular fa-eye fa-eye0" style="display: none;"></i>
+                                <i class="fa-regular fa-eye-slash fa-eye-slash0"></i>
+                            </span>
+                            <div class="validate"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 form-group">
+                            <input type="checkbox" id="exampleInputEmail1"> <span class="checkbox-conn">Se souvenir de
+                                moi</span>
+                            <div class="validate"></div>
+                        </div>
+                        <div class="col-md-6 form-group" id="form-fgpwd">
+                            <div class="text-center"><a href="javascript:void(0)" class="fgpwd">Mot de passe
+                                    oublié?</a></div>
+                            <div class="validate"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="form-control btn btn-save-register conn-btn w-100">Se
+                            connecter</button>
+                        <div class="validate"></div>
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                        <div class="text-center create-compte"><span>Vous n'avez pas de compte ? </span><a
+                                href="{{ route('demandeinscription') }}">Cliquez ici</a></div>
+                        <div class="validate"></div>
+                    </div>
+                </form>
+
+                <!-- Formulaire de récupération de mot de passe -->
+                <form action="{{ route('password.email') }}" method="post" id="form-contain-fgpwd"
+                    style="display: none;">
+                    @csrf <!-- Ajout du jeton CSRF obligatoire -->
+                    <div class="form-row">
+                        <div class="col-md-12 form-group form-email">
+                            <label for="fg-email">Email</label>
+                            <input type="email" name="email" class="form-control conn-input" id="fg-email"
+                                placeholder="Entrez votre email" data-rule="fg-email" />
+                            <i class="fa-regular fa-envelope"></i>
+                            <div class="validate"></div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit"
+                                class="form-control btn btn-save-register conn-btn w-100">Soumettre</button>
+                            <div class="validate"></div>
+                        </div>
+                        <div class="col-md-12 form-group" id="return-to-conn">
+                            <div class="text-center"><a href="javascript:void(0)" class="fgpwd">Retour à la
+                                    connexion</a></div>
+                            <div class="validate"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section><!-- End Contact Section -->
+</main><!-- End #main -->
+
+@include('auth.footer')

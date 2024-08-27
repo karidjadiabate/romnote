@@ -24,12 +24,12 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->instance(LoginResponse ::class, new class implements LoginResponse  {
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
                 $role = Auth()->user()->role_id;
 
-                $route = match($role){
+                $route = match ($role) {
                     2 => '/professeur',
                     3 => '/admin',
                     4 => '/superadmin',
@@ -63,13 +63,13 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::authenticateUsing(function (Request $request) {
-            $user = User::where('username', $request->username)->first();
+            $user = User::where('email', $request->email)->first();
 
-            if ($user &&
-                Hash::check($request->password, $user->password)) {
+            if ($user && Hash::check($request->password, $user->password)) {
                 return $user;
             }
         });
+
 
         Fortify::requestPasswordResetLinkView(function () {
             return view('auth.forgot-password');
@@ -80,7 +80,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input('email')) . '|' . $request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });

@@ -12,7 +12,7 @@
       </div>
 
       <nav class="nav-menu  d-none d-lg-block">
-          
+
         <ul>
           <li><a href="{{ route('home') }}">Accueil</a></li>
           <li><a href="{{ route('nostarifs') }}">Nos tarifs</a></li>
@@ -32,7 +32,7 @@
   <section id="hero" class="d-flex justify-content-center align-items-center mt-5">
       <div class="col-md-12 d-flex justify-content-around align-items-center">
      <div class="row col-md-12 d-flex justify-content-around align-items-center">
-         
+
     <div class="col-md-6 text-head d-flex justify-content-end">
       <div class="text-car w-75 d-flex align-items-center justify-content-start text-start flex-column">
         <h1 class="title-head w-100">Lorem ipsum dolor sit amet.</h1>
@@ -46,7 +46,7 @@
         </form>
       </div>
     </div>
-    
+
     <div id="heroCarousel" class="col-md-6">
       <span class="circle"></span>
         <div class="owl-carousel testimonials-carousel">
@@ -77,7 +77,7 @@
          <li data-target="#customCarousel1" data-slide-to="2"></li>
       </ol>
   </div>
-  </div>         
+  </div>
 </div>
 
   </section><!-- End Hero -->
@@ -91,7 +91,7 @@
       <div class="container">
           <div class="row feature-row">
             <div class="col-md-12 d-flex align-items-center justify-content-center mb-4"><h2 class="feature-title">AKP ROM Note en bref</h2></div>
-            
+
             <div class="row mb-3">
               <div class="col-12 col-sm-6 col-md-4 text-center mb-2">
                 <img src="{{ asset('assets/img/securite.png') }}" alt="Sécurisation des evaluations">
@@ -156,7 +156,7 @@
         <div class="col-12 col-sm-6 col-md-2 mb-4 d-flex align-items-center justify-content-center">
             <img src="{{ asset('assets/img/universite/Loko.png') }}" alt="Logo 10">
         </div>
-        
+
         <div class="col-12 col-sm-6 mb-4 d-flex align-items-center justify-content-center">
             <img src="{{ asset('assets/img/universite/Logo.png') }}" alt="Logo 7">
         </div>
@@ -173,7 +173,7 @@
         </div>
         </div>
       </div>
-      
+
     </section><!-- End Features Section -->
 
   </main><!-- End #main -->

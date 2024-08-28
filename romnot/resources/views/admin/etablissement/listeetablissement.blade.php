@@ -75,9 +75,9 @@
                 </form>
                 {{--  --}}
 
-                
+
                 {{--  --}}
-                {{-- <div class="option">
+                <div class="option">
                     <button id="printBtn" class="btn btn-success mr-2" onclick="printDiv()"><i
                             class="fa-solid fa-print"></i> Imprimer</button>
                     <div class="btn-group">
@@ -94,7 +94,7 @@
                         <i class="fa-solid fa-plus"></i> Ajouter un Etablissement
                     </button>
                 </div>
-            </div> --}}
+            </div>
 
                 <!-- Table for listing establishments -->
                 <div id="noResults">Aucun résultat trouvé</div>

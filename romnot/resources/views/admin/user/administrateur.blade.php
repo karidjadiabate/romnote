@@ -75,8 +75,7 @@
                             <th>Prénom</th>
                             <th>contact</th>
                             <th>Email</th>
-                            <th>Usermane</th>
-                            <th>Etablissement</th>
+=                            <th>Etablissement</th>
                             <th class="no-print">Action</th>
                         </tr>
                     </thead>
@@ -92,7 +91,6 @@
                             <td>{{$administrateur->prenom}}</td>
                             <td>{{$administrateur->contact}}</td>
                             <td>{{$administrateur->email}}</td>
-                            <td>{{$administrateur->username}}</td>
                             <td>{{$administrateur->nometablissement}}</td>
                             <td class="no-print">
                                 <button class="btn btn-outline-primary btn-sm"
@@ -256,13 +254,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                           {{--  <div class="col-sm-6">
                                 <input type="text" class="form-control" id="username" name="username" placeholder="Username" value=""
                                     required>
                                 <div class="invalid-feedback">
                                     Valid subject is required.
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-sm-6">
                                 <select name="role_id" id="role_id" class="form-control">

@@ -253,29 +253,37 @@
           <h5 class="modal-title font-weight-bold" id="exampleModalLongTitle"><span class="navbar-title">AKP</span> ROM-Note</h5>
           <p class="modal-title h6 font-weight-bold">Essayez ROM-Note gratuitement</p>
         </div>
-        <form>
+        <form action="{{route('demo.store')}}" method="POST">
+            @csrf
           <div class="form-group">
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre nom et prenom">
+            <input type="text" name="nom" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre nom">
+          </div>
+
+          <div class="form-group">
+            <input type="text" name="prenom" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre prenom">
+          </div>
+
+          <div class="form-group">
+            <input type="text" name="nometablissement" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre établissement">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre établissement">
+            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entez votre email">
           </div>
           <div class="form-group">
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entez votre email">
-          </div>
-          <div class="form-group">
-            <input type="tel" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre numéro de telephone">
+            <input type="tel" name="numerotel" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre numéro de telephone">
           </div>
           <div class="form-group">
             <input type="checkbox" id="exampleInputEmail1"> <span style="color: #4a3dbb;">J'ai lu et j'accepte les Termes et conditions ainsi que la <a href="" style='text-decoration: underline;color: #4a3dbb;'>Politique de confidentialité.</a> </span>
           </div>
+
+          <div class="modal-footer">
+            <div class="col-md-12 d-flex justify-content-center">
+              <button type="submit" class="btn btn-save-essai  w-100">Demander un essai gratuit</button>
+            </div>
+          </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <div class="col-md-12 d-flex justify-content-center">
-          <button type="button" class="btn btn-save-essai  w-100">Demander un essai gratuit</button>
-        </div>
-      </div>
+
     </div>
   </div>
 </div>

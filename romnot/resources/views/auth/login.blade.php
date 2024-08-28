@@ -43,6 +43,11 @@
                     <h2 class="logo-text">Connexion</h2>
                 </div>
 
+                @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+                @endif
                 <!-- Formulaire de connexion -->
                 <form action="{{ route('login') }}" method="post" role="form" id="form-contain-conn">
                     @csrf <!-- Ajout du jeton CSRF obligatoire -->
@@ -102,6 +107,9 @@
                             <label for="fg-email">Email</label>
                             <input type="email" name="email" class="form-control conn-input" id="fg-email"
                                 placeholder="Entrez votre email" data-rule="fg-email" />
+                                @if ($errors->has('email'))
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                               @endif
                             <i class="fa-regular fa-envelope"></i>
                             <div class="validate"></div>
                         </div>

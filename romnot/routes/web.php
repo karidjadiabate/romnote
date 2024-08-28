@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\CalendrierController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemandeInscriptionController;
+use App\Http\Controllers\DemoController;
 use App\Http\Controllers\EtablissementController;
 use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\MatiereController;
@@ -27,6 +29,8 @@ Route::get('/',[ClientController::class,'home'])->name('home');
 Route::get('/nos-tarifs',[ClientController::class,'nostarifs'])->name('nostarifs');
 Route::get('/demandeinscription',[ClientController::class,'demandeinscription'])->name('demandeinscription');
 Route::post('/demandeinscription',[DemandeInscriptionController::class,'store'])->name('demandeinscription.store');
+Route::post('/demo',[DemoController::class,'store'])->name('demo.store');
+Route::get('/moncompte',[UserController::class,'moncompte'])->name('moncompte');
 
 Route::resource('user', UserController::class)->except(['create','show','edit']);
 
@@ -35,6 +39,7 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
 
     Route::get('/',[DashboardController::class,'dashboard']);
     Route::get('/listedemandeinscription',[DemandeInscriptionController::class,'index'])->name('listedemandeinscription');
+    Route::get('/listedemandedemo',[DemoController::class,'index'])->name('listedemandedemo');
     Route::get('/administrateur',[UserController::class,'administrateur'])->name('administrateur');
     Route::resource('etablissement',EtablissementController::class);
 
@@ -54,6 +59,7 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::resource('niveau', NiveauController::class);
     Route::get('/professeur',[UserController::class,'professeur'])->name('professeur');
     Route::get('/etudiant',[UserController::class,'etudiant'])->name('etudiant');
+    Route::get('/calendrier',[CalendrierController::class,'index'])->name('calendrier');
 
 });
 

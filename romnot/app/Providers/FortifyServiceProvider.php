@@ -70,6 +70,9 @@ class FortifyServiceProvider extends ServiceProvider
             }
         });
 
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth.forgot-password');
+        });
 
         Fortify::requestPasswordResetLinkView(function () {
             return view('auth.forgot-password');
@@ -77,6 +80,10 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::resetPasswordView(function () {
             return view('auth.reset-password');
+        });
+
+        Fortify::confirmPasswordView(function () {
+            return view('auth.password-confirm');
         });
 
         RateLimiter::for('login', function (Request $request) {

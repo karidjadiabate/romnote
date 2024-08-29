@@ -128,7 +128,6 @@ class UserController extends Controller
             'matiere_id' => $request->matiere_id,
             'etablissement_id' => $request->etablissement_id,
             'classe_id' => $request->classe_id,
-            'username' => $request->username,
             'matricule' => $request->matricule,
             'genre' => $request->genre,
             'datenaiss' => $request->datenaiss,
@@ -274,5 +273,10 @@ class UserController extends Controller
         if ($user->role_id == 2) {
             return redirect()->route('professeur')->with('danger', 'Professeur supprimé avec succès');
         }
+    }
+
+    public function moncompte()
+    {
+        return view('admin.compte.moncompte');
     }
 }

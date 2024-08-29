@@ -54,7 +54,7 @@
               </div>
               <div class="form-row  mt-2">
                 <div class="col-md-6 form-group">
-                  <input type="text" name="nameschool" class="form-control conn-input-regi" id="nameschool" placeholder="Nom de l'établissement" data-rule="nameschool" />
+                  <input type="text" name="nometablissement" class="form-control conn-input-regi" id="nameschool" placeholder="Nom de l'établissement" data-rule="nameschool" />
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-6 form-group">

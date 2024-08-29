@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/list.css') }}">
-    <title>demande_d'inscription</title>
+    <title>demande_demo</title>
 </head>
 <style>
 
@@ -26,7 +26,7 @@
     <!-- accueil -->
     <div class="container">
         <div class="printableArea">
-            <h1 class="mt-4 mb-4">La liste de demande d'inscription</h1>
+            <h1 class="mt-4 mb-4">La liste de demande de demo</h1>
             <div class="d-flex justify-content-between mb-3 no-print">
                 <!-- Search bar -->
                 <form class="d-flex search-bar" role="search">
@@ -116,7 +116,6 @@
                             <th>Contact</th>
                             <th>Email</th>
                             <th>noms de l'Etablissement</th>
-                            <th>adresses de l'Etablissement</th>
                             <th class="no-print">Action</th>
                         </tr>
                     </thead>
@@ -125,33 +124,32 @@
                         @php
                             $num = 1;
                         @endphp
-                        @foreach ($listedemandeinscriptions as $listedemandeinscription)
+                        @foreach ($listedemandemos as $listedemandemo)
                             <tr>
                                 <td>{{ $num++ }}</td>
-                                <td>{{$listedemandeinscription->created_at->format('d/m/Y') }}</td>
-                                <td>{{ $listedemandeinscription->prenom }}</td>
-                                <td>{{ $listedemandeinscription->nom }}</td>
-                                <td>{{ $listedemandeinscription->contact }}</td>
-                                <td>{{ $listedemandeinscription->email }}</td>
-                                <td>{{ $listedemandeinscription->nometablissement }}</td>
-                                <td>{{ $listedemandeinscription->adresseetablissement }}</td>
+                                <td>{{$listedemandemo->created_at->format('d/m/Y') }}</td>
+                                <td>{{ $listedemandemo->prenom }}</td>
+                                <td>{{ $listedemandemo->nom }}</td>
+                                <td>{{ $listedemandemo->numerotel }}</td>
+                                <td>{{ $listedemandemo->email }}</td>
+                                <td>{{ $listedemandemo->nometablissement }}</td>
                                 <td class="no-print">
-                                    @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
-                                        <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal"
+                                    @if (!$listedemandemo->accepted && !$listedemandemo->rejected)
+                                        <button data-id="{{ $listedemandemo->id }}" data-bs-toggle="modal"
                                             data-bs-target="#acceptModal"
                                             class="btn btn-outline-success btn-sm btn-accept">
                                             <i class="fa-solid fa-check"></i>
                                         </button>
-                                        <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal"
+                                        <button data-id="{{ $listedemandemo->id }}" data-bs-toggle="modal"
                                             data-bs-target="#rejectModal"
                                             class="btn btn-outline-danger btn-sm btn-reject">
                                             <i class="fa-solid fa-times"></i>
                                         </button>
-                                    @elseif ($listedemandeinscription->accepted)
+                                    @elseif ($listedemandemo->accepted)
                                         <button class="btn btn-success btn-sm" disabled>
                                             <i class="fa-solid fa-check"></i>
                                         </button>
-                                    @elseif ($listedemandeinscription->rejected)
+                                    @elseif ($listedemandemo->rejected)
                                         <button class="btn btn-danger btn-sm" disabled>
                                             <i class="fa-solid fa-times"></i>
                                         </button>

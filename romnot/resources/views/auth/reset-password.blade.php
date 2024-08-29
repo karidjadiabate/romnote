@@ -26,11 +26,18 @@
                 <h2 class="logo-text">Mot de passe oublié</a></h2>
             </div>
 
-            <form action="forms/contact.php" method="post" role="form">
+            <form action="{{ route('password.update') }}" method="POST" role="form">
+                @csrf
+                <input type="hidden" name="token" value="{{ request()->route('token') }}">
+                <input type="hidden" name="email" value="{{ old('email', request()->email) }}">
+
               <div class="form-row form-row-pwd">
                 <div class="col-md-12 form-group form-email">
                   <label for="password"> Mot de  passe</label>
-                  <input type="password" name="fg-password" class="form-control conn-input" id="fg-password" placeholder="Entrez le nouveau mot de passe" data-rule="fg-password"/>
+                  <input type="password" name="password" class="form-control conn-input" id="fg-password" placeholder="Entrez le nouveau mot de passe" data-rule="fg-password"/>
+                  @error('password')
+                  <span class="text-danger">{{ $message }}</span>
+                @enderror
                   <i class="fa-solid fa-lock"></i>
                   <span class="pwd" onclick="togglePassword1()">
                     <i class="fa-regular fa-eye fa-eye1" style="display: none;"></i>
@@ -40,7 +47,10 @@
                 </div>
                 <div class="col-md-12 form-group form-pwd">
                   <label for="fg-confpassword">Confirmation</label>
-                  <input type="password" class="form-control conn-input" name="fg-confpassword" id="fg-confpassword" placeholder="Confirmez le mot de passe" data-rule="fg-confpassword" />
+                  <input type="password" class="form-control conn-input" name="password_confirmation" id="fg-confpassword" placeholder="Confirmez le mot de passe" data-rule="fg-confpassword" />
+                    @if ($errors->has('password_confirmation'))
+                        <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                    @endif
                   <i class="fa-solid fa-lock"></i>
                   <span class="conf-pwd" onclick="togglePassword2()">
                     <i class="fa-regular fa-eye fa-eye2" style="display: none;"></i>

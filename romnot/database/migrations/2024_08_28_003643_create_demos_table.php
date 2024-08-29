@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('nometablissement');
             $table->string('email')->unique();
             $table->string('numerotel');
+            $table->boolean('accepted')->default(false);
+            $table->boolean('rejected')->default(false);
             $table->timestamps();
         });
     }

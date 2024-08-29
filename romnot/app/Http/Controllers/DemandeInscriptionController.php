@@ -59,7 +59,7 @@ class DemandeInscriptionController extends Controller
         return to_route('home');
     }
 
-    public function accept(Request $request, $id)
+    /* public function accept(Request $request, $id)
     {
         $demande = DemandeInscription::find($id);
 
@@ -106,7 +106,7 @@ class DemandeInscriptionController extends Controller
             return response()->json(['success' => true]);
         }
         return response()->json(['success' => false]);
-    }
+    } */
 
     /**
      * Display the specified resource.

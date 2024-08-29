@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique()->nullable();
             $table->string('nometablissement');
-            $table->string('adresse');
+            $table->string('adresse')->nullable();
             $table->string('contact');
             $table->string('nomresponsable');
             $table->string('prenomresponsable');

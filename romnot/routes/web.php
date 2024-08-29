@@ -8,6 +8,7 @@ use App\Http\Controllers\DemandeInscriptionController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\EtablissementController;
 use App\Http\Controllers\FiliereController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatiereController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\UserController;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/',[ClientController::class,'home'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/nos-tarifs',[ClientController::class,'nostarifs'])->name('nostarifs');
 Route::get('/demandeinscription',[ClientController::class,'demandeinscription'])->name('demandeinscription');
 Route::post('/demandeinscription',[DemandeInscriptionController::class,'store'])->name('demandeinscription.store');
@@ -37,14 +38,17 @@ Route::resource('user', UserController::class)->except(['create','show','edit'])
 //Route superUSer
 Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
 
-    Route::get('/',[DashboardController::class,'dashboard']);
+    Route::get('/',[DashboardController::class,'dashboard'])->name('superadmin.dashboard');
     Route::get('/listedemandeinscription',[DemandeInscriptionController::class,'index'])->name('listedemandeinscription');
     Route::get('/listedemandedemo',[DemoController::class,'index'])->name('listedemandedemo');
     Route::get('/administrateur',[UserController::class,'administrateur'])->name('administrateur');
     Route::resource('etablissement',EtablissementController::class);
 
-    Route::post('/accept/{id}', [DemandeInscriptionController::class, 'accept'])->name('demande.accept');
-    Route::post('/reject/{id}', [DemandeInscriptionController::class, 'reject'])->name('demande.reject');
+    Route::post('/accept/{id}', [DemoController::class, 'accept'])->name('demo.accept');
+    Route::post('/reject/{id}', [DemoController::class, 'reject'])->name('demo.reject');
+
+    /* Route::post('/accept/{id}', [DemandeInscriptionController::class, 'accept'])->name('demande.accept');
+    Route::post('/reject/{id}', [DemandeInscriptionController::class, 'reject'])->name('demande.reject'); */
 
 });
 
@@ -52,7 +56,7 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
  //ADMIN
  Route::prefix('admin')->middleware('admin')->group(function () {
 
-    Route::get('/',[DashboardController::class,'dashboard']);
+    Route::get('/',[DashboardController::class,'dashboard'])->name('admin.dashboard');;
     Route::resource('matiere', MatiereController::class);
     Route::resource('filiere', FiliereController::class);
     Route::resource('classe', ClasseController::class);
@@ -67,6 +71,6 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
 //Professeur
 Route::prefix('professeur')->middleware('professeur')->group(function () {
 
-    Route::get('/',[DashboardController::class,'dashboard']);
+    Route::get('/',[DashboardController::class,'dashboard'])->name('professeur.dashboard');;
 
 });

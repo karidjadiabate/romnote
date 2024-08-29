@@ -107,7 +107,7 @@
                                 <th>Nom Responsable</th>
                                 <th>Prénom Responsable</th>
                                 <th>Contact</th>
-                                <th>Adresse Etablissement</th>
+                                {{-- <th>Adresse Etablissement</th> --}}
                                 <th>Logo</th>
                                 <th class="no-print">Action</th>
                             </tr>
@@ -120,7 +120,7 @@
                                     <td>{{ $etablissement->nomresponsable }}</td>
                                     <td>{{ $etablissement->prenomresponsable }}</td>
                                     <td>{{ $etablissement->contact }}</td>
-                                    <td>{{ $etablissement->adresse }}</td>
+                                    {{-- <td>{{ $etablissement->adresse }}</td> --}}
                                     <td><img src="{{ asset('storage/logo/' . $etablissement->image) }}" width="50"
                                             height="50" class="img-circle elevation-2" alt=""></td>
                                     <td class="no-print">

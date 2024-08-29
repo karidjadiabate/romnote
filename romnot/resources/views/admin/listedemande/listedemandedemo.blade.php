@@ -60,6 +60,7 @@
             </div>
 
 
+
             <!-- Modal pour Accepter -->
             <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel"
                 aria-hidden="true">
@@ -193,8 +194,8 @@
         $(document).ready(function() {
             let selectedId = null;
 
-            const routeAccept = '{{ route('demande.accept', ['id' => 'ID']) }}';
-            const routeReject = '{{ route('demande.reject', ['id' => 'ID']) }}';
+            const routeAccept = '{{ route('demo.accept', ['id' => 'ID']) }}';
+            const routeReject = '{{ route('demo.reject', ['id' => 'ID']) }}';
 
             function setSelectedId(id) {
                 selectedId = id;

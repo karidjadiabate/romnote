@@ -26,6 +26,22 @@
       </span>
 
     </div>
+    @if (session('success'))
+        <div class="alert alert-success text-center" style="font-weight: bold">
+            <span>{{session('success')}}</span>
+        </div>
+    @endif
+
+    @if ($errors->any())
+    <div class="alert alert-danger text-center" style="font-weight: bold">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
   </header><!-- End Header -->
 <section class="head-content">
   <!-- ======= Hero Section ======= -->
@@ -256,24 +272,24 @@
         <form action="{{route('demo.store')}}" method="POST">
             @csrf
           <div class="form-group">
-            <input type="text" name="nom" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre nom">
+            <input type="text" name="nom" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Entrez votre nom" required>
           </div>
 
           <div class="form-group">
-            <input type="text" name="prenom" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre prenom">
+            <input type="text" name="prenom" class="form-control" id="prenom" aria-describedby="emailHelp" placeholder="Entrez votre prenom" required>
           </div>
 
           <div class="form-group">
-            <input type="text" name="nometablissement" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre établissement">
+            <input type="text" name="nometablissement" class="form-control" id="nometablissement" aria-describedby="emailHelp" placeholder="Entrez votre établissement" required>
           </div>
           <div class="form-group">
-            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entez votre email">
+            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entez votre email" required>
           </div>
           <div class="form-group">
-            <input type="tel" name="numerotel" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre numéro de telephone">
+            <input type="text" name="numerotel" class="form-control" id="numerotel" aria-describedby="emailHelp" placeholder="Entrez votre numéro de telephone" required>
           </div>
           <div class="form-group">
-            <input type="checkbox" id="exampleInputEmail1"> <span style="color: #4a3dbb;">J'ai lu et j'accepte les Termes et conditions ainsi que la <a href="" style='text-decoration: underline;color: #4a3dbb;'>Politique de confidentialité.</a> </span>
+            <input type="checkbox" id="exampleInputEmail1" required> <span style="color: #4a3dbb;">J'ai lu et j'accepte les Termes et conditions ainsi que la <a href="" style='text-decoration: underline;color: #4a3dbb;'>Politique de confidentialité.</a> </span>
           </div>
 
           <div class="modal-footer">

@@ -136,7 +136,7 @@
                                 <td>{{ $listedemandeinscription->nometablissement }}</td>
                                 <td>{{ $listedemandeinscription->adresseetablissement }}</td>
                                 <td class="no-print">
-                                    @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
+                                    {{-- @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
                                         <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal"
                                             data-bs-target="#acceptModal"
                                             class="btn btn-outline-success btn-sm btn-accept">
@@ -155,7 +155,7 @@
                                         <button class="btn btn-danger btn-sm" disabled>
                                             <i class="fa-solid fa-times"></i>
                                         </button>
-                                    @endif
+                                    @endif --}}
                                 </td>
 
 

@@ -191,7 +191,7 @@
     </script>
 
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             let selectedId = null;
 
@@ -261,7 +261,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
 
 

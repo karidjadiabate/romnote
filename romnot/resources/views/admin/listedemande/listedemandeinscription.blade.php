@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/list.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/list.css') }}"> --}}
     <title>demande_d'inscription</title>
 </head>
 <style>

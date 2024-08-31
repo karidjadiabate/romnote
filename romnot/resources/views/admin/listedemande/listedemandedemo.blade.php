@@ -17,15 +17,8 @@
     <title>demande_demo</title>
 </head>
 <style>
-    .btn-outline-success,
-    .btn-success,
-    .btn-outline-danger,
-    .btn-danger {
-        border-radius: 50% !important;
-        border: 2px solid
-    }
-</style>
 
+</style>
 
 <body>
     <!-- header -->
@@ -135,7 +128,7 @@
                         @foreach ($listedemandemos as $listedemandemo)
                             <tr>
                                 <td>{{ $num++ }}</td>
-                                <td>{{ $listedemandemo->created_at->format('d/m/Y') }}</td>
+                                <td>{{$listedemandemo->created_at->format('d/m/Y') }}</td>
                                 <td>{{ $listedemandemo->prenom }}</td>
                                 <td>{{ $listedemandemo->nom }}</td>
                                 <td>{{ $listedemandemo->numerotel }}</td>

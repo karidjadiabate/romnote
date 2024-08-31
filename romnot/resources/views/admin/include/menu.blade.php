@@ -101,12 +101,32 @@
                 </div>
             </form>
 
+            <style>
+                /* Styles pour le badge du compteur de notifications */
+.badge.notification {
+    position: absolute;
+    top: -10px; /* Décalage vers le haut */
+    right: -10px; /* Décalage vers la droite pour être au-dessus de l'icône */
+    background-color: red; /* Couleur de fond du badge */
+    color: white; /* Couleur du texte du badge */
+    font-size: 0.75rem; /* Taille du texte du badge */
+    padding: 0.25em 0.4em; /* Padding du badge */
+    border-radius: 1.25rem; /* Bords arrondis du badge */
+}
+
+            </style>
 
             <!-- Search bar -->
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <li class="nav-item dropdown" id="noti">
+
                 <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-bell fa-fw"></i>
+                    @unless (auth()->user()->unreadNotifications->isEmpty())
+
+                    <span id="notificationCounter" class="badge notification">{{ auth()->user()->unreadNotifications->count() }}</span>
+                    @endunless
+
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
                     <li class="notification-empty">
@@ -118,7 +138,16 @@
                                 </svg> --}}
                         </div>
                         <div class="notification-text">
-                            Aucune notification
+                            @forelse (auth()->user()->unreadNotifications as $notification)
+                                        <a href="{{ route('demo.notification', ['notification' => $notification->id]) }}">
+                                            <p>Nouvelle demande de demo numero <strong>{{ $notification->data['demoId'] }}</strong></p>
+
+                                @empty
+                                Aucune notification
+
+
+                                @endforelse
+                                        </a>
                         </div>
                     </li>
                 </ul>

@@ -1,13 +1,32 @@
 (function () {
     let currentPage = 1;
-    const rowsPerPage = 5;
+    let rowsPerPage = 5; // Valeur par défaut pour les lignes par page
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Récupérer les éléments HTML
+        const rowsPerPageSelect = document.getElementById('rowsPerPageSelect');
+        const tableId = rowsPerPageSelect.getAttribute('data-table-id');
+
+        searchTable(`${tableId} tbody`, 'searchInput', 'noResults');
+        if (rowsPerPageSelect) {
+            rowsPerPageSelect.addEventListener('change', function () {
+                rowsPerPage = parseInt(this.value);
+                currentPage = 1;
+                paginateTable(tableId);
+            });
+        }
+
+        paginateTable(tableId);
+    });
+
 
     /**
      * Filtre les lignes du tableau en fonction du sujet donné.
      * @param {string} subject - Le sujet à filtrer.
+     * @param {string} tableId - Le sélecteur de l'élément table.
      */
-    function filterTable(subject) {
-        const tables = document.querySelectorAll('tbody');
+    function filterTable(subject, tableId) {
+        const tables = document.querySelectorAll(`${tableId} tbody`);
         tables.forEach(table => {
             const rows = table.querySelectorAll('tr');
             rows.forEach(row => {
@@ -17,12 +36,12 @@
                 }
             });
         });
-        paginateTable();
+        paginateTable(tableId);
     }
 
     /**
-     * Recherche dans les lignes du tableau et filtre en fonction de l'entrée de recherche.
-     * @param {string} tbody - Le sélecteur de l'élément tbody.
+     *
+     * @param {string} tbodyId - Le sélecteur de l'élément tbody.
      * @param {string} searchInputId - L'ID de l'élément d'entrée de recherche.
      */
     function searchTable(tbodyId, searchInputId, noResultsId) {
@@ -32,7 +51,7 @@
         searchInput.addEventListener('keyup', function () {
             const filter = this.value.toLowerCase();
             const rows = document.querySelectorAll(`${tbodyId} tr`);
-            let found = false;  // Initialisation de la variable found
+            let found = false;
 
             rows.forEach(row => {
                 const cells = row.getElementsByTagName('td');
@@ -54,9 +73,8 @@
         });
     }
 
-
     /**
-     * Paginer les lignes du tableau.
+     *
      * @param {string} tableId - Le sélecteur de l'élément table.
      */
     function paginateTable(tableId) {
@@ -72,6 +90,7 @@
             }
         });
 
+        // Met à jour les boutons "Précédent" et "Suivant"
         document.querySelector('.prev').disabled = currentPage === 1;
         document.querySelector('.next').disabled = currentPage === totalPages;
 
@@ -88,6 +107,10 @@
                 paginateTable(tableId);
             }
         };
+
+        // Met à jour l'affichage de la pagination
+        document.querySelector('.pagination-buttons .active').textContent = currentPage;
+        document.querySelector('.pagination-buttons span').textContent = `sur ${totalPages}`;
     }
 
     /**
@@ -112,7 +135,6 @@
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
         XLSX.writeFile(workbook, `${fileName}.xlsx`);
     }
-
 
     /**
      * Exporter le tableau vers un fichier PDF.
@@ -156,3 +178,58 @@ function setActive(event, id) {
 
     document.getElementById(id).classList.add('active');
 }
+(function () {
+    const filters = {};
+    let tableConfig = {};
+    const tableId = '';
+
+    /**
+     * Fonction pour définir la configuration des colonnes du tableau dynamiquement
+     * @param {Object} config
+     */
+    window.setTableConfig = function (config) {
+        tableConfig = config;
+    };
+
+    /**
+     * Fonction générique pour appliquer un filtre basé sur le type et la valeur
+     * @param {string} type
+     * @param {string} value
+     */
+    window.applyFilter = function (type, value) {
+        filters[type] = value;
+        filterTable(tableId); // Applique le filtre au tableau spécifié
+    };
+
+    /**
+     * Fonction pour filtrer le tableau en fonction des filtres sélectionnés
+     * @param {string} tableId
+     */
+    function filterTable(tableId) {
+        const rows = document.querySelectorAll(`${tableId} tbody tr`);
+        rows.forEach(row => {
+            let visible = true;
+
+            // Vérifie chaque type de filtre appliqué
+            Object.keys(filters).forEach(type => {
+                const filterValue = filters[type];
+                const columnIndex = getColumnIndex(type); // Utilise getColumnIndex pour trouver l'index de la colonne
+                const cellValue = row.cells[columnIndex] ? row.cells[columnIndex].textContent.trim() : '';
+                if (filterValue && cellValue !== filterValue) {
+                    visible = false;
+                }
+            });
+
+            row.style.display = visible ? '' : 'none'; // Affiche ou masque la ligne
+        });
+    }
+
+    /**
+
+     * @param {string} type
+     * @returns {number}
+     */
+    function getColumnIndex(type) {
+        return tableConfig[type] !== undefined ? tableConfig[type] : -1;
+    }
+})();

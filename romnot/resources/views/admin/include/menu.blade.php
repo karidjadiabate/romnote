@@ -179,8 +179,9 @@
                                 </g>
                             </svg> Apparence et accessibilité
                         </a></li>
-                    <li><a class="dropdown-item" href="{{route('moncompte')}}"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="26.173" height="24.538" viewBox="0 0 26.173 24.538">
+                    <li><a class="dropdown-item" href="{{ route('moncompte') }}"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="26.173" height="24.538"
+                                viewBox="0 0 26.173 24.538">
                                 <path id="sliders-solid"
                                     d="M0,36.448a1.634,1.634,0,0,0,1.636,1.636h2.8a4.088,4.088,0,0,0,7.494,0H24.538a1.636,1.636,0,0,0,0-3.272H11.926a4.088,4.088,0,0,0-7.494,0h-2.8A1.634,1.634,0,0,0,0,36.448Zm6.543,0a1.636,1.636,0,1,1,1.636,1.636A1.636,1.636,0,0,1,6.543,36.448Zm9.815-8.179A1.636,1.636,0,1,1,17.994,29.9,1.636,1.636,0,0,1,16.358,28.269Zm1.636-4.09a4.082,4.082,0,0,0-3.747,2.454H1.636a1.636,1.636,0,1,0,0,3.272H14.247a4.088,4.088,0,0,0,7.494,0h2.8a1.636,1.636,0,1,0,0-3.272h-2.8A4.082,4.082,0,0,0,17.994,24.179ZM9.815,21.725a1.636,1.636,0,1,1,1.636-1.636A1.636,1.636,0,0,1,9.815,21.725Zm3.747-3.272a4.088,4.088,0,0,0-7.494,0H1.636a1.636,1.636,0,1,0,0,3.272H6.068a4.088,4.088,0,0,0,7.494,0H24.538a1.636,1.636,0,1,0,0-3.272Z"
                                     transform="translate(0 -16)" fill="#4a41c5" />
@@ -337,19 +338,7 @@
                         <li class="nav-item" id="inscription">
                             <a class="nav-link " href="{{ route('listedemandedemo') }}">
                                 <div class="icon-text-container">
-                                    <svg data-name="Layer 1" id="Layer_1" fill="#fff" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path class="cls-1"
-                                            d="M19.51,12v4.29a3.22,3.22,0,0,1-3.22,3.22H7.71a3.22,3.22,0,0,1-3.22-3.22V7.71A3.22,3.22,0,0,1,7.71,4.49H12"
-                                            data-name="&lt;Path&gt;" id="_Path_" />
-                                        <g data-name="&lt;Group&gt;" id="_Group_">
-                                            <rect class="cls-1" data-name="&lt;Rectangle&gt;" height="3.17"
-                                                id="_Rectangle_" transform="translate(2.3 15.02) rotate(-45)"
-                                                width="3.28" x="17.64" y="3.14" />
-                                            <polygon class="cls-1" data-name="&lt;Path&gt;" id="_Path_2"
-                                                points="19.24 7.01 14.81 11.44 12.54 11.47 12.57 9.19 17 4.77 19.24 7.01" />
-                                        </g>
-                                    </svg>
+                                    <i class="fa-solid fa-chalkboard-user"></i>
                                     <span>Demande demo</span>
                                 </div>
                             </a>
@@ -497,7 +486,7 @@
                     @if (auth()->user()->role_id === 3 || auth()->user()->role_id === 2)
                         <!-- calendrier -->
                         <li class="nav-item" id="calendrier">
-                            <a class="nav-link " href="{{route('calendrier')}}">
+                            <a class="nav-link " href="{{ route('calendrier') }}">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
                                         viewBox="0 0 33.158 35">

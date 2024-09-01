@@ -43,7 +43,7 @@ class DemoController extends Controller
             'nometablissement' => 'required|string|max:255',
             'email' => 'required|email|unique:demos,email',
             'numerotel' => 'required|string|max:20'
-        ],[
+        ], [
             'name.required' => 'Le nom est obligatoire.',
             'name.max' => 'Le nom ne peut pas dépasser 255 caractères.',
             'email.required' => 'L\'adresse email est obligatoire.',

@@ -75,7 +75,7 @@
                             <th>Prénom</th>
                             <th>contact</th>
                             <th>Email</th>
-=                            <th>Etablissement</th>
+                          <th>Etablissement</th>
                             <th class="no-print">Action</th>
                         </tr>
                     </thead>

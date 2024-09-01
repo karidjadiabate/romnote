@@ -100,8 +100,10 @@
                     <tr class="aa">
                         <th>#</th>
                         <th>Code</th>
-                        <th>Nom de la Classe</th>
-                        <th>Nom de la filière</th>
+                        <th>Nom</th>
+                        <th>Filière</th>
+                        <th>Niveau</th>
+                        <th>Effectif de la classe</th>
                         <th class="no-print">Action</th>
                     </tr>
                 </thead>
@@ -115,7 +117,9 @@
                         <td>{{ $num++ }}</td>
                         <td>{{$classe->code}}</td>
                         <td>{{$classe->nomclasse}}</td>
-                        <td>{{$classe->nomfiliere}} ({{$classe->nomniveau}})</td>
+                        <td>{{$classe->nomfiliere}}</td>
+                        <td>{{$classe->nomniveau}}</td>
+                        <td class="text-center">{{$classe->effectif_classe}}</td>
                         <td class="no-print">
                             <button class="btn btn-outline-primary btn-sm"
                                 data-bs-toggle="modal" data-bs-target="#editClasse{{$classe->id}}"

@@ -80,7 +80,6 @@ class DemoController extends Controller
         }
 
         $passwordPlain = 'password';
-
         $passwordHashed = Hash::make($passwordPlain);
 
         // Valider les données
@@ -94,24 +93,25 @@ class DemoController extends Controller
             'logo' => null,
         ];
 
-        // Valider les données
-        $dataAdmin = [
-            'nom' => $demande->nom,
-            'prenom' => $demande->prenom,
-            'etablissement_id' => $demande->id,
-            'contact' => $demande->numerotel,
-            'email' => $demande->email,
-            'role_id' => 3,
-            'password' => $passwordHashed
-        ];
-
-
-        Log::info('Données à insérer dans l\'établissement:', $datademoEtablissement);
-
-        Log::info('Données à insérer dans l\'établissement:', $dataAdmin);
-
         try {
-            $ecole = Etablissement::create($datademoEtablissement);
+            // Créer l'établissement
+            $etablissement = Etablissement::create($datademoEtablissement);
+
+            // Préparer les données pour l'admin avec l'ID de l'établissement créé
+            $dataAdmin = [
+                'nom' => $demande->nom,
+                'prenom' => $demande->prenom,
+                'etablissement_id' => $etablissement->id, // Utiliser l'ID de l'établissement créé
+                'contact' => $demande->numerotel,
+                'email' => $demande->email,
+                'role_id' => 3,
+                'password' => $passwordHashed
+            ];
+
+            Log::info('Données à insérer dans l\'établissement:', $datademoEtablissement);
+            Log::info('Données à insérer dans l\'admin:', $dataAdmin);
+
+            // Créer l'utilisateur admin
             $admin = User::create($dataAdmin);
             $admin->notify(new NouveauCompteNotification($admin->email, $passwordPlain));
 
@@ -127,6 +127,7 @@ class DemoController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Demande acceptée et établissement créé avec succès!']);
     }
+
 
     public function reject($id)
     {

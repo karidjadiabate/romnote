@@ -122,12 +122,9 @@
                     </thead>
                     <tbody id="inscriptionTables">
                         <!-- Example rows, replace with dynamic data -->
-                        @php
-                            $num = 1;
-                        @endphp
                         @foreach ($listedemandeinscriptions as $listedemandeinscription)
                             <tr>
-                                <td>{{ $num++ }}</td>
+                                <td>{{ $listedemandeinscription->id }}</td>
                                 <td>{{$listedemandeinscription->created_at->format('d/m/Y') }}</td>
                                 <td>{{ $listedemandeinscription->prenom }}</td>
                                 <td>{{ $listedemandeinscription->nom }}</td>
@@ -136,7 +133,7 @@
                                 <td>{{ $listedemandeinscription->nometablissement }}</td>
                                 <td>{{ $listedemandeinscription->adresseetablissement }}</td>
                                 <td class="no-print">
-                                    {{-- @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
+                                    @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
                                         <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal"
                                             data-bs-target="#acceptModal"
                                             class="btn btn-outline-success btn-sm btn-accept">
@@ -155,7 +152,7 @@
                                         <button class="btn btn-danger btn-sm" disabled>
                                             <i class="fa-solid fa-times"></i>
                                         </button>
-                                    @endif --}}
+                                    @endif
                                 </td>
 
 
@@ -191,12 +188,12 @@
     </script>
 
 
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             let selectedId = null;
 
-            const routeAccept = '{{ route('demande.accept', ['id' => 'ID']) }}';
-            const routeReject = '{{ route('demande.reject', ['id' => 'ID']) }}';
+            const routeAccept = '{{ route('demandeinscription.accept', ['id' => 'ID']) }}';
+            const routeReject = '{{ route('demandeinscription.reject', ['id' => 'ID']) }}';
 
             function setSelectedId(id) {
                 selectedId = id;
@@ -261,7 +258,7 @@
                 }
             });
         });
-    </script> --}}
+    </script>
 
 
 

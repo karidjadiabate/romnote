@@ -17,6 +17,15 @@
         </div>
       </div>
     </section>
+    @if ($errors->any())
+    <div class="alert alert-danger text-center" style="font-weight: bold">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="col-md-12 d-flex align-items-center justify-content-center">
       <div class="section-title-register text-center w-50">
         <h2>Inscription</h2>
@@ -34,41 +43,41 @@
                   @csrf
               <div class="form-row mt-2">
                 <div class="col-md-6 form-group">
-                  <input type="text" name="prenom" class="form-control conn-input-regi" id="lastname" placeholder="Prenom" data-rule="Prenom"/>
+                  <input type="text" name="prenom" class="form-control conn-input-regi" id="lastname" placeholder="Prenom" data-rule="Prenom"/ required>
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-6 form-group">
-                  <input type="text" class="form-control  conn-input-regi" name="nom" id="firstname" placeholder="Nom" data-rule="firstname" />
-                  <div class="validate"></div>
-                </div>
-              </div>
-              <div class="form-row  mt-2">
-                <div class="col-md-6 form-group">
-                  <input type="tel" name="contact" class="form-control conn-input-regi" id="phone" placeholder="Contact" data-rule="phone"  />
-                  <div class="validate"></div>
-                </div>
-                <div class="col-md-6 form-group">
-                  <input type="email" class="form-control conn-input-regi" name="email" id="email" placeholder="Email" data-rule="email" />
+                  <input type="text" class="form-control  conn-input-regi" name="nom" id="firstname" placeholder="Nom" data-rule="firstname" / required>
                   <div class="validate"></div>
                 </div>
               </div>
               <div class="form-row  mt-2">
                 <div class="col-md-6 form-group">
-                  <input type="text" name="nometablissement" class="form-control conn-input-regi" id="nameschool" placeholder="Nom de l'établissement" data-rule="nameschool" />
+                  <input type="tel" name="contact" class="form-control conn-input-regi" id="phone" placeholder="Contact" data-rule="phone"  / required>
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-6 form-group">
-                  <input type="text" class="form-control conn-input-regi" name="adresseetablissement" id="adress" placeholder="Adresse de l'établissement" data-rule="adress" />
+                  <input type="email" class="form-control conn-input-regi" name="email" id="email" placeholder="Email" data-rule="email" / required>
                   <div class="validate"></div>
                 </div>
               </div>
               <div class="form-row  mt-2">
                 <div class="col-md-6 form-group">
-                  <input type="password" name="password" class="form-control conn-input-regi" id="password" placeholder="Créer votre mot de passe" data-rule="password"/>
+                  <input type="text" name="nometablissement" class="form-control conn-input-regi" id="nameschool" placeholder="Nom de l'établissement" data-rule="nameschool" / required>
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-6 form-group">
-                  <input type="password" class="form-control  conn-input-regi" name="password_confirm" id="confpassword" placeholder="Confirmer votre mot de passe" data-rule="confpassword" />
+                  <input type="text" class="form-control conn-input-regi" name="adresseetablissement" id="adress" placeholder="Adresse de l'établissement" data-rule="adress" / required>
+                  <div class="validate"></div>
+                </div>
+              </div>
+              <div class="form-row  mt-2">
+                <div class="col-md-6 form-group">
+                  <input type="password" name="password" class="form-control conn-input-regi" id="password" placeholder="Créer votre mot de passe" data-rule="password"/ required>
+                  <div class="validate"></div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="password" class="form-control  conn-input-regi" name="password_confirm" id="confpassword" placeholder="Confirmer votre mot de passe" data-rule="confpassword" / required>
                   <div class="validate"></div>
                 </div>
               </div>

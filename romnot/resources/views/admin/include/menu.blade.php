@@ -139,15 +139,22 @@
                         </div>
                         <div class="notification-text">
                             @forelse (auth()->user()->unreadNotifications as $notification)
-                                        <a href="{{ route('demo.notification', ['notification' => $notification->id]) }}">
-                                            <p>Nouvelle demande de demo numero <strong>{{ $notification->data['demoId'] }}</strong></p>
 
-                                @empty
-                                Aucune notification
+                                @if (isset($notification->data['demoId']))
+                                <a href="{{ route('demo.notification', ['notification' => $notification->id]) }}">
+                                    <p>Nouvelle demande de démo numéro <strong>{{ $notification->data['demoId'] }}</strong></p>
+                                </a>
+                                @elseif (isset($notification->data['demandeInscriptionId']))
+                                <a href="{{ route('demandeinscription.notification', ['notification' => $notification->id]) }}">
+                                    <p>Nouvelle demande d'inscription numéro <strong>{{ $notification->data['demandeInscriptionId'] }}</strong></p>
+                                </a>
+                                @endif
+
+                        @empty
+                            <p>Aucune notification</p>
+                        @endforelse
 
 
-                                @endforelse
-                                        </a>
                         </div>
                     </li>
                 </ul>

@@ -6,8 +6,12 @@ use App\Models\DemandeInscription;
 use App\Http\Requests\StoreDemandeInscriptionRequest;
 use App\Http\Requests\UpdateDemandeInscriptionRequest;
 use App\Models\Etablissement;
+use App\Models\User;
+use App\Notifications\AccepteNouvelleDemandeInscription;
+use App\Notifications\NouvelleDemandeInscription;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\Session;
@@ -37,63 +41,74 @@ class DemandeInscriptionController extends Controller
      */
     public function store(StoreDemandeInscriptionRequest $request)
     {
-        $demandeData = $request->only([
-            'prenom',
-            'nom',
-            'contact',
-            'email',
-            'nometablissement',
-            'adresseetablissement',
-            'password',
-            'password_confirm'
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'nometablissement' => 'required|string|max:255',
+            'email' => 'required|email|unique:demos,email',
+            'contact' => 'required|string|max:20',
+            'adresseetablissement' => 'required|string|max:20',
+            'password' => 'required|string|min:4',
+            'password_confirm' => 'required|string|min:4',
+        ],[
+            'nom.required' => 'Le nom est obligatoire.',
+            'prenom.required' => 'Le prenom est obligatoire.',
+            'nometablissement.required' => 'Le Nom d\'etablissement est obligatoire.',
+            'contact.required' => 'Le contact est obligatoire.',
+            'password.required' => 'Le mot de passe est obligatoire.',
+            'password_confirm.required' => 'Le mot de passe est obligatoire.',
+            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
+            'email.required' => 'L\'adresse email est obligatoire.',
+            'email.unique' => 'Cet email est déjà associé à une demande d\'inscription.'
         ]);
 
-        // Assurez-vous que les champs 'accepted' et 'rejected' sont définis à false par défaut
-        $demandeData['accepted'] = false;
-        $demandeData['rejected'] = false;
+        $demandeinscription = DemandeInscription::create([
+            'nom' => $validatedData['nom'],
+            'prenom' => $validatedData['prenom'],
+            'nometablissement' => $validatedData['nometablissement'],
+            'adresseetablissement' => $validatedData['adresseetablissement'],
+            'email' => $validatedData['email'],
+            'contact' => $validatedData['contact'],
+            'password' => $validatedData['password'],
+            'password_confirm' => $validatedData['password_confirm']
+        ]);
 
-        DemandeInscription::create($demandeData);
-
-        Session::flash('success', 'Votre demande d\'inscription a bien été soumise !');
-
-        return to_route('home');
-    }
-
-    /* public function accept(Request $request, $id)
-    {
-        $demande = DemandeInscription::find($id);
-
-        if (!$demande) {
-            return response()->json(['success' => false, 'message' => 'Demande non trouvée.']);
+        // Envoyer la notification aux administrateurs
+        $adminUsers = User::where('role_id', 4)->get();
+        foreach ($adminUsers as $admin) {
+            $admin->notify(new NouvelleDemandeInscription($demandeinscription));
         }
 
-        // Valider les données
-        $data = [
-            'code' => $demande->code,
-            'nomresponsable' => $demande->nom,
-            'prenomresponsable' => $demande->prenom,
-            'nometablissement' => $demande->nometablissement,
-            'contact' => $demande->contact,
-            'adresse' => $demande->adresseetablissement,
-            'logo' => null,
-        ];
 
-        Log::info('Données à insérer dans l\'établissement:', $data);
-
-        try {
-            $ecole = Etablissement::create($data);
-        } catch (Exception $e) {
-            Log::error('Erreur lors de la création de l\'établissement: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Erreur lors de la création de l\'établissement.']);
-        }
-
-        // Marquer la demande comme acceptée
-        $demande->accepted = true;
-        $demande->rejected = false;
-        $demande->save();
-
-        return response()->json(['success' => true, 'message' => 'Demande acceptée et établissement créé avec succès!']);
+        return to_route('home')->with('success', 'Votre demande d\'inscription a bien été prise en compte, nous reviendrons vers vous par email.');
     }
+
+    public function accept(Request $request, $id)
+{
+    $demande = DemandeInscription::find($id);
+
+    if (!$demande) {
+        return response()->json(['success' => false, 'message' => 'Demande non trouvée.']);
+    }
+
+    // Marquer la demande comme acceptée
+    $demande->accepted = true;
+    $demande->rejected = false;
+    $demande->save();
+
+    try {
+        // Notifier l'utilisateur que sa demande a été acceptée
+        $demande->notify(new AccepteNouvelleDemandeInscription());
+    } catch (Exception $e) {
+        Log::error('Erreur lors de l\'envoi de l\'email: ' . $e->getMessage());
+        return response()->json(['success' => false, 'message' => 'Erreur lors de l\'envoi de l\'email.']);
+    }
+
+    return response()->json(['success' => true, 'message' => 'Demande acceptée et email envoyé avec succès!']);
+}
+
+
+
 
     public function reject($id)
     {
@@ -106,11 +121,19 @@ class DemandeInscriptionController extends Controller
             return response()->json(['success' => true]);
         }
         return response()->json(['success' => false]);
-    } */
+    }
 
     /**
      * Display the specified resource.
      */
+
+    public function demandeinscriptionnotification(DatabaseNotification $notification)
+    {
+        $notification->markAsRead();
+
+        return redirect()->route('listedemandeinscription');
+    }
+
     public function show(DemandeInscription $demandeInscription)
     {
         //

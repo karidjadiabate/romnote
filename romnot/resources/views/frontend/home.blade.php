@@ -40,7 +40,7 @@
             @endforeach
         </ul>
     </div>
-@endif
+    @endif
 
   </header><!-- End Header -->
 <section class="head-content">

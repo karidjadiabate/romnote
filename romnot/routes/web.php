@@ -50,11 +50,11 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::get('/listedemandeinscription/{notification}',[DemandeInscriptionController::class,'demandeinscriptionnotification'])->name('demandeinscription.notification');
 
 
-    Route::post('/accept/{id}', [DemandeInscriptionController::class, 'accept'])->name('demandeinscription.accept');
-    Route::post('/reject/{id}', [DemandeInscriptionController::class, 'reject'])->name('demandeinscription.reject');
+    Route::post('/acceptdemandeinscription/{id}', [DemandeInscriptionController::class, 'accept'])->name('demandeinscription.accept');
+    Route::post('/rejectdemandeinscription/{id}', [DemandeInscriptionController::class, 'reject'])->name('demandeinscription.reject');
 
-    Route::post('/accept/{id}', [DemoController::class, 'accept'])->name('demo.accept');
-    Route::post('/reject/{id}', [DemoController::class, 'reject'])->name('demo.reject');
+    Route::post('/acceptdemandedemo/{id}', [DemoController::class, 'accept'])->name('demo.accept');
+    Route::post('/rejectdemandedemo/{id}', [DemoController::class, 'reject'])->name('demo.reject');
 
 
 

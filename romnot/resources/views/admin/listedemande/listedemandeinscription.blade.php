@@ -118,12 +118,9 @@
                     </thead>&nbsp;&nbsp;
                     <tbody id="inscriptionTable">
                         <!-- Example rows, replace with dynamic data -->
-                        @php
-                            $num = 1;
-                        @endphp
                         @foreach ($listedemandeinscriptions as $listedemandeinscription)
                             <tr>
-                                <td data-label="Identifiant">{{ $num++ }}</td>
+                                <td data-label="Identifiant">{{ $listedemandeinscription->id }}</td>
                                 <td data-label="Date">{{ $listedemandeinscription->created_at->format('d/m/Y') }}</td>
                                 <td data-label="Nom">{{ $listedemandeinscription->nom }}</td>
                                 <td data-label="Prénoms">{{ $listedemandeinscription->prenom }}</td>
@@ -137,7 +134,7 @@
 
                                 <td data-label="Action">
 
-                                    {{-- @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
+                                    @if (!$listedemandeinscription->accepted && !$listedemandeinscription->rejected)
                                             <button data-id="{{ $listedemandeinscription->id }}" data-bs-toggle="modal"
                                                 data-bs-target="#acceptModal"
                                                 class="btn btn-outline-success btn-sm btn-accept">
@@ -156,7 +153,7 @@
                                             <button class="btn btn-danger btn-sm" disabled>
                                                 <i class="fa-solid fa-times"></i>
                                             </button>
-                                        @endif --}}
+                                        @endif
                                 </td>
 
 
@@ -272,12 +269,12 @@
     </script>
 
 
-    {{-- <script>
+    <script>
         $(document).ready(function() {
             let selectedId = null;
 
-            const routeAccept = '{{ route('demande.accept', ['id' => 'ID']) }}';
-            const routeReject = '{{ route('demande.reject', ['id' => 'ID']) }}';
+            const routeAccept = '{{ route('demandeinscription.accept', ['id' => 'ID']) }}';
+            const routeReject = '{{ route('demandeinscription.reject', ['id' => 'ID']) }}';
 
             function setSelectedId(id) {
                 selectedId = id;
@@ -342,7 +339,7 @@
                 }
             });
         });
-    </script> --}}
+    </script>
 
 
 

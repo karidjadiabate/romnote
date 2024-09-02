@@ -200,6 +200,17 @@
                                                             Contact est requis.
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-sm-6">
+                                                        <select class="select2-single form-control" name="genre" id="genre" style="width: 100%">
+                                                            <option value="M" @if (old('genre') == 'M') selected @endif>M</option>
+                                                            <option value="F" @if (old('genre') == 'F') selected @endif>F</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">
+                                                            Valid class is required.
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-around">

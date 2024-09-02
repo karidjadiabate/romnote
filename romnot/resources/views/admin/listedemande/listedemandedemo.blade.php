@@ -114,8 +114,9 @@
                             <th>noms de l'Etablissement</th>
                             <th class="no-print">Action</th>
                         </tr>
-                    </thead>&nbsp;&nbsp;
-                    <tbody id="demoTable">
+                    </thead>
+                    <tbody id="inscriptionTables">
+                        <!-- Example rows, replace with dynamic data -->
                         @php
                             $num = 1;
                         @endphp

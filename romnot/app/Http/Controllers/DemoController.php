@@ -6,8 +6,10 @@ use App\Models\Demo;
 use App\Models\Etablissement;
 use App\Models\User;
 use App\Notifications\NouveauCompteNotification;
+use App\Notifications\NouvelleDemandeDemo;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Log;
@@ -51,13 +53,20 @@ class DemoController extends Controller
             'email.unique' => 'Cet email est déjà associé à une demande de démo.'
         ]);
 
-        Demo::create([
+        $demo = Demo::create([
             'nom' => $validatedData['nom'],
             'prenom' => $validatedData['prenom'],
             'nometablissement' => $validatedData['nometablissement'],
             'email' => $validatedData['email'],
             'numerotel' => $validatedData['numerotel']
         ]);
+
+        // Envoyer la notification aux administrateurs
+        $adminUsers = User::where('role_id', 4)->get();
+        foreach ($adminUsers as $admin) {
+            $admin->notify(new NouvelleDemandeDemo($demo));
+        }
+
 
         return to_route('home')->with('success', 'Votre demande de démo a bien été prise en compte, nous reviendrons vers vous par email avec vos identifiants après validation.');
     }
@@ -71,11 +80,10 @@ class DemoController extends Controller
         }
 
         $passwordPlain = 'password';
-
         $passwordHashed = Hash::make($passwordPlain);
 
         // Valider les données
-        $dataEtablissement = [
+        $datademoEtablissement = [
             'code' => $demande->code,
             'nomresponsable' => $demande->nom,
             'prenomresponsable' => $demande->prenom,
@@ -85,24 +93,25 @@ class DemoController extends Controller
             'logo' => null,
         ];
 
-        // Valider les données
-        $dataAdmin = [
-            'nom' => $demande->nom,
-            'prenom' => $demande->prenom,
-            'etablissement_id' => $demande->id,
-            'contact' => $demande->numerotel,
-            'email' => $demande->email,
-            'role_id' => 3,
-            'password' => $passwordHashed
-        ];
-
-
-        Log::info('Données à insérer dans l\'établissement:', $dataEtablissement);
-
-        Log::info('Données à insérer dans l\'établissement:', $dataAdmin);
-
         try {
-            $ecole = Etablissement::create($dataEtablissement);
+            // Créer l'établissement
+            $etablissement = Etablissement::create($datademoEtablissement);
+
+            // Préparer les données pour l'admin avec l'ID de l'établissement créé
+            $dataAdmin = [
+                'nom' => $demande->nom,
+                'prenom' => $demande->prenom,
+                'etablissement_id' => $etablissement->id, // Utiliser l'ID de l'établissement créé
+                'contact' => $demande->numerotel,
+                'email' => $demande->email,
+                'role_id' => 3,
+                'password' => $passwordHashed
+            ];
+
+            Log::info('Données à insérer dans l\'établissement:', $datademoEtablissement);
+            Log::info('Données à insérer dans l\'admin:', $dataAdmin);
+
+            // Créer l'utilisateur admin
             $admin = User::create($dataAdmin);
             $admin->notify(new NouveauCompteNotification($admin->email, $passwordPlain));
 
@@ -119,6 +128,7 @@ class DemoController extends Controller
         return response()->json(['success' => true, 'message' => 'Demande acceptée et établissement créé avec succès!']);
     }
 
+
     public function reject($id)
     {
         $demande = Demo::find($id);
@@ -130,6 +140,14 @@ class DemoController extends Controller
             return response()->json(['success' => true]);
         }
         return response()->json(['success' => false]);
+    }
+
+
+    public function demonotification(DatabaseNotification $notification)
+    {
+        $notification->markAsRead();
+
+        return redirect()->route('listedemandedemo');
     }
 
     /**

@@ -106,7 +106,7 @@ h1 {
 
 .select2-container--default .select2-results {
     background-color: #fff;
-    border: 2px solid #4c45dd;
+    /* border: 2px solid #4c45dd; */
     color: #4c45dd;
     z-index: 1050;
 }

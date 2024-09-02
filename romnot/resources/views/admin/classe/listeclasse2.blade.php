@@ -60,7 +60,7 @@
 
                         </ul>
                     </div>
-                    <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#Classes"><i
+                    <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#classe"><i
                             class="fa fa-plus"></i> Ajouter une Classe</button>
 
                     <div class="dropdown" id="filterMenu">
@@ -150,16 +150,16 @@
                                 <td data-label="Niveau">{{ $classe->nomniveau }}</td>
                                 <td data-label="Effectif de la classe">{{ $classe->effectif_classe }}</td>
                                 <td data-label="Action" class="action-icons no-print">
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
+                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editClasse{{ $classe->id }}"
                                         data-id="{{ $classe->id }}" data-code="{{ $classe->code }}"
                                         data-nomclasse="{{ $classe->nomclasse }}"
                                         data-filiere_id="{{ $classe->filiere_id }}">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fa-solid fa-pen"></i>
                                     </button>
-                                    <button class="btn btn-sm" data-bs-toggle="modal"
+                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#deleteclasse{{ $classe->id }}">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -279,7 +279,7 @@
     <!--  -->
     <!--  -->
     <!-- Modal -->
-    <div class="modal fade" id="Classes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="classe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <h1 class="text-center">Ajouter</h1>
@@ -311,7 +311,7 @@
 
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <select name="filiere_id" id="filiere_id" class="form-control w-100">
+                                    <select name="filiere_id" id="editLastName" class="form-control w-100">
                                         @foreach ($filieres as $filiere)
                                             <option value="{{ $filiere->id }}">{{ $filiere->nomfiliere }}
                                                 ({{ $filiere->nomniveau }})
@@ -322,14 +322,13 @@
                                 <div class="invalid-feedback">Valid role is required.</div>
                             </div>
                         </div>
-                        <div class="modal-footer d-flex justify-content-between">
-                            <button type="submit" class="btn btn-success">Sauvegarder</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                        </div>
                     </form>
                 </div>
                 <!-- Modal Footer -->
-
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Sauvegarder</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                </div>
             </div>
         </div>
     </div>
@@ -399,7 +398,7 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#filiere_id').select2({
+            $('#editLastName').select2({
                 placeholder: "Selectionnez une filière",
                 width: '100%',
                 minimumResultsForSearch: Infinity

@@ -4,28 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un Enseignant</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome for icons (if needed) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- pdf & excel -->
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/3c4b920158.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/list.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/lists.css') }}">
-
-    <title>Professeur</title>
-
+    <title>enseignant</title>
 </head>
+<style>
+    .modal-content {
+        border-radius: 0%;
+    }
 
+    .modal-content p {
+        font-size: 10px;
+
+    }
+
+    .btn-danger {
+        border-radius: 0%;
+    }
+
+    .btn-secondary,
+    .btn-success {
+        border-radius: 0%;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        outline: none;
+    }
+
+    #sure {
+        font-size: 14px;
+        color: darkgray;
+    }
+
+    /* #editTeacher {
+        width: 100px;
+        height: 100px;
+    } */
+</style>
 
 <body>
     <!-- header -->
@@ -33,127 +60,106 @@
     <!-- accueil -->
     <div class="container">
         <div class="printableArea">
-            <h2 class="text-start">Liste des enseignants</h2>
-            <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons mb-3 no-print">
-                <div class="d-flex search-container">
-                    <i class="fa fa-search"></i>
-                    <input id="searchInput" type="text" id="search" class="form-control search-bar"
-                        placeholder="Rechercher...">
-                </div>
+            <h1 class="mt-4 mb-4 text-center">Liste des enseignants</h1>
 
-                <div class="d-flex justify-content-end flex-wrap">
-                    <button class="btn btn-custom btn-imprimer" id="printBtn" onclick="printDiv()"><i
-                            class="fa fa-print"></i> Imprimer</button>
-                    <button class="btn btn-custom btn-importer" data-bs-toggle="modal" data-bs-target="#importModal"><i
-                            class="fa fa-upload"></i> Importer</button>
-
+            <!-- Action buttons -->
+            <div class="d-flex justify-content-between mb-3 no-print">
+                <!-- Search bar -->
+                <form class="d-flex search-bar" role="search">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px; color: #A2ADCF;"></i>
+                            <input type="search" id="searchInput" placeholder="Rechercher..." aria-label="Search"
+                                style="border: none; outline: none;">
+                        </span>
+                    </div>
+                </form>
+                <div>
+                    <button id="printBtn" class="btn btn-success mr-2" onclick="printDiv()"><i
+                            class="fa-solid fa-print"></i> Imprimer</button>
+                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#importModal"><i
+                            class="fa-solid fa-upload"></i> Importer</button>
                     <!-- Dropdown for Export options -->
                     <div class="btn-group">
-                        <button class="btn btn-custom btn-exporter dropdown-toggle" type="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-download"></i> Exporter
+                        <button type="button" class="btn btn-export dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-download "></i> Exporter
                         </button>
-                        <ul class="dropdown-menu" id="menu">
-                            <!-- Assurez-vous que ces liens ont bien l'attribut href="#" et que onclick est correct -->
-                            <li><a class="dropdown-item" id="excel" href="#"
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"
                                     onclick="exportTableToExcel('#teacherTable')">Excel</a></li>
-                            <li><a class="dropdown-item" id="pdf" href="#"
-                                    onclick="exportTableToPDF('#teacherTable')">PDF</a></li>
-
+                            <li><a class="dropdown-item" href="#"
+                                    onclick="exportTableToPDF('#teacherTable')">PDF</a>
+                            </li>
                         </ul>
                     </div>
-                    <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#enseignant"><i
-                            class="fa fa-plus"></i> Ajouter un enseignant</button>
-                    <div class="dropdown" id="filterMenu">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-filter"></i> Filtrer par
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-submenu">
-                                <a class="dropdown-item dropdown-toggle" href="#"
-                                    data-bs-toggle="dropdown">Nom-Matière</a>
-                                <ul class="dropdown-menu">
-                                    @foreach ($professeurs as $professeur)
-                                        <li>
-                                            <a class="dropdown-item" href="#"
-                                                onclick="applyFilter('Nom-Matière', '{{ $professeur->nommatieres }}')">
-                                                {{ $professeur->nommatieres }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                            {{--  --}}
-                            <li class="dropdown-submenu">
-                                <a class="dropdown-item dropdown-toggle" href="#"
-                                    data-bs-toggle="dropdown">Classe</a>
-                                <ul class="dropdown-menu">
-                                    @foreach ($professeurs as $professeur)
-                                        <li>
-                                            <a class="dropdown-item" href="#"
-                                                onclick="applyFilter('Classe', '{{ $professeur->nomclasses }}')">
-                                                {{ $professeur->nomclasses }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-
-                            {{--  --}}
-
-                        </ul>
-                    </div>
+                    <button class="btn btn-ajout mr-2" data-bs-toggle="modal" data-bs-target="#enseignant"><i
+                            class="fa-solid fa-plus"></i> Ajouter un enseignant</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-filter"></i> Filtrer par
+                    </button>
+                    <ul class="dropdown-menu" id="filterMenu">
+                        <li class="dropdown-header">Matière</li>
+                        <li><a class="dropdown-item" href="#"
+                                onclick="filterTable('Comptabilité')">Comptabilité</a>
+                        </li>
+                        <li><a class="dropdown-item" href="#" onclick="filterTable('Économie')">Économie</a></li>
+                        <li><a class="dropdown-item" href="#"
+                                onclick="filterTable('Informatique')">Informatique</a>
+                        </li>
+                        <li><a class="dropdown-item" href="#" onclick="filterTable('')">Toutes les matières</a>
+                        </li>
+                    </ul>
                 </div>
 
-
-
-
-
             </div>
+
             <!-- Table for listing teachers -->
             <div id="noResults">Aucun résultat trouvé</div>
             <div class="table-responsive">
-                <table id="teacherTable" class="table">
+                <table class="table" id="teacherTables">
                     <thead class="table-aaa">
                         <tr class="aa">
                             <th>Identifiant</th>
                             <th>Nom</th>
-                            <th>Prénoms</th>
+                            <th>Prénom</th>
                             <th>Email</th>
                             <th>Contact</th>
                             <th>Matière</th>
                             <th>Classes</th>
                             <th class="no-print">Action</th>
                         </tr>
-                    </thead>&nbsp;&nbsp;
-                    <tbody id="teacherTable">
+                    </thead>
+                    <tbody>
+                        <!-- Example rows, replace with dynamic data -->
                         @php
                             $num = 1;
                         @endphp
 
                         @foreach ($professeurs as $professeur)
                             <tr>
-                                <td data-label="Identifiant">{{ $num++ }}</td>
-                                <td data-label="Nom">{{ $professeur->nom }}</td>
-                                <td data-label="Prénoms">{{ $professeur->prenom }}</td>
-                                <td data-label="Email">{{ $professeur->email }}</td>
-                                <td data-label="Contact">{{ $professeur->contact }}</td>
-                                <td data-label="Matière">{{ $professeur->nommatieres }}</td>
-                                <td data-label="Classes">{{ $professeur->nomclasses }}</td>
-                                <td data-label="Action" class="action-icons no-print">
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
+                                <td>{{ $num++ }}</td>
+                                <td>{{ $professeur->nom }}</td>
+                                <td>{{ $professeur->prenom }}</td>
+                                <td>{{ $professeur->email }}</td>
+                                <td>{{ $professeur->contact }}</td>
+                                <td>{{ $professeur->nommatieres }}</td>
+                                <td>{{ $professeur->nomclasses }}</td>
+                                <td class="no-print">
+                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editTeacher{{ $professeur->id }}"
                                         data-id="{{ $professeur->id }}" data-nom="{{ $professeur->nom }}"
-                                        data-prenom="{{ $professeur->prenom }}"
-                                        data-email="{{ $professeur->email }}"
+                                        data-prenom="{{ $professeur->prenom }}" data-email="{{ $professeur->email }}"
                                         data-matiere_id="{{ $professeur->matiere_id }}"
                                         data-selected_classes="{{ $professeur->selected_classes }}">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fa-solid fa-pen"></i>
                                     </button>
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
+                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#deleteTeacher{{ $professeur->id }}">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -282,44 +288,46 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="pagination-container  no-print">
-                <div class="pagination-info">
-                    Affiche
-                    <select id="rowsPerPageSelect" data-table-id="#teacherTable">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    de
-                </div>
-                <div class="pagination-buttons">
-                    <button class="btn prev">‹</button>
-                    <button class="btn active">1</button>
-                    <button class="btn next">›</button>
-                    <span id="nbr">sur 2</span>
-                </div>
-            </div><br>
+            <!-- Pagination buttons -->
+            <div class="pagination no-print">
+                <button class="prev">Précédent</button>
+                <button class="next">Suivant</button>
+            </div>
         </div>
     </div>
-    <!--  -->
-    <!--  -->
-    <!-- Modal -->
-    <div class="modal fade" id="enseignant" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
 
-                <!-- Modal Body -->
-                <button type="button" class="custom-close-btn" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
-                </button>
-                <div class="modal-body">
-                    <form action="{{ route('user.store') }}" method="POST" class="needs-validation" novalidate>
-                        @csrf
+    <!-- Modal for importing a file -->
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="/path/to/your/upload/handler" method="post" enctype="multipart/form-data"
+                    class="needs-validation" novalidate>
+                    <div class="modal-body">
+                        <h1 class="modal-title fs-5 text-center" id="importModalLabel">Importer un fichier</h1>
+                        <div class="mb-3">
+                            <label for="fileInput" class="form-label">Choisissez un fichier à importer</label>
+                            <input type="file" class="form-control" id="fileInput" name="importedFile" required>
+                            <div class="invalid-feedback">
+                                Veuillez sélectionner un fichier.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Importer</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal ajout -->
+    <div class="modal fade" id="enseignant" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <h1 class="text-center">Ajouter un enseignant</h1>
+                <form action="{{ route('user.store') }}" method="POST" class="needs-validation" novalidate>
+                    @csrf
+                    <div class="modal-body">
                         <div class="row g-3">
                             <!-- Fields for adding teacher details -->
                             <div class="col-sm-6">
@@ -345,6 +353,7 @@
                                     Valid contact is required.
                                 </div>
                             </div>
+
                             <div class="col-sm-6">
                                 <input type="email" class="form-control" id="email" name="email"
                                     placeholder="Email" value="" required>
@@ -353,125 +362,96 @@
                                 </div>
                             </div>
 
-
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                    <select name="matiere_id[]" id="matiereselect2"
-                                        class="matiereprof-multiple form-control" multiple>
-                                        @foreach ($matieres as $matiere)
-                                            <option value="{{ $matiere->id }}">{{ $matiere->nommatiere }}</option>
-                                        @endforeach
-                                    </select>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Username" value="" required>
+                                <div class="invalid-feedback">
+                                    Valid subject is required.
                                 </div>
                             </div>
+
                             <div class="col-sm-6">
-                                <div class="form-group">
-                                    <select class="select2-multiple form-control" name="classe_id[]"
-                                        style="width: 100%" id="select2Multiple" multiple>
-                                        @foreach ($classes as $classe)
-                                            <option value="{{ $classe->id }}">{{ $classe->nomclasse }}</option>
-                                        @endforeach
-                                    </select>
+                                <select name="role_id" id="role_id" class="form-control">
+                                    <option value="2">Professeur</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Valid class is required.
                                 </div>
                             </div>
-                            <div class="modal-footer d-flex justify-content-between">
-                                <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                <button type="button" class="btn btn-danger"
-                                    data-bs-dismiss="modal">Annuler</button>
+
+                            <div class="col-sm-6">
+
+                                <select id="select-example" class="form-control w-100" multiple>
+                                    <option value="two">karidjadiabate</option>
+                                    <option value="three">karidja</option>
+                                    <option value="four">Fourkaridjadiabate</option>
+                                </select>
+                                <div class="invalid-feedback">Valid class is required.</div>
+
+                                <div class="invalid-feedback">
+                                    Valid class is required.
+                                </div>
+                            </div>
+                            <select name="matiere_id[]" id="matiereselect2" class="matiereprof-multiple form-control" style="width: 100%" multiple="multiple">
+                                    @foreach ($matieres as $matiere)
+<option value="{{ $matiere->id }}">{{ $matiere->nommatiere }}</option>
+@endforeach
+                                </select>
+
+
+                            <div class="col-sm-6">
+                                <select class="select2-multiple form-control" name="classe_id[]" style="width: 100%"
+                                    multiple="multiple" id="select2Multiple">
+                                    @foreach ($classes as $classe)
+                                        <option value="{{ $classe->id }}">{{ $classe->nomclasse }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                    Valid class is required.
+                                </div>
                             </div>
 
-                    </form>
-                </div>
-                <!-- Modal Footer -->
-
-            </div>
-        </div>
-    </div>
-    <!--  -->
-
-
-    <!-- importer -->
-    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <!-- Modal Body -->
-                <button type="button" class="custom-close-btn" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
-                </button>
-                <h1 class="modal-title fs-5 text-center" id="importModalLabel">Importer un fichier</h1>
-
-                <form action="/path/to/your/upload/handler" method="post" enctype="multipart/form-data"
-                    class="needs-validation" novalidate>
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="fileInput" class="form-label">Choisissez un fichier à importer</label>
-                            <input type="file" class="form-control" id="fileInput" name="importedFile" required>
-                            <div class="invalid-feedback">
-                                Veuillez sélectionner un fichier.
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Password" value="" required>
+                                <div class="invalid-feedback">
+                                    Valid subject is required.
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <button type="submit" class="btn btn-success">Sauvegarder</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                    </div>
                 </form>
-
-                <!-- Modal Footer -->
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="submit" class="btn btn-success">Importer</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                </div>
             </div>
         </div>
     </div>
-    <!--  -->
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Définir la configuration pour ce fichier
-            setTableConfig({
-                'Nom-Matière': 5,
-                'Classe': 6
-            });
-
-            // Définir l'ID du tableau pour les fonctions de recherche et de pagination
-            setTableId('#teacherTable');
-            // Appel des fonctions de recherche et de pagination
-            searchTable('#teacherTable tbody', 'searchInput', 'noResults');
+            searchTable('#teacherTables', 'searchInput', 'noResults');
             paginateTable('#teacherTable');
         });
     </script>
 
-
-    </script>
-
-    <!-- Bootstrap JS -->
-    <script src="../js/list.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <!-- Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Initialize Select2 on both select elements
-            $('#select2Multiple').select2({
-                placeholder: "Classes",
+            // Initialize Select2 on the select element
+            $('#select-example').select2({
+                placeholder: "Select options",
                 allowClear: true,
-                width: '100%'
+                width: 'resolve' // Ensure Select2 takes full width of the parent container
             });
-
-            $('#matiereselect2').select2({
-                placeholder: "Matière",
-                allowClear: true,
-                width: '100%'
-            });
-
-
         });
     </script>
+
 </body>
 
 </html>

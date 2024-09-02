@@ -33,7 +33,7 @@
     <!-- accueil -->
     <div class="container">
         <div class="printableArea">
-            <h2 class="text-start">Liste des enseignants</h2>
+            <h2 class="text-start">Liste des Etablissements</h2>
             <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons mb-3 no-print">
                 <div class="d-flex search-container">
                     <i class="fa fa-search"></i>
@@ -340,7 +340,7 @@
     </script>
 
     <!-- Bootstrap JS -->
-    <script src="../js/list.js"></script>
+   
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

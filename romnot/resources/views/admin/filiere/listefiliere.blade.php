@@ -76,7 +76,7 @@
                                         <li>
                                             <a class="dropdown-item" href="#"
                                                 onclick="applyFilter('Nom-Filière', '{{ $filiere->nomfiliere }}')">
-                                                {{ $niveau->nomniveau }}
+                                                {{ $filiere->nomniveau }}
                                             </a>
                                         </li>
                                     @endforeach
@@ -90,7 +90,7 @@
                                         <li>
                                             <a class="dropdown-item" href="#"
                                                 onclick="applyFilter('Niveau', '{{ $filiere->nomniveau }}')">
-                                                {{ $niveau->code }}
+                                                {{ $filiere->code }}
                                             </a>
                                         </li>
                                     @endforeach

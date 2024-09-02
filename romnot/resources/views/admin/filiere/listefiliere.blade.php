@@ -4,53 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/3c4b920158.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Ajouter un Enseignant</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons (if needed) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- pdf & excel -->
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/list.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/lists.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
-    <title>filiere</title>
+
 </head>
-<style>
-    .modal-content {
-        border-radius: 0%;
-    }
 
-    .modal-content p {
-        font-size: 10px;
-
-    }
-
-    .btn-danger {
-        border-radius: 0%;
-    }
-
-    .btn-secondary,
-    .btn-success {
-        border-radius: 0%;
-    }
-
-    .form-control:focus {
-        box-shadow: none;
-        outline: none;
-    }
-
-    #sure {
-        font-size: 14px;
-        color: darkgray;
-    }
-
-    /* #editTeacher {
-        width: 100px;
-        height: 100px;
-    } */
-</style>
 
 <body>
     <!-- header -->
@@ -59,231 +30,256 @@
     <!-- accueil -->
     <div class="container">
         <div class="printableArea">
-            <h1 class="mt-4 mb-4 text-center">Liste des filières</h1>
+            <h2 class="text-start">Liste des filières</h2>
+            <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons mb-3 no-print">
+                <div class="d-flex search-container">
+                    <i class="fa fa-search"></i>
+                    <input id="searchInput" type="text" id="search" class="form-control search-bar"
+                        placeholder="Rechercher...">
+                </div>
 
-            <!-- Action buttons -->
-            <div class="d-flex justify-content-between mb-3 no-print">
-                <!-- Search bar -->
-                <form class="d-flex search-bar" role="search">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px; color: #A2ADCF;"></i>
-                            <input type="search" id="searchInput" placeholder="Rechercher..." aria-label="Search"
-                                style="border: none; outline: none;">
-                        </span>
-                    </div>
-                </form>
-                <div>
-                    <button id="printBtn" class="btn btn-success mr-2" onclick="printDiv()"><i
-                            class="fa-solid fa-print"></i> Imprimer</button>
-                    <button class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#importModal"><i
-                            class="fa-solid fa-upload"></i> Importer</button>
+                <div class="d-flex justify-content-end flex-wrap action-buttons">
+                    <button class="btn btn-custom btn-imprimer" id="printBtn" onclick="printDiv()"><i
+                            class="fa fa-print"></i> Imprimer</button>
+                    <button class="btn btn-custom btn-importer" data-bs-toggle="modal" data-bs-target="#importModal"><i
+                            class="fa fa-upload"></i> Importer</button>
+
                     <!-- Dropdown for Export options -->
                     <div class="btn-group">
-                        <button type="button" class="btn btn-export dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class="fa-solid fa-download "></i> Exporter
+                        <button class="btn btn-custom btn-exporter dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-download"></i> Exporter
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"
+                        <ul class="dropdown-menu" id="menu">
+                            <!-- Assurez-vous que ces liens ont bien l'attribut href="#" et que onclick est correct -->
+                            <li><a class="dropdown-item" id="excel" href="#"
                                     onclick="exportTableToExcel('#filiereTable')">Excel</a></li>
-                            <li><a class="dropdown-item" href="#"
-                                    onclick="exportTableToPDF('#filiereTable')">PDF</a>
+                            <li><a class="dropdown-item" id="pdf" href="#"
+                                    onclick="exportTableToPDF('#filiereTable')">PDF</a></li>
+
+                        </ul>
+                    </div>
+                    <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#filiere"><i
+                            class="fa fa-plus"></i> Ajouter une filiere</button>
+
+                    <div class="dropdown" id="filterMenu">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-filter"></i> Filtrer par
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#"
+                                    data-bs-toggle="dropdown">Nom-Filière</a>
+                                <ul class="dropdown-menu">
+                                    @foreach ($filieres as $filiere)
+                                        <li>
+                                            <a class="dropdown-item" href="#"
+                                                onclick="applyFilter('Nom-Filière', '{{ $filiere->nomfiliere }}')">
+                                                {{ $niveau->nomniveau }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#"
+                                    data-bs-toggle="dropdown">Niveau</a>
+                                <ul class="dropdown-menu">
+                                    @foreach ($filieres as $filiere)
+                                        <li>
+                                            <a class="dropdown-item" href="#"
+                                                onclick="applyFilter('Niveau', '{{ $filiere->nomniveau }}')">
+                                                {{ $niveau->code }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </li>
                         </ul>
                     </div>
-                    <button class="btn btn-ajout mr-2" data-bs-toggle="modal" data-bs-target="#filiere"><i
-                            class="fa-solid fa-plus"></i> Ajouter une filiere</button>
                 </div>
-                <!-- <div class="btn-group">
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="fa-solid fa-filter"></i> Filtrer par
-                    </button>
-                    <ul class="dropdown-menu" id="filterMenu">
-                        <li class="dropdown-header">Matière</li>
-                        <li><a class="dropdown-item" href="#" onclick="filterTable('Comptabilité')">Comptabilité</a>
-                        </li>
-                        <li><a class="dropdown-item" href="#" onclick="filterTable('Économie')">Économie</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="filterTable('Informatique')">Informatique</a>
-                        </li>
-                        <li><a class="dropdown-item" href="#" onclick="filterTable('')">Toutes les matières</a></li>
-                    </ul>
-                </div> -->
+
+
+
 
             </div>
-            <div id="noResults">Aucun résultat trouvé</div>
             <!-- Table for listing teachers -->
-            <table class="table" id="filiereTable">
-                <thead class="table-aaa">
-                    <tr class="aa">
-                        <th>#</th>
-                        <th>Code(Abreviation)</th>
-                        <th>Description</th>
-                        <th>Niveau</th>
-                        <th>Nombre de classes</th>
-                        <th class="no-print">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="filiereTables">
-                    <!-- Example rows, replace with dynamic data -->
-                    @php
-                        $num = 1;
-                    @endphp
-                    @foreach ($filieres as $filiere)
-                        <tr>
-                            <td>{{ $num++ }}</td>
-                            <td>{{ $filiere->code }}</td>
-                            <td>{{ $filiere->nomfiliere }}</td>
-                            <td>{{ $filiere->nomniveau }}</td>
-                            <td class="text-center">{{ $filiere->nbclasse }}</td>
-                            <td class="no-print">
-                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#editFiliere{{ $filiere->id }}" data-id="{{ $filiere->id }}"
-                                    data-code="{{ $filiere->code }}" data-nomfiliere="{{ $filiere->nomfiliere }}">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#deletefiliere{{ $filiere->id }}">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
+            <div id="noResults">Aucun résultat trouvé</div>
+            <div class="table-responsive">
+                <table id="filiereTable" class="table">
+                    <thead class="table-aaa">
+                        <tr class="aa">
+                            <th>Identifiant</th>
+                            <th>Code(Abreviation)</th>
+                            <th>Nom de la Filière</th>
+                            <th>Niveau</th>
+                            <th>Nombre de classes</th>
+                            <th class="no-print">Action</th>
                         </tr>
+                    </thead>&nbsp;&nbsp;
+                    <tbody id="filiereTable">
+                        @php
+                            $num = 1;
+                        @endphp
+                        @foreach ($filieres as $filiere)
+                            <tr>
+                                <td data-label="Identifiant">{{ $num++ }}</td>
+                                <td data-label="Code(Abreviation)">{{ $filiere->code }}</td>
+                                <td data-label="Nom de la Filière">{{ $filiere->nomfiliere }}</td>
+                                <td data-label="Niveau">{{ $filiere->nomniveau }}</td>
+                                <td data-label="Nombre de classes" class="text-center">{{ $filiere->nbclasse }}</td>
+                                <td data-label="Action" class="action-icons no-print">
+                                    <button class="btn  btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#editFiliere{{ $filiere->id }}"
+                                        data-id="{{ $filiere->id }}" data-code="{{ $filiere->code }}"
+                                        data-nomfiliere="{{ $filiere->nomfiliere }}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn  btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#deletefiliere{{ $filiere->id }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
 
-                        <!-- Modal de Modification -->
-                        <div class="modal " id="editFiliere{{ $filiere->id }}" tabindex="-1"
-                            aria-labelledby="editFiliereLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content " wi>
-                                    <h1 class="text-center">Modifier</h1>
-                                    <form action="{{ route('filiere.update', $filiere->id) }}" method="POST"
-                                        class="needs-validation" novalidate>
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-body">
-                                            <div class="row g-3">
-                                                <!-- Fields for editing teacher details -->
-                                                <div class="col-sm-6">
-                                                    <input type="text" name="code" class="form-control"
-                                                        id="editFirstName" placeholder="Code(Abreviation)"
-                                                        value="{{ $filiere->code }}" required>
-                                                    <div class="invalid-feedback">
-                                                        Valid first name is required.
+                            <!-- Modal de Modification -->
+                            <div class="modal " id="editFiliere{{ $filiere->id }}" tabindex="-1"
+                                aria-labelledby="editFiliereLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content ">
+                                        <button type="button" class="custom-close-btn" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                            <i class="fa-solid fa-xmark"></i> </button>
+                                        <h1 class="text-center">Modifier</h1>
+                                        <form action="{{ route('filiere.update', $filiere->id) }}" method="POST"
+                                            class="needs-validation" novalidate>
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+                                                <div class="row g-3">
+                                                    <!-- Fields for editing teacher details -->
+                                                    <div class="col-sm-6">
+                                                        <input type="text" name="code" class="form-control"
+                                                            id="editFirstName" placeholder="Code(Abreviation)"
+                                                            value="{{ $filiere->code }}" required>
+                                                        <div class="invalid-feedback">
+                                                            Valid first name is required.
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="col-sm-6">
-                                                    <input type="text" name="nomfiliere" class="form-control"
-                                                        id="editLastName" placeholder="Nom de la filière"
-                                                        value="{{ $filiere->nomfiliere }}" required>
-                                                    <div class="invalid-feedback">
-                                                        Valid last name is required.
+                                                    <div class="col-sm-6">
+                                                        <input type="text" name="nomfiliere" class="form-control"
+                                                            id="editLastName" placeholder="Nom de la filière"
+                                                            value="{{ $filiere->nomfiliere }}" required>
+                                                        <div class="invalid-feedback">
+                                                            Valid last name is required.
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="modal-body">
-                                            <div class="row g-3">
-                                                <!-- Fields for editing teacher details -->
-                                                <div class="col-sm-6">
-                                                    <select name="niveau_id" class="form-control" id=""
-                                                        disabled>
-                                                        @foreach ($niveaux as $niveau)
-                                                            <option value="{{ $niveau->id }}"
-                                                                @if ($niveau->id == $filiere->niveau_id) selected @endif>
-                                                                {{ $niveau->nomniveau }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <div class="invalid-feedback">
-                                                        Valid first name is required.
+                                            <div class="modal-body">
+                                                <div class="row g-3">
+                                                    <!-- Fields for editing teacher details -->
+                                                    <div class="col-sm-6">
+                                                        <select name="niveau_id" class="form-control" id=""
+                                                            disabled>
+                                                            @foreach ($niveaux as $niveau)
+                                                                <option value="{{ $niveau->id }}"
+                                                                    @if ($niveau->id == $filiere->niveau_id) selected @endif>
+                                                                    {{ $niveau->nomniveau }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div class="invalid-feedback">
+                                                            Valid first name is required.
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
+                                            <div class="modal-footer d-flex justify-content-between">
+                                                <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                                <button type="button" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Annuler</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Modal de Suppression -->
+                            <div class="modal " id="deletefiliere{{ $filiere->id }}" tabindex="-1"
+                                aria-labelledby="deletefiliereLabel" aria-hidden="true">
+                                <div class="modal-dialog ">
+                                    <div class="modal-content">
+                                        <div class="modal-body text-center">
+                                            <img src="{{ asset('frontend/dashboard/images/images.png') }}"
+                                                width="150" height="150" alt=""><br><br>
+                                            <p id="sure">Êtes-vous sûr?</p>
+                                            <p>supprimer cette filière ?</p>
+                                        </div>
                                         <div class="d-flex justify-content-around">
-                                            <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                            <button type="button" class="btn btn-danger"
+                                            <form action="{{ route('filiere.destroy', $filiere->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                            </form>
+                                            <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Annuler</button>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- Modal de Suppression -->
-                        <div class="modal " id="deletefiliere{{ $filiere->id }}" tabindex="-1"
-                            aria-labelledby="deletefiliereLabel" aria-hidden="true">
-                            <div class="modal-dialog ">
-                                <div class="modal-content">
-                                    <div class="modal-body text-center">
-                                        <img src="{{ asset('frontend/dashboard/images/images.png') }}" width="150"
-                                            height="150" alt=""><br><br>
-                                        <p id="sure">Êtes-vous sûr?</p>
-                                        <p>supprimer cette filière ?</p>
-                                    </div>
-                                    <div class="d-flex justify-content-around">
-                                        <form action="{{ route('filiere.destroy', $filiere->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                                        </form>
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Annuler</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
 
-                </tbody>
-            </table>
 
-            <!-- Pagination buttons -->
-            <div class="pagination no-print">
-                <button class="prev">Précédent</button>
-                <button class="next">Suivant</button>
+                    </tbody>
+                </table>
             </div>
+
+            <div class="pagination-container  no-print">
+                <div class="pagination-info">
+                    Affiche
+                    <select id="rowsPerPageSelect" data-table-id="#filiereTable">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    de
+                </div>
+                <div class="pagination-buttons">
+                    <button class="btn prev">‹</button>
+                    <button class="btn active">1</button>
+                    <button class="btn next">›</button>
+                    <span id="nbr">sur 2</span>
+                </div>
+            </div><br>
         </div>
     </div>
-
-    <!-- Modal for importing a file -->
-    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <!--  -->
+    <!--  -->
+    <!-- Modal -->
+    <div class="modal fade" id="filiere" tabindex="-1" aria-labelledby="editFiliereLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
-                <form action="/path/to/your/upload/handler" method="post" enctype="multipart/form-data"
-                    class="needs-validation" novalidate>
-                    <div class="modal-body">
-                        <h1 class="modal-title fs-5 text-center" id="importModalLabel">Importer un fichier</h1>
-                        <div class="mb-3">
-                            <label for="fileInput" class="form-label">Choisissez un fichier à importer</label>
-                            <input type="file" class="form-control" id="fileInput" name="importedFile" required>
-                            <div class="invalid-feedback">
-                                Veuillez sélectionner un fichier excel.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Importer</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Modal ajout -->
+                <!-- Modal Header -->
 
-    <div class="modal " id="filiere" tabindex="-1" aria-labelledby="editFiliereLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content " wi>
+                <!-- Modal Body -->
+                <button type="button" class="custom-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
                 <h1 class="text-center">Ajouter</h1>
-                <form action="{{ route('filiere.store') }}" method="POST" class="needs-validation" novalidate>
-                    @csrf
-                    <div class="modal-body">
+                <div class="modal-body">
+                    <form action="{{ route('filiere.store') }}" method="POST" class="needs-validation" novalidate>
+                        @csrf
                         <div class="row g-3">
-                            <!-- Fields for editing teacher details -->
+                            <!-- Fields for adding teacher details -->
                             <div class="col-sm-6">
                                 <input type="text" name="code" class="form-control" id="editFirstName"
                                     placeholder="Code(Abreviation)" value="" required>
@@ -292,6 +288,7 @@
                                 </div>
                             </div>
 
+
                             <div class="col-sm-6">
                                 <input type="text" name="nomfiliere" class="form-control" id="editLastName"
                                     placeholder="Nom de la filière" value="" required>
@@ -299,46 +296,105 @@
                                     Valid last name is required.
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <select name="niveau_id" class="form-control w-100" id="niveau_id">
+                                        @foreach ($niveaux as $niveau)
+                                            <option value="{{ $niveau->id }}">{{ $niveau->nomniveau }}</option>
+                                        @endforeach
+                                    </select>
 
-                    <div class="modal-body">
-                        <div class="row g-3">
-                            <!-- Fields for editing teacher details -->
-                            <div class="col-sm-6">
-                                <select name="niveau_id" class="form-control" id="niveau_id">
-                                    <option value="">Selectionnez le niveau</option>
-                                    @foreach ($niveaux as $niveau)
-                                        <option value="{{ $niveau->id }}">{{ $niveau->nomniveau }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
                                 </div>
+                                <div class="invalid-feedback">Valid role is required.</div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="d-flex justify-content-around">
-                        <button type="submit" class="btn btn-success">Sauvegarder</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Sauvegarder</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                </div>
             </div>
         </div>
     </div>
+    <!--  -->
+
+
+    <!-- importer -->
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <!-- Modal Body -->
+                <button type="button" class="custom-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
+                </button>
+                <h1 class="modal-title fs-5 text-center" id="importModalLabel">Importer un fichier</h1>
+
+                <form action="/path/to/your/upload/handler" method="post" enctype="multipart/form-data"
+                    class="needs-validation" novalidate>
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="fileInput" class="form-label">Choisissez un fichier à importer</label>
+                            <input type="file" class="form-control" id="fileInput" name="importedFile" required>
+                            <div class="invalid-feedback">
+                                Veuillez sélectionner un fichier.
+                            </div>
+                        </div>
+                </form>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Importer</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  -->
 
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            searchTable('#filiereTables', 'searchInput', 'noResults');
+            const rowsPerPageSelect = document.getElementById('rowsPerPageSelect');
+            tableId = rowsPerPageSelect.getAttribute('data-table-id');
+
+            setTableConfig({
+                'Nom-Filière': 2,
+                'Niveau': 3
+            });
+
+            setTableId('#filiereTable');
+            searchTable('#filiereTable tbody', 'searchInput', 'noResults');
             paginateTable('#filiereTable');
         });
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+
+
+            $('#niveau_id').select2({
+                placeholder: "Selectionnez le niveau",
+                width: '100%',
+                minimumResultsForSearch: Infinity
+
+            });
+        });
     </script>
 </body>
 

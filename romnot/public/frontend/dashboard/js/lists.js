@@ -3,6 +3,7 @@
     let rowsPerPage = 5; // Valeur par défaut pour les lignes par page
 
     document.addEventListener('DOMContentLoaded', function () {
+        // Récupérer les éléments HTML
         const rowsPerPageSelect = document.getElementById('rowsPerPageSelect');
         const tableId = rowsPerPageSelect.getAttribute('data-table-id');
 
@@ -24,30 +25,17 @@
      * @param {string} subject - Le sujet à filtrer.
      * @param {string} tableId - Le sélecteur de l'élément table.
      */
-    window.applyFilter = function (type, value) {
-        filters[type] = value;
-        console.log('Applying filter:', filters); // Debug log
-        filterTable(tableId);
-    };
-
-    function filterTable(tableId) {
-        console.log('Filtering table:', tableId, 'with filters:', filters); // Debug log
-        const rows = document.querySelectorAll(`${tableId} tbody tr`);
-        rows.forEach(row => {
-            let visible = true;
-
-            Object.keys(filters).forEach(type => {
-                const filterValue = filters[type];
-                const columnIndex = getColumnIndex(type);
-                const cellValue = row.cells[columnIndex] ? row.cells[columnIndex].textContent.trim() : '';
-                if (filterValue && cellValue !== filterValue) {
-                    visible = false;
+    function filterTable(subject, tableId) {
+        const tables = document.querySelectorAll(`${tableId} tbody`);
+        tables.forEach(table => {
+            const rows = table.querySelectorAll('tr');
+            rows.forEach(row => {
+                const subjectCell = row.cells[5];
+                if (subjectCell) {
+                    row.style.display = subject === '' || subjectCell.textContent.trim() === subject ? '' : 'none';
                 }
             });
-
-            row.style.display = visible ? '' : 'none';
         });
-
         paginateTable(tableId);
     }
 
@@ -133,7 +121,7 @@
         const table = document.querySelector(tableId);
         if (!table) return;
 
-        const pageTitle = document.querySelector('h2') ? document.querySelector('h2').textContent : 'default';
+        const pageTitle = document.querySelector('h1') ? document.querySelector('h1').textContent : 'default';
         const fileName = pageTitle.trim() || 'data';
         const workbook = XLSX.utils.book_new();
         const rows = Array.from(table.rows).map(row => {
@@ -155,43 +143,15 @@
     function exportTableToPDF(tableId) {
         const table = document.querySelector(tableId);
         if (!table) return;
-
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('l');
-
-        // Récupérer le titre à partir de <h2>
-        const pageTitle = document.querySelector('h2') ? document.querySelector('h2').textContent : 'default';
+        const pageTitle = document.querySelector('h1') ? document.querySelector('h1').textContent : 'default';
         const fileName = pageTitle.trim() || 'data';
-
         doc.setFontSize(18);
         doc.text(pageTitle, doc.internal.pageSize.getWidth() / 2, 10, { align: 'center' });
-
-        // Cloner le tableau pour le modifier sans affecter l'original
-        const clonedTable = table.cloneNode(true);
-
-        // Supprimer la dernière colonne des en-têtes
-        const headerRows = clonedTable.querySelectorAll('thead tr');
-        headerRows.forEach(row => {
-            if (row.lastElementChild) {
-                row.removeChild(row.lastElementChild);
-            }
-        });
-
-        // Supprimer la dernière colonne de chaque ligne de données
-        const bodyRows = clonedTable.querySelectorAll('tbody tr');
-        bodyRows.forEach(row => {
-            if (row.lastElementChild) {
-                row.removeChild(row.lastElementChild);
-            }
-        });
-
-        // Utiliser le tableau modifié pour l'exportation en PDF
-        doc.autoTable({ html: clonedTable, startY: 20 });
+        doc.autoTable({ html: table, startY: 20 });
         doc.save(`${fileName}.pdf`);
     }
-    //
-    // pdf
-
 
     /**
      * Imprimer la div courante.

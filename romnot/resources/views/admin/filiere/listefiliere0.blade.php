@@ -65,7 +65,8 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li class="dropdown-submenu">
-                            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Matière</a>
+                            <a class="dropdown-item dropdown-toggle" href="#"
+                                data-bs-toggle="dropdown">Matière</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#"
                                         onclick="applyFilter('Matière', 'Comptabilité')">Comptabilité</a></li>
@@ -78,11 +79,13 @@
                         <li class="dropdown-submenu">
                             <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Classe</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" onclick="applyFilter('Classe', 'MA1A')">MA1A</a>
+                                <li><a class="dropdown-item" href="#"
+                                        onclick="applyFilter('Classe', 'MA1A')">MA1A</a>
                                 </li>
                                 <li><a class="dropdown-item" href="#"
                                         onclick="applyFilter('Classe', 'RHCOM1A')">RHCOM1A</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="applyFilter('Classe', 'CF2A')">CF2A</a>
+                                <li><a class="dropdown-item" href="#"
+                                        onclick="applyFilter('Classe', 'CF2A')">CF2A</a>
                                 </li>
                             </ul>
                         </li>
@@ -316,8 +319,8 @@
                         <div class="row g-3">
                             <!-- Fields for adding teacher details -->
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="firstName" name="nom" placeholder="Nom"
-                                    required>
+                                <input type="text" class="form-control" id="firstName" name="nom"
+                                    placeholder="Nom" required>
                                 <div class="invalid-feedback">Valid first name is required.</div>
                             </div>
 
@@ -328,14 +331,14 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <input type="tel" class="form-control" id="contact" name="contact" placeholder="Contact"
-                                    required>
+                                <input type="tel" class="form-control" id="contact" name="contact"
+                                    placeholder="Contact" required>
                                 <div class="invalid-feedback">Valid contact is required.</div>
                             </div>
 
                             <div class="col-sm-6">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email"
-                                    required>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Email" required>
                                 <div class="invalid-feedback">Valid email is required.</div>
                             </div>
 
@@ -419,11 +422,11 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // Définir la configuration pour ce fichier
             setTableConfig({
-                'Matière': 5,  // Index de la colonne "Matière"
-                'Classe': 6    // Index de la colonne "Classe"
+                'Matière': 5, // Index de la colonne "Matière"
+                'Classe': 6 // Index de la colonne "Classe"
             });
 
             // Définir l'ID du tableau pour les fonctions de recherche et de pagination
@@ -432,7 +435,6 @@
             searchTable('#inscriptionTable tbody', 'searchInput', 'noResults');
             paginateTable('#inscriptionTable');
         });
-
     </script>
 
 
@@ -444,14 +446,12 @@
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
 
     <script>
-
-
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Initialize Select2 on both select elements
             $('#select-example1').select2({
                 placeholder: "Select options",

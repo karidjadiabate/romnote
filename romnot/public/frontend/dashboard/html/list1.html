@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des enseignants</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <!-- <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet"> -->
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            position: relative;
+        }
+
+        h2 {
+            color: #160e85;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .btn-custom {
+            font-weight: 500;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .btn-imprimer,
+        .btn-imprimer:hover {
+            background-color: #38B293;
+        }
+
+        .btn-ajouter,
+        .btn-ajouter:hover {
+            background-color: #675DEE;
+        }
+
+        .btn-importer,
+        .btn-importer:hover {
+            background-color: #3629FF;
+        }
+
+        .btn-exporter,
+        .btn-exporter:hover {
+            background-color: #293D7A;
+        }
+
+        .btn-importer,
+        .btn-imprimer,
+        .btn-exporter,
+        .btn-ajouter,
+        .btn-imprimer:hover,
+        .btn-exporter:hover,
+        .btn-importer:hover,
+        .btn-ajouter:hover {
+            border-radius: 0%;
+            color: #FFFFFF;
+            margin-right: 0.5rem;
+        }
+
+        .table-responsive {
+            background-color: #fff;
+            width: 100%;
+            position: relative;
+        }
+
+        .table th {
+            background-color: #F1F4FE;
+            color: #a7b0cd;
+            border-bottom: 2px solid #A2ADCF;
+        }
+
+        .table td {
+            vertical-align: middle;
+            border-color: #CBD2E8;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            color: #293D7A;
+        }
+
+        .action-icons i {
+            color: #A2ADCF;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: nowrap;
+            /* No wrapping on larger screens */
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 250px;
+        }
+
+        .search-container input {
+            padding-left: 35px;
+            border: 1px solid #A2ADCF;
+            border-radius: 5px;
+            background-color: #fff;
+            width: 100%;
+        }
+
+        .search-container .fa-search {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #A2ADCF;
+        }
+
+        .d-flex.justify-content-end {
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .dropdown {
+            margin-left: 0;
+            flex-grow: 1;
+            max-width: 150px;
+        }
+
+        .dropdown .btn {
+            background-color: #FFFFFF;
+            color: #A2ADCF;
+            border: 2px solid #A2ADCF;
+            border-radius: 0%;
+            padding: 8px 12px;
+            font-weight: 500;
+            margin-left: 0;
+        }
+
+        .dropdown .btn:hover,
+        .dropdown .btn:focus {
+            background-color: #EEF0F9;
+            color: #3629FF;
+            border-color: #3629FF;
+        }
+
+        .dropdown-menu {
+            min-width: 10rem;
+            background-color: #F1F4FE;
+            border: 1px solid #CBD2E8;
+            border-radius: 5px;
+        }
+
+        .dropdown-menu .dropdown-item {
+            color: #3629FF;
+            padding: 8px 12px;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #EEF0F9;
+            color: #293D7A;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu>.dropdown-menu {
+            top: 0;
+            right: 60%;
+            margin-top: -6px;
+            margin-left: 0;
+            border-radius: 5px;
+        }
+
+        .dropdown-submenu>a::after {
+            content: "\f0da";
+            float: right;
+            border: none;
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        .dropdown-submenu:hover>.dropdown-menu {
+            display: block;
+        }
+
+        .fa-edit {
+            color: #675DEE !important;
+
+        }
+
+
+        .fa-trash-alt {
+            color: #E80C0C !important;
+        }
+
+        .action-icons button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+
+        }
+
+        .action-icons i {
+            width: 25px;
+            height: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 2px solid;
+            padding: 10px;
+            font-size: 13px;
+
+        }
+
+
+
+
+
+
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+                /* Stack elements vertically on small screens */
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .btn-importer,
+            .btn-imprimer,
+            .btn-exporter,
+            .btn-ajouter,
+            .btn-imprimer:hover,
+            .btn-exporter:hover,
+            .btn-importer:hover,
+            .btn-ajouter:hover {
+
+                margin-right: 0;
+            }
+
+            .search-container,
+            .btn-custom,
+            .dropdown {
+                width: 100%;
+
+            }
+
+            .dropdown .btn {
+                width: 100%;
+
+            }
+
+            .search-container {
+                max-width: none;
+
+            }
+
+            .dropdown {
+                max-width: none;
+            }
+
+            .dropdown-submenu>.dropdown-menu {
+                top: 10px;
+                left: 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2 class="text-start">Liste des enseignants</h2>
+        <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons mb-3">
+            <div class="d-flex search-container">
+                <i class="fa fa-search"></i>
+                <input type="text" id="search" class="form-control search-bar" placeholder="Rechercher...">
+            </div>
+
+            <div class="d-flex justify-content-end flex-wrap">
+                <button class="btn btn-custom btn-imprimer"><i class="fa fa-print"></i> Imprimer</button>
+                <button class="btn btn-custom btn-importer "><i class="fa fa-upload"></i> Importer</button>
+                <button class="btn btn-custom btn-exporter "><i class="fa fa-download"></i> Exporter</button>
+                <button class="btn btn-custom btn-ajouter"><i class="fa fa-plus"></i> Ajouter un enseignant</button>
+            </div>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fa fa-filter"></i> Filtrer par
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Matière</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="selectMatiere('Maths')">Maths</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectMatiere('Physique')">Physique</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectMatiere('Chimie')">Chimie</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Classe</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="selectClasse('Terminale')">Terminale</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectClasse('Première')">Première</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="selectClasse('Seconde')">Seconde</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="teachersTable" class="table">
+                <thead>
+                    <tr>
+                        <th>Identifiant</th>
+                        <th>Nom</th>
+                        <th>Prénoms</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Matière</th>
+                        <th>Classes</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0001</td>
+                        <td>Koffi</td>
+                        <td>Marc Brice</td>
+                        <td>KoffiMarc@gmail.com</td>
+                        <td>0707532281</td>
+                        <td>Comptabilité</td>
+                        <td>MA1A - RHCOM1A - CF2A - RGL1C</td>
+                        <td class="action-icons">
+                            <button> <i class="fas fa-edit"></i></button>
+                            <button><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#teachersTable').DataTable({
+                "pagingType": "full_numbers",
+                "language": {
+                    "search": "Rechercher:",
+                    "lengthMenu": "Afficher _MENU_ enseignants par page",
+                    "zeroRecords": "Aucun enseignant trouvé",
+                    "info": "Affiche _PAGE_ de _PAGES_",
+                    "infoEmpty": "Aucune donnée disponible",
+                    "infoFiltered": "(filtré de _MAX_ total des enregistrements)"
+                }
+            });
+
+
+        });
+    </script>
+
+</body>
+
+</html>

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const togglePassword = document.getElementById('togglePassword');
     const passwordField = document.getElementById('password');
     const lockIcon = document.getElementById('lockIcon');
-    const emailField = document.getElementById('email');
+    const emailField = document.getElementById('username');
     const emailIcon = document.getElementById('emailIcon');
     const rememberMeCheckbox = document.getElementById('rememberMe');
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Etablissement;
+use App\Models\Filiere;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
-            $table->string('nomclasse')->nullable();
+            $table->string('code')->nullable();
+            $table->string('nomclasse');
+            $table->foreignIdFor(Filiere::class)->onDelete('cascade');
             $table->foreignIdFor(Etablissement::class)->onDelete('cascade');
             $table->timestamps();
         });

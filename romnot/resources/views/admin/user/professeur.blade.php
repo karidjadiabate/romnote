@@ -209,37 +209,48 @@
                                                             Contact est requis.
                                                         </div>
                                                     </div>
+
+                                                    {{--  --}}
                                                     <div class="col-sm-6">
-                                                        <select name="matiere_id[]" id="matiereselect2edit"
-                                                            class="matiereprof-multiple form-control"
-                                                            multiple="multiple">
-                                                            @foreach ($matieres as $matiere)
-                                                                <option value="{{ $matiere->id }}"
-                                                                    @if (in_array((string) $matiere->id, explode(',', $professeur->matiere_id))) selected @endif>
-                                                                    {{ $matiere->nommatiere }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="invalid-feedback">
-                                                            Matière est requise.
+                                                        <div class="form-group">
+                                                            <select name="matiere_id[]" id="matiereselect2"
+                                                                class="matiereprof-multiple form-control" multiple>
+                                                                @foreach ($matieres as $matiere)
+                                                                    <option value="{{ $matiere->id }}"
+                                                                        @if (in_array((string) $matiere->id, explode(',', $professeur->matiere_id))) selected @endif>
+                                                                        {{ $matiere->nommatiere }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <div class="invalid-feedback">
+                                                                Matière est requise.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{--  --}}
+                                                    {{--  --}}
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <select class="select2-multiple form-control"
+                                                                name="classe_id[]" style="width: 100%"
+                                                                id="classeselect2" multiple>
+                                                                @foreach ($classes as $classe)
+                                                                    <option value="{{ $classe->id }}"
+                                                                        @if (in_array($classe->id, json_decode($professeur->selected_classes))) selected @endif>
+                                                                        {{ $classe->nomclasse }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <div class="invalid-feedback">
+                                                                Classe est requise.
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-sm-6">
-                                                        <select class="classeprof-multiple form-control"
-                                                            name="classe_id[]" multiple="multiple"
-                                                            id="classeselect2edit">
-                                                            @foreach ($classes as $classe)
-                                                                <option value="{{ $classe->id }}"
-                                                                    @if (in_array($classe->id, json_decode($professeur->selected_classes))) selected @endif>
-                                                                    {{ $classe->nomclasse }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="invalid-feedback">
-                                                            Classe est requise.
-                                                        </div>
-                                                    </div>
+                                                    {{--  --}}
+
+
+
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-around">

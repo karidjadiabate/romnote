@@ -200,6 +200,7 @@ select.form-control:focus {
     border-radius: 20px;
     display: inline-flex;
     align-items: center;
+    margin-top: 10px;
     max-width: 100%;
     gap: 0.5rem;
     flex-shrink: 1;

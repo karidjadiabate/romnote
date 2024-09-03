@@ -14,6 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/lists.css') }}">
@@ -167,7 +168,7 @@
 
 
     <!-- refuser -->
-    <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
+    <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->

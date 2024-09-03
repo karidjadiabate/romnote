@@ -16,23 +16,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
         integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/styles.css') }}" />
+    {{-- <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}"> --}}
 
 
 </head>
 <style>
-    select .form-control-lg .col-md-12 {
-        border: 1px solid #3939b7 !important;
-        color: #3939b7 !important;
-    }
 
-    select .form-control-lg .col-md-12 option {
-        color: #3939b7 !important
-    }
 </style>
 
 <body>
@@ -48,8 +40,12 @@
                 <form action="" method="post">
                     <div class="form-row mb-3 mt-5">
                         <div class="form-group col-md-6">
-                            <select class="form-control-lg col-md-12">
-                                <option value="" disabled selected>
+                            <select class="form-control-lg col-md-12"
+                                style="
+                  border: 1px solid #3939b7 !important;
+                  color: #3939b7 !important;
+                ">
+                                <option value="" disabled selected style="color: #3939b7 !important">
                                     Matière
                                 </option>
                                 <option value="math">Mathématiques</option>

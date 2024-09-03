@@ -4,22 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/3c4b920158.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Ajouter un Enseignant</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons (if needed) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/list.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
-    <title>etudiant</title>
-</head>
-<style>
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/lists.css') }}">
 
-</style>
+    <title>etudiant</title>
+
+</head>
+
 
 <body>
     <!-- header -->
@@ -27,52 +29,91 @@
     <!-- accueil -->
     <div class="container">
         <div class="printableArea">
-            <h1 class="mt-4 mb-4">Liste des Etudiants</h1>
+            <h2 class="text-start">Liste des Etudiants</h2>
+            <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons mb-3 no-print">
+                <div class="d-flex search-container">
+                    <i class="fa fa-search"></i>
+                    <input id="searchInput" type="text" id="search" class="form-control search-bar"
+                        placeholder="Rechercher...">
+                </div>
 
-            <!-- Action buttons -->
-            <div class="d-flex justify-content-between mb-3 no-print">
-                <!-- Search bar -->
-                <form class="d-flex search-bar" role="search">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px; color: #A2ADCF;"></i>
-                            <input type="search" id="searchInput" placeholder="Rechercher..." aria-label="Search"
-                                style="border: none; outline: none;">
-                        </span>
-                    </div>
-                </form>
-                <div>
-                    <button id="printBtn" class="btn btn-success mr-2" onclick="printDiv()"><i
-                            class="fa-solid fa-print"></i>
-                        Imprimer</button>
+                <div class="d-flex justify-content-end flex-wrap action-buttons">
+                    <button class="btn btn-custom btn-imprimer" id="printBtn" onclick="printDiv()"><i
+                            class="fa fa-print"></i> Imprimer</button>
+                    <button class="btn btn-custom btn-importer" data-bs-toggle="modal" data-bs-target="#importModal"><i
+                            class="fa fa-upload"></i> Importer</button>
 
                     <!-- Dropdown for Export options -->
                     <div class="btn-group">
-                        <button type="button" class="btn btn-export dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class="fa-solid fa-download "></i> Exporter
+                        <button class="btn btn-custom btn-exporter dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-download"></i> Exporter
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"
-                                    onclick="exportTableToExcel('#adminTable')">Excel</a>
-                            </li>
-                            <li><a class="dropdown-item" href="#"
-                                    onclick="exportTableToPDF('#adminTable')">PDF</a>
-                            </li>
+                        <ul class="dropdown-menu" id="menu">
+                            <!-- Assurez-vous que ces liens ont bien l'attribut href="#" et que onclick est correct -->
+                            <li><a class="dropdown-item" id="excel" href="#"
+                                    onclick="exportTableToExcel('#etudiantTable')">Excel</a></li>
+                            <li><a class="dropdown-item" id="pdf" href="#"
+                                    onclick="exportTableToPDF('#etudiantTable')">PDF</a></li>
+
                         </ul>
                     </div>
-                    <button class="btn btn-ajout mr-2" data-bs-toggle="modal" data-bs-target="#admin"><i
-                            class="fa-solid fa-plus"></i> Ajouter un Etudiant</button>
-                </div>
-            </div>
+                    <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#etudiant"><i
+                            class="fa fa-plus"></i> Ajouter un etudiant</button>
+                    <div class="dropdown" id="filterMenu">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-filter"></i> Filtrer par
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#"
+                                    data-bs-toggle="dropdown">Genre</a>
+                                <ul class="dropdown-menu">
+                                    @foreach ($etudiants as $etudiant)
+                                        <li>
+                                            <a class="dropdown-item" href="#"
+                                                onclick="applyFilter('Genre', '{{ $etudiant->genre }}')">
+                                                {{ $etudiant->genre }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                            {{--  --}}
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#"
+                                    data-bs-toggle="dropdown">Classe</a>
+                                <ul class="dropdown-menu">
+                                    @foreach ($etudiants as $etudiant)
+                                        <li>
+                                            <a class="dropdown-item" href="#"
+                                                onclick="applyFilter('Classe', '{{ $etudiant->nomclasse }}')">
+                                                {{ $etudiant->nomclasse }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
 
+                            {{--  --}}
+
+                        </ul>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
             <!-- Table for listing teachers -->
             <div id="noResults">Aucun résultat trouvé</div>
             <div class="table-responsive">
-                <table class="table" id="adminTable">
+                <table id="etudiantTable" class="table">
                     <thead class="table-aaa">
                         <tr class="aa">
-                            <th>#</th>
+                            <th>Identifiant</th>
                             <th>Matricule</th>
                             <th>Nom</th>
                             <th>Prénom</th>
@@ -83,34 +124,33 @@
                             <th>Classe</th>
                             <th class="no-print">Action</th>
                         </tr>
-                    </thead>
-                    <tbody id="adminTables">
-                        <!-- Example rows, replace with dynamic data -->
+                    </thead>&nbsp;&nbsp;
+                    <tbody id="etudiantTable">
                         @php
                             $num = 1;
                         @endphp
                         @foreach ($etudiants as $etudiant)
                             <tr>
-                                <td>{{ $num++ }}</td>
-                                <td>{{ $etudiant->matricule }}</td>
-                                <td>{{ $etudiant->nom }}</td>
-                                <td>{{ $etudiant->prenom }}</td>
-                                <td>{{ $etudiant->genre }}</td>
-                                <td>{{ $etudiant->email }}</td>
-                                <td>{{ $etudiant->contact }}</td>
-                                <td>{{ $etudiant->datenaiss }}</td>
-                                <td>{{ $etudiant->nomclasse }}</td>
-                                <td class="no-print">
-                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                <td data-label="Identifiant">{{ $num++ }}</td>
+                                <td data-label="Matricule">{{ $etudiant->matricule }}</td>
+                                <td data-label="Nom">{{ $etudiant->nom }}</td>
+                                <td data-label="Prénom">{{ $etudiant->prenom }}</td>
+                                <td data-label="Genre">{{ $etudiant->genre }}</td>
+                                <td data-label="Email">{{ $etudiant->email }}</td>
+                                <td data-label="Contact">{{ $etudiant->contact }}</td>
+                                <td data-label="Date-naissance">{{ $etudiant->datenaiss }}</td>
+                                <td data-label="Classe">{{ $etudiant->nomclasse }}</td>
+                                <td data-label="Action" class="action-icons no-print">
+                                    <button class="btn  btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editEtudiant{{ $etudiant->id }}"
                                         data-id="{{ $etudiant->id }}" data-nom="{{ $etudiant->nom }}"
                                         data-prenom="{{ $etudiant->prenom }}" data-email="{{ $etudiant->email }}"
                                         data-datenaiss="{{ $etudiant->datenaiss }}">
-                                        <i class="fa-solid fa-pen"></i>
+                                        <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                    <button class="btn  btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#deleteEtudiant{{ $etudiant->id }}">
-                                        <i class="fa-solid fa-trash"></i>
+                                        <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -131,8 +171,8 @@
                                                     <div class="col-sm-6">
                                                         <input type="text" class="form-control"
                                                             id="editNom{{ $etudiant->id }}" name="matricule"
-                                                            placeholder="Matricule" value="{{ $etudiant->matricule }}"
-                                                            required>
+                                                            placeholder="Matricule"
+                                                            value="{{ $etudiant->matricule }}" required>
                                                         <div class="invalid-feedback">
                                                             Nom est requis.
                                                         </div>
@@ -202,9 +242,14 @@
                                                     </div>
 
                                                     <div class="col-sm-6">
-                                                        <select class="select2-single form-control" name="genre" id="genre" style="width: 100%">
-                                                            <option value="M" @if (old('genre') == 'M') selected @endif>M</option>
-                                                            <option value="F" @if (old('genre') == 'F') selected @endif>F</option>
+                                                        <select class="select2-single form-control" name="genre"
+                                                            id="genre" style="width: 100%">
+                                                            <option value="M"
+                                                                @if (old('genre') == 'M') selected @endif>M
+                                                            </option>
+                                                            <option value="F"
+                                                                @if (old('genre') == 'F') selected @endif>F
+                                                            </option>
                                                         </select>
                                                         <div class="invalid-feedback">
                                                             Valid class is required.
@@ -249,31 +294,49 @@
                             </div>
                         @endforeach
 
-
                     </tbody>
                 </table>
             </div>
 
-            <!-- Pagination buttons -->
-            <div class="pagination no-print">
-                <button class="prev">Précédent</button>
-                <button class="next">Suivant</button>
-            </div>
+            <div class="pagination-container  no-print">
+                <div class="pagination-info">
+                    Affiche
+                    <select id="rowsPerPageSelect" data-table-id="#etudiantTable">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    de
+                </div>
+                <div class="pagination-buttons">
+                    <button class="btn prev">‹</button>
+                    <button class="btn active">1</button>
+                    <button class="btn next">›</button>
+                    <span id="nbr">sur 2</span>
+                </div>
+            </div><br>
         </div>
     </div>
-
-
-    <!-- Modal ajout -->
-    <div class="modal fade" id="admin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <!--  -->
+    <!--  -->
+    <!-- Modal -->
+    <div class="modal fade" id="etudiant" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
-                <h1 class="text-center">Ajouter un etudiant</h1>
-                <form action="{{ route('user.store') }}" method="POST" class="needs-validation" novalidate>
-                    @csrf
-                    <div class="modal-body">
+                <!-- Modal Header -->
+
+                <!-- Modal Body -->
+                <button type="button" class="custom-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
+                </button>
+                <div class="modal-body">
+                    <form action="{{ route('user.store') }}" method="POST" class="needs-validation" novalidate>
+                        @csrf
                         <div class="row g-3">
                             <!-- Fields for adding teacher details -->
-
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="matricule" name="matricule"
                                     placeholder="Matricule" value="" required>
@@ -313,16 +376,21 @@
                                     Valid email is required.
                                 </div>
                             </div>
-
+                            {{--  --}}
                             <div class="col-sm-6">
-                                <select name="genre" id="genre" class="form-control">
-                                    <option value="M">M</option>
-                                    <option value="F">F</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Valid class is required.
+                                <div class="form-group">
+                                    <select name="genre" id="genre" class="form-control">
+                                        <option value="M">M</option>
+                                        <option value="F">F</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Valid class is required.
+                                    </div>
                                 </div>
                             </div>
+                            {{--  --}}
+
+
 
                             <div class="col-sm-6">
                                 <input type="date" class="form-control" id="datenaiss" name="datenaiss"
@@ -332,63 +400,128 @@
                                 </div>
                             </div>
 
-                            {{--     <div class="col-sm-6">
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" value=""
-                                    required>
-                                <div class="invalid-feedback">
-                                    Valid subject is required.
-                                </div>
-                            </div> --}}
 
                             <div class="col-sm-6">
-                                <select name="role_id" id="role_id" class="form-control">
-                                    <option value="1">Etudiant</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    Valid class is required.
+                                <div class="form-group">
+                                    <select name="role_id" id="role_id" class="form-control">
+                                        <option value="1">Etudiant</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Valid class is required.
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
-                                <select name="classe_id" id="classe_id" class="form-control">
-                                    <option value="">Selectionnez la classe</option>
-                                    @foreach ($classes as $classe)
-                                        <option value="{{ $classe->id }}">{{ $classe->nomclasse }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback">
-                                    Valid class is required.
+                                <div class="form-group">
+                                    <select name="role_id" id="role_id" class="form-control w-100">
+                                        @foreach ($classes as $classe)
+                                            <option value="{{ $classe->id }}">{{ $classe->nomclasse }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                <div class="invalid-feedback">Valid role is required.</div>
                             </div>
-
-                            <div class="col-sm-6" style="display: none">
+                            {{-- <div class="col-sm-6" style="display: none">
                                 <input type="password" class="form-control" id="password" name="password"
                                     value="password" placeholder="Password" value="" required>
                                 <div class="invalid-feedback">
                                     Valid subject is required.
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-around">
-                        <button type="submit" class="btn btn-success">Sauvegarder</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                    </div>
-                </form>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal Footer -->
+
             </div>
         </div>
     </div>
+    <!--  -->
+
+
+    <!-- importer -->
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <!-- Modal Body -->
+                <button type="button" class="custom-close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
+                </button>
+                <h1 class="modal-title fs-5 text-center" id="importModalLabel">Importer un fichier</h1>
+
+                <form action="/path/to/your/upload/handler" method="post" enctype="multipart/form-data"
+                    class="needs-validation" novalidate>
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="fileInput" class="form-label">Choisissez un fichier à importer</label>
+                            <input type="file" class="form-control" id="fileInput" name="importedFile" required>
+                            <div class="invalid-feedback">
+                                Veuillez sélectionner un fichier.
+                            </div>
+                        </div>
+
+                </form>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Importer</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                </div>
+
+                <!-- Modal Footer -->
+
+            </div>
+        </div>
+    </div>
+    <!--  -->
 
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            searchTable('#adminTables', 'searchInput', 'noResults');
-            paginateTable('#adminTable');
+            // Définir la configuration pour ce fichier
+            setTableConfig({
+                'Genre': 4, // Index de la colonne "Matière"
+                'Classe': 8 // Index de la colonne "Classe"
+            });
+
+            // Définir l'ID du tableau pour les fonctions de recherche et de pagination
+            setTableId('#etudiantTable');
+            // Appel des fonctions de recherche et de pagination
+            searchTable('#etudiantTable tbody', 'searchInput', 'noResults');
+            paginateTable('#etudiantTable');
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 on both select elements
+            $('#role_id').select2({
+                placeholder: "Select options",
+                allowClear: true,
+                width: '100%'
+            });
+
+
+
+
+        });
     </script>
 </body>
 

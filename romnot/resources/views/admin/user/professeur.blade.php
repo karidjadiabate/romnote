@@ -64,6 +64,7 @@
                     </div>
                     <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#enseignant"><i
                             class="fa fa-plus"></i> Ajouter un enseignant</button>
+
                     <div class="dropdown" id="filterMenu">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false">

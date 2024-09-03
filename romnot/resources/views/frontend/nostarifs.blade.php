@@ -175,7 +175,7 @@
                                 officia. Modi cupiditate nisi officia nulla velit exercitationem voluptate saepe
                                 reiciendis!
                             </p>
-                            <a href="#" class="btn custom-btn">Choisir</a>
+                            <a href="/admin" class="btn custom-btn">Choisir</a>
                         </div>
                     </div>
                 </div>
@@ -188,7 +188,7 @@
                             <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique nemo
                                 doloremque consequatur natus vitae error veritatis nobis possimus quam autem.
                                 harum?</p>
-                            <a href="#" class="btn custom-btn">Choisir</a>
+                            <a href="/admin" class="btn custom-btn">Choisir</a>
                         </div>
                     </div>
 
@@ -202,7 +202,7 @@
                             <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum,
                                 officia. Modi cupiditate nisi officia nulla velit exercitationem voluptate saepe
                                 reiciendis!</p>
-                            <a href="#" class="btn custom-btn">Choisir</a>
+                            <a href="/admin" class="btn custom-btn">Choisir</a>
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatiereController;
 use App\Http\Controllers\NiveauController;
+use App\Http\Controllers\SujetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,7 +66,7 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
 
 
  //ADMIN
- Route::prefix('admin')->middleware('admin')->group(function () {
+ Route::prefix('admin')->middleware(['auth', 'admin', 'checkFromDemandeInscription'])->group(function () {
 
     Route::get('/',[DashboardController::class,'dashboard'])->name('admin.dashboard');;
     Route::resource('matiere', MatiereController::class);
@@ -82,6 +83,7 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
 //Professeur
 Route::prefix('professeur')->middleware('professeur')->group(function () {
 
-    Route::get('/',[DashboardController::class,'dashboard'])->name('professeur.dashboard');;
+    Route::get('/',[DashboardController::class,'dashboard'])->name('professeur.dashboard');
+    Route::resource('sujet', SujetController::class);
 
 });

@@ -555,7 +555,7 @@
 
                         <!-- sujet -->
                         <li class="nav-item" id="sujet">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{route('sujet.index')}}">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
                                         viewBox="0 0 35 35">

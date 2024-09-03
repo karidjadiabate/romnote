@@ -8,10 +8,12 @@ use App\Http\Requests\UpdateDemandeInscriptionRequest;
 use App\Models\Etablissement;
 use App\Models\User;
 use App\Notifications\AccepteNouvelleDemandeInscription;
+use App\Notifications\NouveauCompteNotification;
 use App\Notifications\NouvelleDemandeInscription;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\Session;
@@ -84,28 +86,62 @@ class DemandeInscriptionController extends Controller
     }
 
     public function accept(Request $request, $id)
-{
-    $demande = DemandeInscription::find($id);
+    {
+        $demande = DemandeInscription::find($id);
 
-    if (!$demande) {
-        return response()->json(['success' => false, 'message' => 'Demande non trouvée.']);
+        if (!$demande) {
+            return response()->json(['success' => false, 'message' => 'Demande non trouvée.']);
+        }
+
+        $passwordPlain = 'password';
+        $passwordHashed = Hash::make($passwordPlain);
+
+        // Valider les données
+        $datademoEtablissement = [
+            'code' => $demande->code,
+            'nomresponsable' => $demande->nom,
+            'prenomresponsable' => $demande->prenom,
+            'nometablissement' => $demande->nometablissement,
+            'contact' => $demande->contact,
+            'adresse' => $demande->adresseetablissement,
+            'logo' => null,
+        ];
+
+        try {
+            // Créer l'établissement
+            $etablissement = Etablissement::create($datademoEtablissement);
+
+            // Préparer les données pour l'admin avec l'ID de l'établissement créé
+            $dataAdmin = [
+                'nom' => $demande->nom,
+                'prenom' => $demande->prenom,
+                'etablissement_id' => $etablissement->id, // Utiliser l'ID de l'établissement créé
+                'contact' => $demande->contact,
+                'email' => $demande->email,
+                'role_id' => 3,
+                'password' => $passwordHashed,
+                'from_demande_inscription' => true
+            ];
+
+            Log::info('Données à insérer dans l\'établissement:', $datademoEtablissement);
+            Log::info('Données à insérer dans l\'admin:', $dataAdmin);
+
+            // Créer l'utilisateur admin
+            $admin = User::create($dataAdmin);
+            $admin->notify(new NouveauCompteNotification($admin->email, $passwordPlain));
+
+        } catch (Exception $e) {
+            Log::error('Erreur lors de la création de l\'admin: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Erreur lors de la création de l\'établissement.']);
+        }
+
+        // Marquer la demande comme acceptée
+        $demande->accepted = true;
+        $demande->rejected = false;
+        $demande->save();
+
+        return response()->json(['success' => true, 'message' => 'Demande acceptée et établissement créé avec succès!']);
     }
-
-    // Marquer la demande comme acceptée
-    $demande->accepted = true;
-    $demande->rejected = false;
-    $demande->save();
-
-    try {
-        // Notifier l'utilisateur que sa demande a été acceptée
-        $demande->notify(new AccepteNouvelleDemandeInscription());
-    } catch (Exception $e) {
-        Log::error('Erreur lors de l\'envoi de l\'email: ' . $e->getMessage());
-        return response()->json(['success' => false, 'message' => 'Erreur lors de l\'envoi de l\'email.']);
-    }
-
-    return response()->json(['success' => true, 'message' => 'Demande acceptée et email envoyé avec succès!']);
-}
 
 
 

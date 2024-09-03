@@ -13,7 +13,7 @@ class SujetController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.sujet.listesujet');
     }
 
     /**

@@ -210,7 +210,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <select name="matiere_id[]" id="matiereprofMultiple"
+                                                        <select name="matiere_id[]" id="matiereselect2edit"
                                                             class="matiereprof-multiple form-control"
                                                             multiple="multiple">
                                                             @foreach ($matieres as $matiere)
@@ -226,9 +226,9 @@
                                                     </div>
 
                                                     <div class="col-sm-6">
-                                                        <select class="classeprof-multiple form-control w-100"
+                                                        <select class="classeprof-multiple form-control"
                                                             name="classe_id[]" multiple="multiple"
-                                                            id="select2Multiple">
+                                                            id="classeselect2edit">
                                                             @foreach ($classes as $classe)
                                                                 <option value="{{ $classe->id }}"
                                                                     @if (in_array($classe->id, json_decode($professeur->selected_classes))) selected @endif>
@@ -353,6 +353,23 @@
                                 </div>
                             </div>
 
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Password" value="" required>
+                                <div class="invalid-feedback">
+                                    Valid subject is required.
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <select name="role_id" id="role_id" class="form-control">
+                                    <option value="2">Professeur</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Valid class is required.
+                                </div>
+                            </div>
+
 
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -367,7 +384,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <select class="select2-multiple form-control" name="classe_id[]"
-                                        style="width: 100%" id="select2Multiple" multiple>
+                                        style="width: 100%" id="classeselect2" multiple>
                                         @foreach ($classes as $classe)
                                             <option value="{{ $classe->id }}">{{ $classe->nomclasse }}</option>
                                         @endforeach
@@ -457,16 +474,14 @@
     <script>
         $(document).ready(function() {
             // Initialize Select2 on both select elements
-            $('#select2Multiple').select2({
+            $('#classeselect2').select2({
                 placeholder: "Classes",
                 allowClear: true,
-                width: '100%'
             });
 
             $('#matiereselect2').select2({
                 placeholder: "Matière",
                 allowClear: true,
-                width: '100%'
             });
 
 

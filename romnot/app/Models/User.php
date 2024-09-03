@@ -32,6 +32,7 @@ class User extends Authenticatable
         'genre',
         'datenaiss',
         'password',
+        'from_demande_inscription'
     ];
 
     /**

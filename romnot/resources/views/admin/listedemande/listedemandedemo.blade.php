@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un Enseignant</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome for icons (if needed) -->
@@ -244,7 +243,13 @@
             });
 
             $('#confirmAccept').on('click', function() {
+                const $button = $(this);
                 if (selectedId) {
+                    // Changer le texte du bouton et griser le bouton
+                    $button.text('Acceptation en cours...');
+                    $button.addClass('btn-disabled');
+                    $button.prop('disabled', true);
+
                     $.ajax({
                         url: routeAccept.replace('ID', selectedId),
                         method: 'POST',
@@ -257,18 +262,32 @@
                                 window.location.reload();
                             } else {
                                 alert('Une erreur est survenue: ' + response.message);
+                                // Réactiver le bouton en cas d'erreur
+                                $button.text('Accepter');
+                                $button.removeClass('btn-disabled');
+                                $button.prop('disabled', false);
                             }
                         },
                         error: function(xhr) {
                             alert('Une erreur est survenue lors de la requête: ' + xhr.status +
                                 ' ' + xhr.statusText);
+                            // Réactiver le bouton en cas d'erreur
+                            $button.text('Accepter');
+                            $button.removeClass('btn-disabled');
+                            $button.prop('disabled', false);
                         }
                     });
                 }
             });
 
             $('#confirmReject').on('click', function() {
+                const $button = $(this);
                 if (selectedId) {
+                    // Changer le texte du bouton et griser le bouton
+                    $button.text('Rejet en cours...');
+                    $button.addClass('btn-disabled');
+                    $button.prop('disabled', true);
+
                     $.ajax({
                         url: routeReject.replace('ID', selectedId),
                         method: 'POST',
@@ -281,17 +300,26 @@
                                 window.location.reload();
                             } else {
                                 alert('Une erreur est survenue: ' + response.message);
+                                // Réactiver le bouton en cas d'erreur
+                                $button.text('Rejeter');
+                                $button.removeClass('btn-disabled');
+                                $button.prop('disabled', false);
                             }
                         },
                         error: function(xhr) {
                             alert('Une erreur est survenue lors de la requête: ' + xhr.status +
                                 ' ' + xhr.statusText);
+                            // Réactiver le bouton en cas d'erreur
+                            $button.text('Rejeter');
+                            $button.removeClass('btn-disabled');
+                            $button.prop('disabled', false);
                         }
                     });
                 }
             });
         });
     </script>
+
 </body>
 
 </html>

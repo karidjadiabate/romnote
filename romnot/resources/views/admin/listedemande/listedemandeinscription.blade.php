@@ -268,77 +268,106 @@
     </script>
 
 
-    <script>
-        $(document).ready(function() {
-            let selectedId = null;
+<script>
+    $(document).ready(function() {
+        let selectedId = null;
 
-            const routeAccept = '{{ route('demandeinscription.accept', ['id' => 'ID']) }}';
-            const routeReject = '{{ route('demandeinscription.reject', ['id' => 'ID']) }}';
+        const routeAccept = '{{ route('demandeinscription.accept', ['id' => 'ID']) }}';
+        const routeReject = '{{ route('demandeinscription.reject', ['id' => 'ID']) }}';
 
-            function setSelectedId(id) {
-                selectedId = id;
-            }
+        function setSelectedId(id) {
+            selectedId = id;
+        }
 
-            // Gestionnaires d'événements pour les boutons "accepter" et "rejeter"
-            $(document).on('click', '.btn-accept', function() {
-                const id = $(this).data('id');
-                setSelectedId(id);
-            });
-
-            $(document).on('click', '.btn-reject', function() {
-                const id = $(this).data('id');
-                setSelectedId(id);
-            });
-
-            $('#confirmAccept').on('click', function() {
-                if (selectedId) {
-                    $.ajax({
-                        url: routeAccept.replace('ID', selectedId),
-                        method: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                $('#acceptModal').modal('hide');
-                                window.location.reload();
-                            } else {
-                                alert('Une erreur est survenue: ' + response.message);
-                            }
-                        },
-                        error: function(xhr) {
-                            alert('Une erreur est survenue lors de la requête: ' + xhr.status +
-                                ' ' + xhr.statusText);
-                        }
-                    });
-                }
-            });
-
-            $('#confirmReject').on('click', function() {
-                if (selectedId) {
-                    $.ajax({
-                        url: routeReject.replace('ID', selectedId),
-                        method: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                $('#rejectModal').modal('hide');
-                                window.location.reload();
-                            } else {
-                                alert('Une erreur est survenue: ' + response.message);
-                            }
-                        },
-                        error: function(xhr) {
-                            alert('Une erreur est survenue lors de la requête: ' + xhr.status +
-                                ' ' + xhr.statusText);
-                        }
-                    });
-                }
-            });
+        // Gestionnaires d'événements pour les boutons "accepter" et "rejeter"
+        $(document).on('click', '.btn-accept', function() {
+            const id = $(this).data('id');
+            setSelectedId(id);
         });
-    </script>
+
+        $(document).on('click', '.btn-reject', function() {
+            const id = $(this).data('id');
+            setSelectedId(id);
+        });
+
+        $('#confirmAccept').on('click', function() {
+            const $button = $(this);
+            if (selectedId) {
+                // Changer le texte du bouton et griser le bouton
+                $button.text('Acceptation en cours...');
+                $button.addClass('btn-disabled');
+                $button.prop('disabled', true);
+
+                $.ajax({
+                    url: routeAccept.replace('ID', selectedId),
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#acceptModal').modal('hide');
+                            window.location.reload();
+                        } else {
+                            alert('Une erreur est survenue: ' + response.message);
+                            // Réactiver le bouton en cas d'erreur
+                            $button.text('Accepter');
+                            $button.removeClass('btn-disabled');
+                            $button.prop('disabled', false);
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Une erreur est survenue lors de la requête: ' + xhr.status +
+                            ' ' + xhr.statusText);
+                        // Réactiver le bouton en cas d'erreur
+                        $button.text('Accepter');
+                        $button.removeClass('btn-disabled');
+                        $button.prop('disabled', false);
+                    }
+                });
+            }
+        });
+
+        $('#confirmReject').on('click', function() {
+            const $button = $(this);
+            if (selectedId) {
+                // Changer le texte du bouton et griser le bouton
+                $button.text('Refus en cours...');
+                $button.addClass('btn-disabled');
+                $button.prop('disabled', true);
+
+                $.ajax({
+                    url: routeReject.replace('ID', selectedId),
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#rejectModal').modal('hide');
+                            window.location.reload();
+                        } else {
+                            alert('Une erreur est survenue: ' + response.message);
+                            // Réactiver le bouton en cas d'erreur
+                            $button.text('Refuser');
+                            $button.removeClass('btn-disabled');
+                            $button.prop('disabled', false);
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Une erreur est survenue lors de la requête: ' + xhr.status +
+                            ' ' + xhr.statusText);
+                        // Réactiver le bouton en cas d'erreur
+                        $button.text('Refuser');
+                        $button.removeClass('btn-disabled');
+                        $button.prop('disabled', false);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 
 
 

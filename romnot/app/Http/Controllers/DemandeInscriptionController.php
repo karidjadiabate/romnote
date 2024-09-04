@@ -50,15 +50,11 @@ class DemandeInscriptionController extends Controller
             'email' => 'required|email|unique:demos,email',
             'contact' => 'required|string|max:20',
             'adresseetablissement' => 'required|string|max:20',
-            'password' => 'required|string|min:4',
-            'password_confirm' => 'required|string|min:4',
         ],[
             'nom.required' => 'Le nom est obligatoire.',
             'prenom.required' => 'Le prenom est obligatoire.',
             'nometablissement.required' => 'Le Nom d\'etablissement est obligatoire.',
             'contact.required' => 'Le contact est obligatoire.',
-            'password.required' => 'Le mot de passe est obligatoire.',
-            'password_confirm.required' => 'Le mot de passe est obligatoire.',
             'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
             'email.required' => 'L\'adresse email est obligatoire.',
             'email.unique' => 'Cet email est déjà associé à une demande d\'inscription.'
@@ -71,8 +67,6 @@ class DemandeInscriptionController extends Controller
             'adresseetablissement' => $validatedData['adresseetablissement'],
             'email' => $validatedData['email'],
             'contact' => $validatedData['contact'],
-            'password' => $validatedData['password'],
-            'password_confirm' => $validatedData['password_confirm']
         ]);
 
         // Envoyer la notification aux administrateurs

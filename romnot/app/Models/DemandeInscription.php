@@ -11,5 +11,5 @@ class DemandeInscription extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['prenom','nom','contact','email','nometablissement','adresseetablissement','password','password_confirm'];
+    protected $fillable = ['prenom','nom','contact','email','nometablissement','adresseetablissement'];
 }

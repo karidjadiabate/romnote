@@ -71,19 +71,9 @@
                   <div class="validate"></div>
                 </div>
               </div>
-              <div class="form-row  mt-2">
-                <div class="col-md-6 form-group">
-                  <input type="password" name="password" class="form-control conn-input-regi" id="password" placeholder="Créer votre mot de passe" data-rule="password"/ required>
-                  <div class="validate"></div>
-                </div>
-                <div class="col-md-6 form-group">
-                  <input type="password" class="form-control  conn-input-regi" name="password_confirm" id="confpassword" placeholder="Confirmer votre mot de passe" data-rule="confpassword" / required>
-                  <div class="validate"></div>
-                </div>
-              </div>
               <div class="form-row mt-4">
                 <div class="col-md-6 form-group">
-                  <input type="checkbox" id="exampleInputEmail1"> <span style="color: #4a3dbb;">J'ai lu et j'accepte les <span class="fgpwd">Termes et conditions</span> ainsi que la <a href="" class="fgpwd">Politique de confidentialité.</a> </span>
+                  <input type="checkbox" id="exampleInputEmail1" required> <span style="color: #4a3dbb;">J'ai lu et j'accepte les <span class="fgpwd">Termes et conditions</span> ainsi que la <a href="" class="fgpwd">Politique de confidentialité.</a> </span>
                   <div class="validate"></div>
                 </div>
                 <div class="col-md-6 form-group">

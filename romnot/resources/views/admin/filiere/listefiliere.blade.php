@@ -183,8 +183,7 @@
                                                 <div class="row g-3">
                                                     <!-- Fields for editing teacher details -->
                                                     <div class="col-sm-6">
-                                                        <select name="niveau_id" class="form-control" id=""
-                                                            disabled>
+                                                        <select name="niveau_id" class="form-control" id="niveau_id">
                                                             @foreach ($niveaux as $niveau)
                                                                 <option value="{{ $niveau->id }}"
                                                                     @if ($niveau->id == $filiere->niveau_id) selected @endif>
@@ -308,13 +307,15 @@
                                 <div class="invalid-feedback">Valid role is required.</div>
                             </div>
                         </div>
+
+                        <!-- Modal Footer -->
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                        </div>
                     </form>
                 </div>
-                <!-- Modal Footer -->
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="submit" class="btn btn-success">Sauvegarder</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                </div>
+
             </div>
         </div>
     </div>

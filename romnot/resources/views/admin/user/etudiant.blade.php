@@ -183,7 +183,6 @@
                                                             id="editNom{{ $etudiant->id }}" name="nom"
                                                             placeholder="Nom" value="{{ $etudiant->nom }}" required>
                                                         <div class="invalid-feedback">
-                                                            Nom est requis.
                                                         </div>
                                                     </div>
 
@@ -193,7 +192,6 @@
                                                             placeholder="Prénoms" value="{{ $etudiant->prenom }}"
                                                             required>
                                                         <div class="invalid-feedback">
-                                                            Prénom est requis.
                                                         </div>
                                                     </div>
 
@@ -333,48 +331,44 @@
                     <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
                 </button>
                 <div class="modal-body">
-                    <form action="{{ route('user.store') }}" method="POST" class="needs-validation" novalidate>
+                    <form action="{{ route('user.store') }}" id="quickForm" method="POST">
                         @csrf
                         <div class="row g-3">
                             <!-- Fields for adding teacher details -->
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="matricule" name="matricule"
                                     placeholder="Matricule" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
-                                </div>
+                                    <div class="invalid-feedback">
+                                    </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="firstName" name="nom"
                                     placeholder="Nom" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid first name is required.
-                                </div>
+                                    <div class="invalid-feedback">
+                                    </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="lastName" name="prenom"
                                     placeholder="Prenoms" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid last name is required.
-                                </div>
+                                    <div class="invalid-feedback">
+                                    </div>
+
                             </div>
 
                             <div class="col-sm-6">
                                 <input type="tel" class="form-control" id="contact" name="contact"
                                     placeholder="Contact" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid contact is required.
-                                </div>
+                                    <div class="invalid-feedback">
+                                    </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="Email" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid email is required.
-                                </div>
+                                    placeholder="Email">
+                                    <div class="invalid-feedback">
+                                    </div>
                             </div>
                             {{--  --}}
                             <div class="col-sm-6">
@@ -383,9 +377,7 @@
                                         <option value="M">M</option>
                                         <option value="F">F</option>
                                     </select>
-                                    <div class="invalid-feedback">
-                                        Valid class is required.
-                                    </div>
+
                                 </div>
                             </div>
                             {{--  --}}
@@ -395,9 +387,8 @@
                             <div class="col-sm-6">
                                 <input type="date" class="form-control" id="datenaiss" name="datenaiss"
                                     placeholder="Date de naissance" value="" required>
-                                <div class="invalid-feedback">
-                                    Valid subject is required.
-                                </div>
+                                    <div class="invalid-feedback">
+                                    </div>
                             </div>
 
 
@@ -406,21 +397,18 @@
                                     <select name="role_id" id="role_id" class="form-control">
                                         <option value="1">Etudiant</option>
                                     </select>
-                                    <div class="invalid-feedback">
-                                        Valid class is required.
-                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <select name="role_id" id="role_id" class="form-control w-100">
+                                    <select name="classe_id" id="classe_id" class="form-control w-100">
                                         @foreach ($classes as $classe)
                                             <option value="{{ $classe->id }}">{{ $classe->nomclasse }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="invalid-feedback">Valid role is required.</div>
                             </div>
                             {{-- <div class="col-sm-6" style="display: none">
                                 <input type="password" class="form-control" id="password" name="password"
@@ -508,6 +496,9 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -523,6 +514,119 @@
 
         });
     </script>
+
+<style>
+  .invalid-feedback {
+    display: block; /* Assurez-vous que les messages d'erreur sont visibles */
+    color: #dc3545; /* Typiquement utilisé pour les messages d'erreur */
+    }
+    .is-invalid {
+        border: 1px solid red;
+    }
+    .is-valid {
+        border: 1px solid green;
+    }
+
+
+</style>
+
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#quickForm').validate({
+            onkeyup: function (element) {
+                $(element).valid();
+            },
+            onfocusout: function (element) {
+                $(element).valid();
+            },
+            rules: {
+                nom: {
+                    required: true,
+                },
+
+                prenom: {
+                    required: true,
+                },
+
+                contact: {
+                    required: true,
+                },
+
+                matricule: {
+                    required: true,
+                },
+
+                datenaiss: {
+                    required: true,
+                },
+
+                email: {
+                    required: true,
+                    email: true,
+                    remote: {
+                        url: "/verify-email",
+                        type: "POST",
+                        data: {
+                            email: function() {
+                                return $("#email").val();
+                            }
+                        }
+                    }
+                }
+            },
+            messages: {
+                nom: {
+                    required: "Veuillez entrer le nom.",
+                },
+                prenom: {
+                    required: "Veuillez entrer le prenom.",
+                },
+
+                contact: {
+                    required: "Veuillez entrer le contact.",
+                },
+
+                datenaiss: {
+                    required: "Veuillez entrer la date de naissance.",
+                },
+
+                matricule: {
+                    required: "Veuillez entrer le matricule.",
+                },
+
+                email: {
+                    required: "Veuillez entrer une adresse e-mail.",
+                    email: "Veuillez entrer une adresse e-mail valide.",
+                    remote: "Cette adresse e-mail existe déjà."
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                // Utiliser la classe invalid-feedback pour placer le message d'erreur
+                var container = element.siblings('.invalid-feedback');
+                if (container.length) {
+                    container.append(error);
+                } else {
+                    element.after(error);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid').removeClass('is-valid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-valid').removeClass('is-invalid');
+            }
+        });
+    });
+</script>
+
+
 </body>
 
 </html>

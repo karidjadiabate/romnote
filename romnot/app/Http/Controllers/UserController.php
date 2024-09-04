@@ -8,6 +8,7 @@ use App\Models\Etablissement;
 use App\Models\Matiere;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\NouveauCompteNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
@@ -161,7 +162,7 @@ class UserController extends Controller
             $user->save();
         }
 
-        //$user->notify(new NouveauCompteNotification($user->username, $request->password));
+        $user->notify(new NouveauCompteNotification($user->email, $request->password));
 
         if ($user->role_id == 1) {
             $user->classe_id = $request->classe_id;
@@ -263,7 +264,7 @@ class UserController extends Controller
         $user->delete();
 
         if ($user->role_id == 1) {
-            return to_route('admin.etudiant')->with('danger','Etudiant supprimé avec success');
+            return to_route('etudiant')->with('danger','Etudiant supprimé avec success');
         }
 
         if ($user->role_id == 3) {

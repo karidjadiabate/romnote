@@ -330,7 +330,7 @@
                     <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
                 </button>
                 <div class="modal-body">
-                    <form action="{{ route('user.store') }}" method="POST" class="needs-validation" novalidate>
+                    <form action="{{ route('user.store') }}" id="quickForm" method="POST" class="needs-validation" novalidate>
                         @csrf
                         <div class="row g-3">
                             <!-- Fields for adding teacher details -->
@@ -338,7 +338,6 @@
                                 <input type="text" class="form-control" id="firstName" name="nom"
                                     placeholder="Nom" value="" required>
                                 <div class="invalid-feedback">
-                                    Valid first name is required.
                                 </div>
                             </div>
 
@@ -346,7 +345,6 @@
                                 <input type="text" class="form-control" id="lastName" name="prenom"
                                     placeholder="Prenoms" value="" required>
                                 <div class="invalid-feedback">
-                                    Valid last name is required.
                                 </div>
                             </div>
 
@@ -354,14 +352,12 @@
                                 <input type="tel" class="form-control" id="contact" name="contact"
                                     placeholder="Contact" value="" required>
                                 <div class="invalid-feedback">
-                                    Valid contact is required.
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <input type="email" class="form-control" id="email" name="email"
                                     placeholder="Email" value="" required>
                                 <div class="invalid-feedback">
-                                    Valid email is required.
                                 </div>
                             </div>
 
@@ -369,7 +365,6 @@
                                 <input type="password" class="form-control" id="password" name="password"
                                     placeholder="Password" value="" required>
                                 <div class="invalid-feedback">
-                                    Valid subject is required.
                                 </div>
                             </div>
 
@@ -377,30 +372,33 @@
                                 <select name="role_id" id="role_id" class="form-control">
                                     <option value="2">Professeur</option>
                                 </select>
-                                <div class="invalid-feedback">
-                                    Valid class is required.
-                                </div>
+
                             </div>
 
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <select name="matiere_id[]" id="matiereselect2"
+                                    <select name="matiere_id[]" id="matiereselect3"
                                         class="matiereprof-multiple form-control" multiple>
                                         @foreach ($matieres as $matiere)
                                             <option value="{{ $matiere->id }}">{{ $matiere->nommatiere }}</option>
                                         @endforeach
                                     </select>
+                                    <div class="invalid-feedback">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <select class="select2-multiple form-control" name="classe_id[]"
-                                        style="width: 100%" id="classeselect2" multiple>
+                                        style="width: 100%" id="classeselect3" multiple>
                                         @foreach ($classes as $classe)
                                             <option value="{{ $classe->id }}">{{ $classe->nomclasse }}</option>
                                         @endforeach
+                                        <div class="invalid-feedback">
+                                        </div>
                                     </select>
+
                                 </div>
                             </div>
                             <div class="modal-footer d-flex justify-content-between">
@@ -481,7 +479,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -495,10 +494,124 @@
                 placeholder: "Matière",
                 allowClear: true,
             });
+            $('#classeselect3').select2({
+                placeholder: "Classes",
+                allowClear: true,
+            });
+
+            $('#matiereselect3').select2({
+                placeholder: "Matière",
+                allowClear: true,
+            });
 
 
         });
     </script>
+
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#quickForm').validate({
+            onkeyup: function (element) {
+                $(element).valid();
+            },
+            onfocusout: function (element) {
+                $(element).valid();
+            },
+            rules: {
+                nom: {
+                    required: true,
+                },
+
+                prenom: {
+                    required: true,
+                },
+
+                contact: {
+                    required: true,
+                },
+
+                password: {
+                    required: true,
+                },
+
+                classeselect3: {
+                    required: true,
+                },
+
+                matiere_id: {
+                    required: true,
+                },
+
+
+                email: {
+                    required: true,
+                    email: true,
+                    remote: {
+                        url: "/verify-email",
+                        type: "POST",
+                        data: {
+                            email: function() {
+                                return $("#email").val();
+                            }
+                        }
+                    }
+                }
+            },
+            messages: {
+                nom: {
+                    required: "Veuillez entrer le nom.",
+                },
+                prenom: {
+                    required: "Veuillez entrer le prenom.",
+                },
+
+                contact: {
+                    required: "Veuillez entrer le contact.",
+                },
+
+                classeselect3: {
+                    required: "Veuillez selectionner la ou les classes",
+                },
+
+                matiere_id: {
+                    required: "Veuillez selectionner la ou les matieres",
+                },
+
+                password: {
+                    required: "Veuillez entrer le mot de passe.",
+                },
+
+                email: {
+                    required: "Veuillez entrer une adresse e-mail.",
+                    email: "Veuillez entrer une adresse e-mail valide.",
+                    remote: "Cette adresse e-mail existe déjà."
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                // Utiliser la classe invalid-feedback pour placer le message d'erreur
+                var container = element.siblings('.invalid-feedback');
+                if (container.length) {
+                    container.append(error);
+                } else {
+                    element.after(error);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid').removeClass('is-valid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-valid').removeClass('is-invalid');
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

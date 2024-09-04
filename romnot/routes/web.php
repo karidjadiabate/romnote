@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemandeInscriptionController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\EtablissementController;
 use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\HomeController;
@@ -87,3 +88,5 @@ Route::prefix('professeur')->middleware('professeur')->group(function () {
     Route::resource('sujet', SujetController::class);
 
 });
+
+Route::post('/verify-email', [EmailVerificationController::class, 'verifyEmail']);

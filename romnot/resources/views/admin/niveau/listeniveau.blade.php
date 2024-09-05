@@ -129,96 +129,99 @@
                                 <td data-label="Identifiant">{{ $num++ }}</td>
                                 <td data-label="Code">{{ $niveau->code }}</td>
                                 <td data-label="Nom du niveau">{{ $niveau->nomniveau }}</td>
-                                <td data-label="Action" class="action-icons no-print">
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
+                                <td class="action-icons no-print">
+                                    <!-- Bouton de Modification -->
+                                    <button type="button" class="btn  btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editNiveau{{ $niveau->id }}" data-id="{{ $niveau->id }}"
                                         data-code="{{ $niveau->code }}" data-nomniveau="{{ $niveau->nomniveau }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
+                                    <!-- Bouton de Suppression -->
+                                    <button type="button" class="btn  btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#deleteniveau{{ $niveau->id }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
                             </tr>
 
-
                             <!-- Modal de Modification -->
-                            <div class="modal " id="editNiveau{{ $niveau->id }}" tabindex="-1"
+                            <div class="modal fade" id="editNiveau{{ $niveau->id }}" tabindex="-1"
                                 aria-labelledby="editNiveauLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content ">
+                                    <div class="modal-content">
+                                        <!-- Bouton de fermeture du Modal -->
                                         <button type="button" class="custom-close-btn" data-bs-dismiss="modal"
                                             aria-label="Close">
                                             <i class="fa-solid fa-xmark"></i>
                                         </button>
+
                                         <h1 class="text-center">Modifier</h1>
+                                        <!-- Formulaire de Modification -->
                                         <form action="{{ route('niveau.update', $niveau->id) }}" method="POST"
                                             class="needs-validation" novalidate>
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-body">
-
                                                 <div class="row g-3">
-                                                    <!-- Fields for editing teacher details -->
+                                                    <!-- Champ pour le Code -->
                                                     <div class="col-sm-6">
                                                         <input type="text" class="form-control" name="code"
                                                             placeholder="Ex: L1, L2" value="{{ $niveau->code }}"
                                                             required>
-
                                                         <div class="invalid-feedback">
-                                                            Valid last name is required.
+                                                            Le code est requis.
                                                         </div>
                                                     </div>
-
-                                                    <!-- Fields for editing teacher details -->
+                                                    <!-- Champ pour le Nom du Niveau -->
                                                     <div class="col-sm-6">
                                                         <input type="text" class="form-control" name="nomniveau"
                                                             placeholder="Ex: Licence 1, Licence 2"
                                                             value="{{ $niveau->nomniveau }}" required>
-
                                                         <div class="invalid-feedback">
-                                                            Valid last name is required.
+                                                            Le nom du niveau est requis.
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="modal-footer d-flex justify-content-between">
-                                                    <button type="submit"
-                                                        class="btn btn-success">Sauvegarder</button>
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-bs-dismiss="modal">Annuler</button>
-                                                </div>
+                                            </div>
+                                            <!-- Boutons de Confirmation -->
+                                            <div class="modal-footer d-flex justify-content-between">
+                                                <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                                <button type="button" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Annuler</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
 
-
                             <!-- Modal de Suppression -->
-                            <div class="modal " id="deleteniveau{{ $niveau->id }}" tabindex="-1"
+                            <div class="modal fade" id="deleteniveau{{ $niveau->id }}" tabindex="-1"
                                 aria-labelledby="deleteNiveauLabel" aria-hidden="true">
-                                <div class="modal-dialog ">
+                                <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-body text-center">
                                             <img src="{{ asset('frontend/dashboard/images/images.png') }}"
-                                                width="150" height="150" alt=""><br><br>
+                                                width="50" height="50" alt=""><br><br>
                                             <p id="sure">Êtes-vous sûr?</p>
-                                            <p>supprimer cette matière ?</p>
+                                            <p>Supprimer cette niveau ?</p>
                                         </div>
                                         <div class="d-flex justify-content-around">
+                                            <!-- Formulaire de Suppression -->
                                             <form action="{{ route('niveau.destroy', $niveau->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                <button type="button" style="border-radius: 0%"
+                                                    class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                             </form>
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Annuler</button>
+                                            <!-- Bouton d'Annulation -->
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+
                     </tbody>
                 </table>
             </div>

@@ -102,7 +102,7 @@
                         <tr class="aa">
                             <th>Identifiant</th>
                             <th>Nom de la Matière</th>
-                            <th class="no-print">Action</th>
+                            <th class="no-print" style="text-align: center">Action</th>
                         </tr>
                     </thead>&nbsp;&nbsp;
                     <tbody id="matiereTable">
@@ -113,23 +113,26 @@
                             <tr>
                                 <td data-label="Identifiant">{{ $num++ }}</td>
                                 <td data-label="Nom">{{ $matiere->nommatiere }}</td>
-                                <td data-label="Action" class="action-icons no-print">
-                                    <button class="btn btn-sm" data-bs-toggle="modal"
+                                <td data-label="Action" style="text-align: center" class="action-icons no-print">
+                                    <!-- Bouton de Modification -->
+                                    <button type="button" class="btn btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#editMatiere{{ $matiere->id }}" data-id="{{ $matiere->id }}"
                                         data-nommatiere="{{ $matiere->nommatiere }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
+                                    <!-- Bouton de Suppression -->
+                                    <button type="button" class="btn btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#deletematiere{{ $matiere->id }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
                             </tr>
+
                             <!-- Modal de Modification -->
-                            <div class="modal " id="editMatiere{{ $matiere->id }}" tabindex="-1"
+                            <div class="modal fade" id="editMatiere{{ $matiere->id }}" tabindex="-1"
                                 aria-labelledby="editMatiereLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content ">
+                                    <div class="modal-content">
                                         <h1 class="text-center">Modifier</h1>
                                         <form action="{{ route('matiere.update', $matiere->id) }}" method="POST"
                                             class="needs-validation" novalidate>
@@ -137,12 +140,11 @@
                                             @method('PUT')
                                             <div class="modal-body">
                                                 <div class="row g-3">
-                                                    <!-- Fields for editing teacher details -->
+                                                    <!-- Champ pour le Nom de la Matière -->
                                                     <div class="col-sm-12">
                                                         <input type="text" class="form-control" name="nommatiere"
                                                             placeholder="Nom Etablissement"
                                                             value="{{ $matiere->nommatiere }}" required>
-
                                                         <div class="invalid-feedback">
                                                             Valid last name is required.
                                                         </div>
@@ -154,36 +156,36 @@
                                                     <button type="button" class="btn btn-danger"
                                                         data-bs-dismiss="modal">Annuler</button>
                                                 </div>
-
                                             </div>
+                                        </form>
                                     </div>
                                 </div>
+                            </div>
 
-
-                                <!-- Modal de Suppression -->
-                                <div class="modal " id="deletematiere{{ $matiere->id }}" tabindex="-1"
-                                    aria-labelledby="deleteMatiereLabel" aria-hidden="true">
-                                    <div class="modal-dialog ">
-                                        <div class="modal-content">
-                                            <div class="modal-body text-center">
-                                                <img src="{{ asset('frontend/dashboard/images/images.png') }}"
-                                                    width="150" height="150" alt=""><br><br>
-                                                <p id="sure">Êtes-vous sûr?</p>
-                                                <p>supprimer cette matière ?</p>
-                                            </div>
-                                            <div class="d-flex justify-content-around">
-                                                <form action="{{ route('matiere.destroy', $matiere->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                                </form>
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Annuler</button>
-                                            </div>
+                            <!-- Modal de Suppression -->
+                            <div class="modal fade" id="deletematiere{{ $matiere->id }}" tabindex="-1"
+                                aria-labelledby="deleteMatiereLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body text-center">
+                                            <img src="{{ asset('frontend/dashboard/images/images.png') }}"
+                                                width="50" height="50" alt=""><br><br>
+                                            <p id="sure">Êtes-vous sûr?</p>
+                                            <p>Supprimer cette matière ?</p>
+                                        </div>
+                                        <div class="d-flex justify-content-around">
+                                            <form action="{{ route('matiere.destroy', $matiere->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                            </form>
+                                            <button type="button" style="border-radius: 0%"
+                                                class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                         @endforeach
 
                     </tbody>

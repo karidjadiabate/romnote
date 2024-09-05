@@ -176,13 +176,10 @@
                                                             Valid last name is required.
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
 
-                                            <div class="modal-body">
-                                                <div class="row g-3">
+
                                                     <!-- Fields for editing teacher details -->
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-12">
                                                         <select name="niveau_id" class="form-control" id="niveau_id">
                                                             @foreach ($niveaux as $niveau)
                                                                 <option value="{{ $niveau->id }}"
@@ -215,7 +212,7 @@
                                     <div class="modal-content">
                                         <div class="modal-body text-center">
                                             <img src="{{ asset('frontend/dashboard/images/images.png') }}"
-                                                width="150" height="150" alt=""><br><br>
+                                                width="50" height="50" alt=""><br><br>
                                             <p id="sure">Êtes-vous sûr?</p>
                                             <p>supprimer cette filière ?</p>
                                         </div>
@@ -226,7 +223,7 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                                             </form>
-                                            <button type="button" class="btn btn-secondary"
+                                            <button type="button" style="border-radius:0%" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Annuler</button>
                                         </div>
                                     </div>

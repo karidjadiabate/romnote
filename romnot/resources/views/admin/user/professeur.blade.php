@@ -26,7 +26,6 @@
 
 </head>
 
-
 <body>
     <!-- header -->
     @include('admin.include.menu')
@@ -235,6 +234,7 @@
                                                             <select class="select2-multiple form-control"
                                                                 name="classe_id[]" style="width: 100%"
                                                                 id="classeselect2" multiple>
+                                                                <option value="">Selectionnez une classe</option>
                                                                 @foreach ($classes as $classe)
                                                                     <option value="{{ $classe->id }}"
                                                                         @if (in_array($classe->id, json_decode($professeur->selected_classes))) selected @endif>
@@ -272,7 +272,7 @@
                                     <div class="modal-content">
                                         <div class="modal-body text-center">
                                             <img src="{{ asset('frontend/dashboard/images/images.png') }}"
-                                                width="150" height="150" alt=""><br><br>
+                                                width="50" height="50" alt=""><br><br>
                                             <p id="sure">Êtes-vous sûr?</p>
                                             <p>Supprimer cet enseignant ?</p>
                                         </div>
@@ -330,7 +330,8 @@
                     <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
                 </button>
                 <div class="modal-body">
-                    <form action="{{ route('user.store') }}" id="quickForm" method="POST" class="needs-validation" novalidate>
+                    <form action="{{ route('user.store') }}" id="quickForm" method="POST" class="needs-validation"
+                        novalidate>
                         @csrf
                         <div class="row g-3">
                             <!-- Fields for adding teacher details -->
@@ -459,10 +460,7 @@
                 'Nom-Matière': 5,
                 'Classe': 6
             });
-
-            // Définir l'ID du tableau pour les fonctions de recherche et de pagination
             setTableId('#teacherTable');
-            // Appel des fonctions de recherche et de pagination
             searchTable('#teacherTable tbody', 'searchInput', 'noResults');
             paginateTable('#teacherTable');
         });
@@ -479,12 +477,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
 
     <script>
         $(document).ready(function() {
-            // Initialize Select2 on both select elements
             $('#classeselect2').select2({
                 placeholder: "Classes",
                 allowClear: true,
@@ -508,110 +505,110 @@
         });
     </script>
 
-<script>
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-        $('#quickForm').validate({
-            onkeyup: function (element) {
-                $(element).valid();
-            },
-            onfocusout: function (element) {
-                $(element).valid();
-            },
-            rules: {
-                nom: {
-                    required: true,
+            $('#quickForm').validate({
+                onkeyup: function(element) {
+                    $(element).valid();
                 },
-
-                prenom: {
-                    required: true,
+                onfocusout: function(element) {
+                    $(element).valid();
                 },
+                rules: {
+                    nom: {
+                        required: true,
+                    },
 
-                contact: {
-                    required: true,
-                },
+                    prenom: {
+                        required: true,
+                    },
 
-                password: {
-                    required: true,
-                },
+                    contact: {
+                        required: true,
+                    },
 
-                classeselect3: {
-                    required: true,
-                },
+                    password: {
+                        required: true,
+                    },
 
-                matiere_id: {
-                    required: true,
-                },
+                    classeselect3: {
+                        required: true,
+                    },
+
+                    matiere_id: {
+                        required: true,
+                    },
 
 
-                email: {
-                    required: true,
-                    email: true,
-                    remote: {
-                        url: "/verify-email",
-                        type: "POST",
-                        data: {
-                            email: function() {
-                                return $("#email").val();
+                    email: {
+                        required: true,
+                        email: true,
+                        remote: {
+                            url: "/verify-email",
+                            type: "POST",
+                            data: {
+                                email: function() {
+                                    return $("#email").val();
+                                }
                             }
                         }
                     }
+                },
+                messages: {
+                    nom: {
+                        required: "Veuillez entrer le nom.",
+                    },
+                    prenom: {
+                        required: "Veuillez entrer le prenom.",
+                    },
+
+                    contact: {
+                        required: "Veuillez entrer le contact.",
+                    },
+
+                    classeselect3: {
+                        required: "Veuillez selectionner la ou les classes",
+                    },
+
+                    matiere_id: {
+                        required: "Veuillez selectionner la ou les matieres",
+                    },
+
+                    password: {
+                        required: "Veuillez entrer le mot de passe.",
+                    },
+
+                    email: {
+                        required: "Veuillez entrer une adresse e-mail.",
+                        email: "Veuillez entrer une adresse e-mail valide.",
+                        remote: "Cette adresse e-mail existe déjà."
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    // Utiliser la classe invalid-feedback pour placer le message d'erreur
+                    var container = element.siblings('.invalid-feedback');
+                    if (container.length) {
+                        container.append(error);
+                    } else {
+                        element.after(error);
+                    }
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-valid').removeClass('is-invalid');
                 }
-            },
-            messages: {
-                nom: {
-                    required: "Veuillez entrer le nom.",
-                },
-                prenom: {
-                    required: "Veuillez entrer le prenom.",
-                },
-
-                contact: {
-                    required: "Veuillez entrer le contact.",
-                },
-
-                classeselect3: {
-                    required: "Veuillez selectionner la ou les classes",
-                },
-
-                matiere_id: {
-                    required: "Veuillez selectionner la ou les matieres",
-                },
-
-                password: {
-                    required: "Veuillez entrer le mot de passe.",
-                },
-
-                email: {
-                    required: "Veuillez entrer une adresse e-mail.",
-                    email: "Veuillez entrer une adresse e-mail valide.",
-                    remote: "Cette adresse e-mail existe déjà."
-                }
-            },
-            errorElement: 'span',
-            errorPlacement: function (error, element) {
-                // Utiliser la classe invalid-feedback pour placer le message d'erreur
-                var container = element.siblings('.invalid-feedback');
-                if (container.length) {
-                    container.append(error);
-                } else {
-                    element.after(error);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass('is-invalid').removeClass('is-valid');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass('is-valid').removeClass('is-invalid');
-            }
+            });
         });
-    });
-</script>
+    </script>
 </body>
 
 </html>

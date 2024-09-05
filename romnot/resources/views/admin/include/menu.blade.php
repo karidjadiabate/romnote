@@ -82,6 +82,153 @@
     #profi svg {
         background-color:
     }
+
+    .badge.notification {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: red;
+        color: white;
+        font-size: 0.75rem;
+        padding: 0.25em 0.4em;
+        border-radius: 1.25rem;
+    }
+
+
+    /*  */
+    /* Style personnalisé pour le dropdown de notification */
+    .custom-dropdown {
+        width: 230px;
+
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .notification-empty {
+        text-align: center;
+        padding: 20px;
+        color: #9494C9;
+
+    }
+
+    .notification-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .notification-icon svg {
+        fill: #9494C9;
+
+    }
+
+    .notification-text {
+        font-size: 16px;
+        color: #9494C9;
+    }
+
+    .notification-text a {
+        text-decoration: none
+    }
+
+    .notification-text p {
+        text-decoration: none;
+        color: #4a3dbb;
+    }
+
+    .no-notifications {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #9494C9;
+    }
+
+    .no-notifications i {
+        font-size: 40px !important;
+        margin-bottom: 9px;
+
+    }
+
+    /* Style pour le conteneur de l'icône avec arrière-plan */
+    .icon-background {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        background-color: #e0e0e0;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    /* Style de l'icône */
+    .icon-background i {
+        font-size: 24px;
+        color: #4c45dd;
+    }
+
+    /*  */
+    /* Style du menu déroulant personnalisé */
+    .custom-profile-dropdown {
+        width: 250px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropdown-header {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown-header .profile-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+        /* Espace entre l'image et le texte */
+    }
+
+    .dropdown-header .profile-info {
+        text-align: left;
+    }
+
+    .dropdown-header h6 {
+        margin: 0;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .dropdown-header .view-profile {
+        font-size: 12px;
+        color: #666;
+        text-decoration: none;
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    #profi .dropdown-item svg {
+        margin-right: 10px;
+        color: #4a41c5;
+        width: 24px;
+        height: 24px;
+    }
+
+    .dropdown-divider {
+        margin: 0.5rem 0;
+        border-top: 1px solid #ddd;
+    }
 </style>
 <nav class="navbar navbar-expand-lg  ">
     <div class="container-fluid">
@@ -101,63 +248,51 @@
                 </div>
             </form>
 
-            <style>
-                /* Styles pour le badge du compteur de notifications */
-.badge.notification {
-    position: absolute;
-    top: -10px; /* Décalage vers le haut */
-    right: -10px; /* Décalage vers la droite pour être au-dessus de l'icône */
-    background-color: red; /* Couleur de fond du badge */
-    color: white; /* Couleur du texte du badge */
-    font-size: 0.75rem; /* Taille du texte du badge */
-    padding: 0.25em 0.4em; /* Padding du badge */
-    border-radius: 1.25rem; /* Bords arrondis du badge */
-}
-
-            </style>
 
             <!-- Search bar -->
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <li class="nav-item dropdown" id="noti">
-
                 <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-bell fa-fw"></i>
                     @unless (auth()->user()->unreadNotifications->isEmpty())
-
-                    <span id="notificationCounter" class="badge notification">{{ auth()->user()->unreadNotifications->count() }}</span>
+                        <span id="notificationCounter"
+                            class="badge notification">{{ auth()->user()->unreadNotifications->count() }}</span>
                     @endunless
 
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
                     <li class="notification-empty">
                         <div class="notification-icon">
-                            {{-- <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#9494C9"
-                                    class="bi bi-bell" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8 16a2 2 0 0 0 1.985-1.75H6.015A2 2 0 0 0 8 16zm6.002-3c-.11-.23-.302-.692-.651-1.356-.348-.664-.83-1.513-1.337-2.35C11.307 7.886 11 6.275 11 5V3a5 5 0 0 0-10 0v2c0 1.275-.307 2.886-.995 4.294-.507.837-.99 1.686-1.337 2.35-.349.664-.54 1.125-.65 1.356A1.993 1.993 0 0 0 0 14h16a1.993 1.993 0 0 0-1.998-1zm-1.513-2.56c.465.78.82 1.516 1.051 2.073H2.46c.23-.557.586-1.293 1.05-2.073C4.287 9.193 5 7.413 5 5V3a4 4 0 0 1 8 0v2c0 2.413.713 4.193 1.49 5.44z" />
-                                </svg> --}}
                         </div>
                         <div class="notification-text">
+                            <div class="icon-background">
+                                <i class="fas fa-bell fa-fw"></i>
+                            </div>
                             @forelse (auth()->user()->unreadNotifications as $notification)
-
                                 @if (isset($notification->data['demoId']))
-                                <a href="{{ route('demo.notification', ['notification' => $notification->id]) }}">
-                                    <p>Nouvelle demande de démo numéro <strong>{{ $notification->data['demoId'] }}</strong></p>
-                                </a>
+                                    <a href="{{ route('demo.notification', ['notification' => $notification->id]) }}">
+                                        <p>Nouvelle demande de démo numéro
+                                            <strong>{{ $notification->data['demoId'] }}</strong>
+                                        </p>
+                                    </a>
                                 @elseif (isset($notification->data['demandeInscriptionId']))
-                                <a href="{{ route('demandeinscription.notification', ['notification' => $notification->id]) }}">
-                                    <p>Nouvelle demande d'inscription numéro <strong>{{ $notification->data['demandeInscriptionId'] }}</strong></p>
-                                </a>
+                                    <a
+                                        href="{{ route('demandeinscription.notification', ['notification' => $notification->id]) }}">
+                                        <p>Nouvelle demande d'inscription numéro
+                                            <strong>{{ $notification->data['demandeInscriptionId'] }}</strong>
+                                        </p>
+                                    </a>
                                 @endif
 
-                        @empty
-                            <p>Aucune notification</p>
-                        @endforelse
-
-
+                            @empty
+                                <div class="no-notifications">
+                                    <p>Aucune notification</p>
+                                </div>
+                            @endforelse
                         </div>
                     </li>
                 </ul>
+
             </li>
             &nbsp;&nbsp;
 
@@ -170,21 +305,25 @@
                         style="width: 40px; height: 30px; margin-top:-5px">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end custom-profile-dropdown">
-                    <li class="dropdown-header text-center">
-                        <h6>{{ auth()->user()->username }}</h6>
-                        <a href="#" class="view-profile"> <img
-                                src="{{ asset('frontend/dashboard/images/kad.jpg') }}" alt="User"
-                                class="rounded-circle" style="width: 40px; height: 30px; margin-top:-5px">Voir le
-                            profil</a>
+                    <li class="dropdown-header d-flex align-items-center">
+                        <img src="{{ asset('frontend/dashboard/images/kad.jpg') }}" alt="User"
+                            class="rounded-circle profile-image">
+                        <div class="profile-info">
+                            <h6 class="mt-2">{{ auth()->user()->username }}</h6>
+                            <a href="#" class="view-profile">Voir le profil</a>
+                        </div>
                     </li>
-                    <li><a class="dropdown-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="25.943"
-                                height="25.125" viewBox="0 0 25.943 25.125">
+                    <li><a class="dropdown-item" href="#">
+                            <!-- SVG pour Signature -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25.943" height="25.125"
+                                viewBox="0 0 25.943 25.125">
                                 <path id="Tracé_456" data-name="Tracé 456"
                                     d="M13.14,9.771a53.017,53.017,0,0,0-7.41,11.218A1.441,1.441,0,0,1,3.152,19.7,55.879,55.879,0,0,1,10.984,7.858a25.093,25.093,0,0,1,3.611-3.43,9.606,9.606,0,0,1,1.618-1A4.018,4.018,0,0,1,17.893,3a1.786,1.786,0,0,1,.971.281A1.815,1.815,0,0,1,19.5,4a2.677,2.677,0,0,1,.246,1.252,10.774,10.774,0,0,1-.43,2.422c-.482,1.792-1.329,4.167-2.172,6.512l-.118.329c-.815,2.269-1.618,4.5-2.14,6.285-.141.481-.256.912-.344,1.29,1-.8,2.232-2.012,3.541-3.3l.043-.042c1.271-1.248,2.615-2.569,3.749-3.476a7.98,7.98,0,0,1,1.754-1.125,2.2,2.2,0,0,1,2.489.328,2.8,2.8,0,0,1,.748,1.811,7.209,7.209,0,0,1-.125,1.743,33.069,33.069,0,0,1-.985,3.711l-.06.195c-.333,1.083-.631,2.049-.8,2.826a10.288,10.288,0,0,0,1.376-1.853,1.441,1.441,0,1,1,2.458,1.506,10.643,10.643,0,0,1-2.452,2.96,3.035,3.035,0,0,1-3.265.459,2.145,2.145,0,0,1-1.12-1.8,5.873,5.873,0,0,1,.128-1.607c.189-.969.555-2.157.9-3.28L23,20.89a30.564,30.564,0,0,0,.9-3.364q.019-.109.034-.209-.123.093-.261.2c-1.006.8-2.249,2.023-3.571,3.322l-.043.042c-1.27,1.248-2.615,2.569-3.749,3.476a7.985,7.985,0,0,1-1.754,1.125,2.055,2.055,0,0,1-3.085-1.676,5.027,5.027,0,0,1,.033-1.157,18.406,18.406,0,0,1,.614-2.667c.547-1.87,1.377-4.179,2.18-6.412l.132-.367c.856-2.381,1.656-4.632,2.1-6.285q.059-.218.106-.412-.154.106-.322.231A22.294,22.294,0,0,0,13.14,9.771Z"
                                     transform="translate(-3 -3)" fill="#4a41c5" />
-                            </svg>
-                            Signature</a></li>
+                            </svg> Signature</a>
+                    </li>
                     <li><a class="dropdown-item" href="#">
+                            <!-- SVG pour Signature -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="34.52" height="25.119"
                                 viewBox="0 0 34.52 25.119">
                                 <g id="Groupe_280" data-name="Groupe 280" transform="translate(0 0)">
@@ -213,18 +352,20 @@
                                         d="M517.493,250.968a1.586,1.586,0,0,0,.683.147,1.62,1.62,0,0,0,1.516-1.173,1.977,1.977,0,0,0-.88-2.2,2.022,2.022,0,0,0-.93-.243,1.755,1.755,0,0,0-.389,3.468Z"
                                         transform="translate(-493.45 -242.025)" fill="#4a41c5" />
                                 </g>
-                            </svg> Apparence et accessibilité
-                        </a></li>
-                    <li><a class="dropdown-item" href="{{route('moncompte')}}"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="26.173" height="24.538" viewBox="0 0 26.173 24.538">
+                            </svg>Apparence & <br>accessibilité </a>
+                    </li>
+                    <li><a class="dropdown-item" href="{{ route('moncompte') }}">
+                            <!-- SVG pour Compte -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26.173" height="24.538"
+                                viewBox="0 0 26.173 24.538">
                                 <path id="sliders-solid"
                                     d="M0,36.448a1.634,1.634,0,0,0,1.636,1.636h2.8a4.088,4.088,0,0,0,7.494,0H24.538a1.636,1.636,0,0,0,0-3.272H11.926a4.088,4.088,0,0,0-7.494,0h-2.8A1.634,1.634,0,0,0,0,36.448Zm6.543,0a1.636,1.636,0,1,1,1.636,1.636A1.636,1.636,0,0,1,6.543,36.448Zm9.815-8.179A1.636,1.636,0,1,1,17.994,29.9,1.636,1.636,0,0,1,16.358,28.269Zm1.636-4.09a4.082,4.082,0,0,0-3.747,2.454H1.636a1.636,1.636,0,1,0,0,3.272H14.247a4.088,4.088,0,0,0,7.494,0h2.8a1.636,1.636,0,1,0,0-3.272h-2.8A4.082,4.082,0,0,0,17.994,24.179ZM9.815,21.725a1.636,1.636,0,1,1,1.636-1.636A1.636,1.636,0,0,1,9.815,21.725Zm3.747-3.272a4.088,4.088,0,0,0-7.494,0H1.636a1.636,1.636,0,1,0,0,3.272H6.068a4.088,4.088,0,0,0,7.494,0H24.538a1.636,1.636,0,1,0,0-3.272Z"
                                     transform="translate(0 -16)" fill="#4a41c5" />
-                            </svg>
-
-                            Compte</a></li>
-                    <li><a class="dropdown-item" href="#"><svg id="Groupe_278" data-name="Groupe 278"
-                                xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
+                            </svg> Compte</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#">
+                            <!-- SVG pour A propos -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
                                 viewBox="0 0 13.729 27.457">
                                 <path id="Tracé_452" data-name="Tracé 452"
                                     d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
@@ -232,10 +373,11 @@
                                 <path id="Tracé_453" data-name="Tracé 453"
                                     d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
                                     transform="translate(-32.568)" fill="#4a41c5" />
-                            </svg>
-                            A propos</a></li>
-                    <li><a class="dropdown-item" href="#"><svg id="Groupe_277" data-name="Groupe 277"
-                                xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
+                            </svg> A propos</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#">
+                            <!-- SVG pour Aide & Confidentialité -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
                                 viewBox="0 0 17.664 35.327">
                                 <path id="Tracé_450" data-name="Tracé 450"
                                     d="M32.832,0A8.842,8.842,0,0,0,24,8.832a2.208,2.208,0,1,0,4.416,0,4.416,4.416,0,0,1,8.832,0c0,1.915-1.126,3.09-2.976,4.8-1.712,1.576-3.648,3.362-3.648,6.242a2.208,2.208,0,0,0,4.416,0c0-.9.845-1.725,2.225-3,1.854-1.712,4.4-4.056,4.4-8.043A8.842,8.842,0,0,0,32.832,0Z"
@@ -243,12 +385,14 @@
                                 <path id="Tracé_451" data-name="Tracé 451"
                                     d="M40.416,72a4.416,4.416,0,1,0,4.416,4.416A4.416,4.416,0,0,0,40.416,72Z"
                                     transform="translate(-31.584 -45.505)" fill="#4a41c5" />
-                            </svg> Aide & confidentialité</a></li>
+                            </svg> Aide & confidentialité</a>
+                    </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li><a href="{{ route('logout') }}" class="dropdown-item"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <!-- SVG pour Déconnexion -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="26.81" height="30.726"
                                 viewBox="0 0 26.81 30.726">
                                 <g id="Groupe_279" data-name="Groupe 279" transform="translate(0 0)">
@@ -259,15 +403,17 @@
                                         d="M28.341,21.929a1.915,1.915,0,1,0-2.558,2.85,9.38,9.38,0,0,1,3.194,7.052,9.574,9.574,0,1,1-19.149,0,9.38,9.38,0,0,1,3.195-7.052,1.915,1.915,0,1,0-2.559-2.849,13.4,13.4,0,1,0,17.877,0Z"
                                         transform="translate(-5.997 -14.596)" fill="#4a41c5" />
                                 </g>
-                            </svg>
-                            Déconnexion
+                            </svg> Déconnexion
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            style="display: none;">
                             @csrf
                         </form>
                     </li>
                 </ul>
             </li>
+
+
 
 
 
@@ -533,7 +679,7 @@
                     @if (auth()->user()->role_id === 3 || auth()->user()->role_id === 2)
                         <!-- calendrier -->
                         <li class="nav-item" id="calendrier">
-                            <a class="nav-link " href="{{route('calendrier')}}">
+                            <a class="nav-link " href="{{ route('calendrier') }}">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
                                         viewBox="0 0 33.158 35">
@@ -555,7 +701,7 @@
 
                         <!-- sujet -->
                         <li class="nav-item" id="sujet">
-                            <a class="nav-link" href="{{route('sujet.index')}}">
+                            <a class="nav-link" href="{{ route('sujet.index') }}">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
                                         viewBox="0 0 35 35">

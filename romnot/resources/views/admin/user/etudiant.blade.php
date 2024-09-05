@@ -338,37 +338,37 @@
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="matricule" name="matricule"
                                     placeholder="Matricule" value="" required>
-                                    <div class="invalid-feedback">
-                                    </div>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="firstName" name="nom"
                                     placeholder="Nom" value="" required>
-                                    <div class="invalid-feedback">
-                                    </div>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" id="lastName" name="prenom"
                                     placeholder="Prenoms" value="" required>
-                                    <div class="invalid-feedback">
-                                    </div>
+                                <div class="invalid-feedback">
+                                </div>
 
                             </div>
 
                             <div class="col-sm-6">
                                 <input type="tel" class="form-control" id="contact" name="contact"
                                     placeholder="Contact" value="" required>
-                                    <div class="invalid-feedback">
-                                    </div>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <input type="email" class="form-control" id="email" name="email"
                                     placeholder="Email">
-                                    <div class="invalid-feedback">
-                                    </div>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
                             {{--  --}}
                             <div class="col-sm-6">
@@ -387,8 +387,8 @@
                             <div class="col-sm-6">
                                 <input type="date" class="form-control" id="datenaiss" name="datenaiss"
                                     placeholder="Date de naissance" value="" required>
-                                    <div class="invalid-feedback">
-                                    </div>
+                                <div class="invalid-feedback">
+                                </div>
                             </div>
 
 
@@ -473,13 +473,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Définir la configuration pour ce fichier
             setTableConfig({
-                'Genre': 4, // Index de la colonne "Matière"
-                'Classe': 8 // Index de la colonne "Classe"
+                'Genre': 4,
+                'Classe': 8
             });
 
-            // Définir l'ID du tableau pour les fonctions de recherche et de pagination
+
             setTableId('#etudiantTable');
-            // Appel des fonctions de recherche et de pagination
             searchTable('#etudiantTable tbody', 'searchInput', 'noResults');
             paginateTable('#etudiantTable');
         });
@@ -496,17 +495,17 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
 
 
     <script>
         $(document).ready(function() {
-            // Initialize Select2 on both select elements
             $('#role_id').select2({
-                placeholder: "Select options",
+                placeholder: "",
                 allowClear: true,
-                width: '100%'
+                width: '100%',
+                minimumResultsForSearch: Infinity
             });
 
 
@@ -515,116 +514,118 @@
         });
     </script>
 
-<style>
-  .invalid-feedback {
-    display: block; /* Assurez-vous que les messages d'erreur sont visibles */
-    color: #dc3545; /* Typiquement utilisé pour les messages d'erreur */
-    }
-    .is-invalid {
-        border: 1px solid red;
-    }
-    .is-valid {
-        border: 1px solid green;
-    }
+    <style>
+        .invalid-feedback {
+            display: block;
+            /* Assurez-vous que les messages d'erreur sont visibles */
+            color: #dc3545;
+            /* Typiquement utilisé pour les messages d'erreur */
+        }
 
+        .is-invalid {
+            border: 1px solid red;
+        }
 
-</style>
+        .is-valid {
+            border: 1px solid green;
+        }
+    </style>
 
-<script>
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-        $('#quickForm').validate({
-            onkeyup: function (element) {
-                $(element).valid();
-            },
-            onfocusout: function (element) {
-                $(element).valid();
-            },
-            rules: {
-                nom: {
-                    required: true,
+            $('#quickForm').validate({
+                onkeyup: function(element) {
+                    $(element).valid();
                 },
-
-                prenom: {
-                    required: true,
+                onfocusout: function(element) {
+                    $(element).valid();
                 },
+                rules: {
+                    nom: {
+                        required: true,
+                    },
 
-                contact: {
-                    required: true,
-                },
+                    prenom: {
+                        required: true,
+                    },
 
-                matricule: {
-                    required: true,
-                },
+                    contact: {
+                        required: true,
+                    },
 
-                datenaiss: {
-                    required: true,
-                },
+                    matricule: {
+                        required: true,
+                    },
 
-                email: {
-                    required: true,
-                    email: true,
-                    remote: {
-                        url: "/verify-email",
-                        type: "POST",
-                        data: {
-                            email: function() {
-                                return $("#email").val();
+                    datenaiss: {
+                        required: true,
+                    },
+
+                    email: {
+                        required: true,
+                        email: true,
+                        remote: {
+                            url: "/verify-email",
+                            type: "POST",
+                            data: {
+                                email: function() {
+                                    return $("#email").val();
+                                }
                             }
                         }
                     }
+                },
+                messages: {
+                    nom: {
+                        required: "Veuillez entrer le nom.",
+                    },
+                    prenom: {
+                        required: "Veuillez entrer le prenom.",
+                    },
+
+                    contact: {
+                        required: "Veuillez entrer le contact.",
+                    },
+
+                    datenaiss: {
+                        required: "Veuillez entrer la date de naissance.",
+                    },
+
+                    matricule: {
+                        required: "Veuillez entrer le matricule.",
+                    },
+
+                    email: {
+                        required: "Veuillez entrer une adresse e-mail.",
+                        email: "Veuillez entrer une adresse e-mail valide.",
+                        remote: "Cette adresse e-mail existe déjà."
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    // Utiliser la classe invalid-feedback pour placer le message d'erreur
+                    var container = element.siblings('.invalid-feedback');
+                    if (container.length) {
+                        container.append(error);
+                    } else {
+                        element.after(error);
+                    }
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-valid').removeClass('is-invalid');
                 }
-            },
-            messages: {
-                nom: {
-                    required: "Veuillez entrer le nom.",
-                },
-                prenom: {
-                    required: "Veuillez entrer le prenom.",
-                },
-
-                contact: {
-                    required: "Veuillez entrer le contact.",
-                },
-
-                datenaiss: {
-                    required: "Veuillez entrer la date de naissance.",
-                },
-
-                matricule: {
-                    required: "Veuillez entrer le matricule.",
-                },
-
-                email: {
-                    required: "Veuillez entrer une adresse e-mail.",
-                    email: "Veuillez entrer une adresse e-mail valide.",
-                    remote: "Cette adresse e-mail existe déjà."
-                }
-            },
-            errorElement: 'span',
-            errorPlacement: function (error, element) {
-                // Utiliser la classe invalid-feedback pour placer le message d'erreur
-                var container = element.siblings('.invalid-feedback');
-                if (container.length) {
-                    container.append(error);
-                } else {
-                    element.after(error);
-                }
-            },
-            highlight: function (element, errorClass, validClass) {
-                $(element).addClass('is-invalid').removeClass('is-valid');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).addClass('is-valid').removeClass('is-invalid');
-            }
+            });
         });
-    });
-</script>
+    </script>
 
 
 </body>

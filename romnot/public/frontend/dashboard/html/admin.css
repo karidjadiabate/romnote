@@ -88,10 +88,10 @@ button.navbar-toggler:focus {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-item:hover {
+/* .dropdown-item:hover {
     background-color: #38B293;
 
-}
+} */
 
 .dropdown-menu {
     border: #4a3dbb;

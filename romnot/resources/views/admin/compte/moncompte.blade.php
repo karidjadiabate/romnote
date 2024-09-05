@@ -5,51 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compte</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
+            background-color: white;
             margin: 0;
             padding: 0;
-            /* display: flex;
-            justify-content: center;
-            align-items: center; */
-            height: 100vh;
         }
 
         .account-container {
-            width: 100%;
+            width: 90%;
             max-width: 1200px;
-            background-color: #fff;
+            background-color: white;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-
+            margin: 20px auto;
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
         }
 
         .account-title {
-            font-size: 36px;
+            font-size: 32px;
             color: #4a3dbb;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .tabs {
             display: flex;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .tab-link {
-            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            margin-right: 15px;
             background-color: #f8f9fa;
-            border: 1px solid #ced4da;
-            padding: 15px 20px;
-            cursor: pointer;
-            margin-right: 5px;
-            transition: background-color 0.3s;
-            font-size: 18px;
             color: #4a3dbb;
-            text-align: center;
+            border: 1px solid transparent;
             border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
         }
 
         .tab-link.active {
@@ -62,84 +62,82 @@
         }
 
         .tab-content.active {
-            display: block;
+            display: flex;
+            gap: 40px;
+
         }
 
-        /* .profile-section{
+        .profile-section {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        } */
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
 
         .profile-img-container {
             position: relative;
-            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             border: 3px solid #4a3dbb;
         }
 
         .photo-btn {
             position: absolute;
-            bottom: 10px;
-            left: 123px;
+            bottom: 5px;
+            right: 5px;
             background-color: #ffffff;
             border: none;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 14px;
             color: #4a3dbb;
             border-radius: 50%;
-            padding: 8px;
+            padding: 5px;
         }
 
         .profile-actions {
-            /* display: flex;
-            left: 0; */
-            gap: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         .upload-btn,
         .delete-btn {
             background-color: #ffffff;
             border: none;
-            margin-left: 20px;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 18px;
             color: #4a3dbb;
             border-radius: 50%;
-            /* padding: 15px; */
-
+            padding: 10px;
         }
 
         .account-form {
             display: flex;
             flex-direction: column;
+            width: 90%;
             gap: 20px;
         }
 
         .form-row {
             display: flex;
             justify-content: space-between;
-            gap: 60px;
+            gap: 30px;
             flex-wrap: wrap;
         }
 
         .form-group {
             flex: 1;
             min-width: 280px;
-            margin-right: 20px;
-
             margin-bottom: 20px;
-        }
-
-
-        .form-group:last-child {
-            margin-right: 0;
         }
 
         .form-group label {
@@ -152,13 +150,12 @@
         .form-group input,
         .form-group select,
         .form-group textarea {
-            width: 90%;
-            padding: 12px;
+            width: 100%;
+            padding: 10px;
             border: 1px solid #ced4da;
             border-radius: 4px;
             font-size: 16px;
             color: #4a3dbb;
-            /* margin-bottom: 20px; */
         }
 
         .form-group input:focus,
@@ -171,23 +168,15 @@
         .notification-setting {
             display: flex;
             align-items: start;
+            color: #4a3dbb;
         }
-
-        #notifications {
-            left: 0;
-        }
-
-        /* .notification-setting input {
-            right: 0;
-        } */
 
         .save-btn {
             align-self: flex-end;
             background-color: #38B293;
             color: #ffffff;
-            padding: 12px 30px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s;
@@ -210,36 +199,8 @@
             cursor: pointer;
         }
 
-        .icon-user:before {
-            content: "\f007";
-            font-family: 'FontAwesome';
-            margin-right: 8px;
-        }
-
-        .icon-lock:before {
-            content: "\f023";
-            font-family: 'FontAwesome';
-            margin-right: 8px;
-        }
-
-        .icon-upload:before {
-            content: "\f093";
-            font-family: 'FontAwesome';
-        }
-
-        .icon-delete:before {
-            content: "\f1f8";
-            font-family: 'FontAwesome';
-        }
-
-        .icon-camera:before {
-            content: "\f030";
-            font-family: 'FontAwesome';
-        }
-
-        .icon-eye:before {
-            content: "\f06e";
-            font-family: 'FontAwesome';
+        h2 {
+            color: #4a3dbb;
         }
 
         hr {
@@ -247,51 +208,39 @@
             width: 100%;
         }
 
-        .notification-setting {
-            display: flex;
+        input::placeholder {
             color: #4a3dbb;
-            align-items: start;
-
         }
 
-        #notifications {
-            margin-right: 10px;
-            position: relative;
+        #security {
+
+            margin-left: 20%;
+            width: 100%
         }
-
-
-
-
-        /* .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #003366;
-            color: white;
-            font-size: 12px;
-        } */
     </style>
 </head>
 
 <body>
-
+    <h2 class="account-title">Compte</h2>
+    <div class="tabs">
+        <button class="tab-link active" data-tab="personal-info"><i class="fas fa-user"></i> Informations
+            personnelles</button>
+        <button class="tab-link" data-tab="security"><i class="fas fa-lock"></i> Sécurité</button>
+    </div>
     <div class="account-container">
-        <h2 class="account-title">Compte</h2>
-        <div class="tabs">
-            <button class="tab-link active" data-tab="personal-info"><i class="icon-user"></i> Informations
-                personnelles</button>
-            <button class="tab-link" data-tab="security"><i class="icon-lock"></i> Sécurité</button>
-        </div>
-
         <div id="personal-info" class="tab-content active">
             <div class="profile-section">
                 <div class="profile-img-container">
-                    <img src="../images/kad.jpg" alt="User" class="profile-img">
-                    <button class="photo-btn"><i class="icon-camera"></i></button>
+                    <img src="{{ asset('frontend/dashboard/images/kad.jpg') }}" alt="User" class="profile-img"
+                        id="user-image">
+                    <button class="photo-btn" id="camera-btn"><i class="fas fa-camera"></i></button>
+                    <input type="file" id="upload-input" accept="image/*" style="display: none;"
+                        onchange="uploadImage(event)">
                 </div>
                 <div class="profile-actions">
-                    <button class="upload-btn"><i class="icon-upload"></i></button>
-                    <button class="delete-btn"><i class="icon-delete"></i></button>
+                    <button class="upload-btn" onclick="document.getElementById('upload-input').click();"><i
+                            class="fas fa-upload"></i></button>
+                    <button class="delete-btn" onclick="deleteImage()"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
 
@@ -333,9 +282,9 @@
                     <div class="form-group">
                         <label for="role">Rôle</label>
                         <select id="role">
-                            <option value="SuperAdmin" selected>SuperAdmin</option>
-                            <option value="SuperAdmin" selected>Admin</option>
-                            <option value="SuperAdmin" selected>Enseignants</option>
+                            <option value="SuperAdmin">SuperAdmin</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Enseignants">Enseignants</option>
                         </select>
                     </div>
                 </div>
@@ -361,56 +310,117 @@
 
         <div id="security" class="tab-content">
             <form class="account-form">
+                <h2>Mot de passe </h2>
+                <hr>
                 <div class="form-group password-group">
-                    <label for="current-password">Mot de passe actuel</label>
-                    <input type="password" id="current-password">
-                    <i class="icon-eye"></i>
+                    <label for="current-password"></label>
+                    <input type="password" id="current-password" placeholder="Mot de passe actuel">
+                    <i class="fas fa-eye-slash" onclick="togglePassword('current-password', this)"></i>
                 </div>
 
                 <div class="form-group password-group">
-                    <label for="new-password">Nouveau mot de passe</label>
-                    <input type="password" id="new-password">
-                    <i class="icon-eye"></i>
+                    <label for="new-password"></label>
+                    <input type="password" id="new-password" placeholder="Nouveau mot de passe">
+                    <i class="fas fa-eye-slash" onclick="togglePassword('new-password', this)"></i>
                 </div>
 
                 <div class="form-group password-group">
-                    <label for="confirm-password">Confirmez le nouveau mot de passe</label>
-                    <input type="password" id="confirm-password">
-                    <i class="icon-eye"></i>
+                    <label for="confirm-password"></label>
+                    <input type="password" id="confirm-password" placeholder="Confirmez le nouveau mot de passe">
+                    <i class="fas fa-eye-slash" onclick="togglePassword('confirm-password', this)"></i>
                 </div>
 
                 <button type="submit" class="save-btn">Sauvegarder</button>
             </form>
         </div>
-        <!-- <div class="footer">
-            © 2024 Tous Droits Réservés. AKPANY, Software & Media Solution
-        </div> -->
     </div>
 
-
-
-
-
-
     <script>
+        document.getElementById('camera-btn').addEventListener('click', () => {
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then((stream) => {
+                    const video = document.createElement('video');
+                    video.srcObject = stream;
+                    video.play();
+
+                    const modal = document.createElement('div');
+                    modal.style.position = 'fixed';
+                    modal.style.top = '50%';
+                    modal.style.left = '50%';
+                    modal.style.transform = 'translate(-50%, -50%)';
+                    modal.style.zIndex = '1000';
+                    modal.style.backgroundColor = 'white';
+                    modal.style.padding = '20px';
+                    modal.appendChild(video);
+
+                    const captureBtn = document.createElement('button');
+                    captureBtn.innerText = 'Capturer';
+                    captureBtn.onclick = () => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        const imageDataUrl = canvas.toDataURL('image/png');
+                        document.getElementById('user-image').src = imageDataUrl;
+
+                        stream.getTracks().forEach(track => track.stop());
+                        document.body.removeChild(modal);
+                    };
+
+                    modal.appendChild(captureBtn);
+                    document.body.appendChild(modal);
+                })
+                .catch((err) => {
+                    alert('Erreur lors de l\'accès à la caméra : ' + err.message);
+                });
+        });
+
+        function uploadImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                document.getElementById('user-image').src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function deleteImage() {
+            document.getElementById('user-image').src =
+                '{{ asset('frontend/dashboard/images/kad.jpg') }}';
+        }
+
         document.querySelectorAll('.tab-link').forEach(button => {
             button.addEventListener('click', () => {
                 const tabContentId = button.getAttribute('data-tab');
-
-                document.querySelectorAll('.tab-link').forEach(btn => {
-                    btn.classList.remove('active');
-                });
                 document.querySelectorAll('.tab-content').forEach(tabContent => {
                     tabContent.classList.remove('active');
                 });
-
-                button.classList.add('active');
+                document.querySelectorAll('.tab-link').forEach(btn => {
+                    btn.classList.remove('active');
+                });
                 document.getElementById(tabContentId).classList.add('active');
+                button.classList.add('active');
             });
         });
 
+        function togglePassword(fieldId, icon) {
+            const field = document.getElementById(fieldId);
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        }
     </script>
-
 </body>
 
 </html>

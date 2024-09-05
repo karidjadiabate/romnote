@@ -43,22 +43,25 @@ class DemandeInscriptionController extends Controller
      */
     public function store(StoreDemandeInscriptionRequest $request)
     {
-        $validatedData = $request->validate([
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
-            'nometablissement' => 'required|string|max:255',
-            'email' => 'required|email|unique:demos,email',
-            'contact' => 'required|string|max:20',
-            'adresseetablissement' => 'required|string|max:20',
-        ],[
-            'nom.required' => 'Le nom est obligatoire.',
-            'prenom.required' => 'Le prenom est obligatoire.',
-            'nometablissement.required' => 'Le Nom d\'etablissement est obligatoire.',
-            'contact.required' => 'Le contact est obligatoire.',
-            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
-            'email.required' => 'L\'adresse email est obligatoire.',
-            'email.unique' => 'Cet email est déjà associé à une demande d\'inscription.'
-        ]);
+        $validatedData = $request->validate(
+            [
+                'nom' => 'required|string',
+                'prenom' => 'required|string',
+                'nometablissement' => 'required|string',
+                'email' => 'required|email|unique:demos,email',
+                'contact' => 'required|string|max:20',
+                'adresseetablissement' => 'required|string',
+            ]
+            // ,[
+            //     'nom.required' => 'Le nom est obligatoire.',
+            //     'prenom.required' => 'Le prenom est obligatoire.',
+            //     'nometablissement.required' => 'Le Nom d\'etablissement est obligatoire.',
+            //     'contact.required' => 'Le contact est obligatoire.',
+            //     'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
+            //     'email.required' => 'L\'adresse email est obligatoire.',
+            //     'email.unique' => 'Cet email est déjà associé à une demande d\'inscription.'
+            // ]
+        );
 
         $demandeinscription = DemandeInscription::create([
             'nom' => $validatedData['nom'],
@@ -123,7 +126,6 @@ class DemandeInscriptionController extends Controller
             // Créer l'utilisateur admin
             $admin = User::create($dataAdmin);
             $admin->notify(new NouveauCompteNotification($admin->email, $passwordPlain));
-
         } catch (Exception $e) {
             Log::error('Erreur lors de la création de l\'admin: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'Erreur lors de la création de l\'établissement.']);

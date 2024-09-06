@@ -32,6 +32,8 @@ class User extends Authenticatable
         'genre',
         'datenaiss',
         'password',
+        'adresse',
+        'image',
         'from_demande_inscription'
     ];
 
@@ -70,7 +72,7 @@ class User extends Authenticatable
         $administrateurs = DB::table('users AS u')
             ->join('etablissements AS e', 'e.id', '=', 'u.etablissement_id')
             ->where('u.role_id', '=', 3)
-            ->select('u.id', 'u.nom','u.prenom','u.image', 'u.contact', 'e.nometablissement','u.etablissement_id','u.email','u.username','u.password')
+            ->select('u.id', 'u.nom','u.prenom','u.image', 'u.contact', 'u.adresse', 'e.nometablissement','u.etablissement_id','u.email','u.password')
             ->get();
 
         return $administrateurs;
@@ -84,7 +86,8 @@ class User extends Authenticatable
         $professeurs = DB::table('users AS u')
             ->join('etablissements AS e', 'e.id', '=', 'u.etablissement_id')
             ->where('u.role_id', '=', 2)
-            ->select('u.id', 'u.nom','u.prenom','u.image', 'u.contact', 'e.nometablissement','u.email','u.username','u.password','u.matiere_id','selected_classes',
+            ->select('u.id', 'u.nom','u.prenom','u.image', 'u.contact', 'e.nometablissement','u.email',
+            'u.password','u.matiere_id','selected_classes','u.adresse',
             DB::raw('GROUP_CONCAT(DISTINCT (c.nomclasse)) as nomclasses'),
             DB::raw('GROUP_CONCAT(DISTINCT m.nommatiere) as nommatieres'))
 
@@ -95,8 +98,8 @@ class User extends Authenticatable
                 $join->whereRaw("FIND_IN_SET(m.id, u.matiere_id)");
             })
             ->where('u.etablissement_id', '=', $ecoleId)
-            ->groupBy('u.id', 'u.email', 'u.username', 'u.nom', 'u.prenom', 'u.image', 'u.contact',
-            'u.password','e.nometablissement','u.matiere_id','u.selected_classes')
+            ->groupBy('u.id', 'u.email', 'u.nom', 'u.prenom', 'u.image', 'u.contact',
+            'u.password','e.nometablissement','u.matiere_id','u.selected_classes','u.adresse')
             ->get();
 
         return $professeurs;
@@ -112,7 +115,7 @@ class User extends Authenticatable
             ->join('classes AS c','c.id','=','u.classe_id')
             ->where('u.role_id', '=', 1)
             ->where('u.etablissement_id', '=', $ecoleId)
-            ->select('u.id', 'u.nom','u.prenom','u.image', 'u.contact', 'e.nometablissement','u.email','u.username','u.password',
+            ->select('u.id', 'u.nom','u.prenom','u.image', 'u.contact', 'e.nometablissement','u.email','u.adresse','u.password',
             'u.matricule','c.nomclasse','u.datenaiss','u.classe_id','genre')
             ->get();
 

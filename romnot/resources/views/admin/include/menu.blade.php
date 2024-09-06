@@ -301,13 +301,27 @@
             <li class="nav-item dropdown" id="profi">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset('frontend/dashboard/images/kad.jpg') }}" alt="User" class="rounded-circle"
-                        style="width: 40px; height: 30px; margin-top:-5px">
+                    @if (auth()->user()->image)
+
+                    <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User" class="rounded-circle profile-image"
+                    style="width: 40px; height: 35x; margin-top:-5px">
+
+                    @else
+
+                    <img src="{{ Avatar::create(auth()->user()->nom .' '.auth()->user()->prenom)->toBase64() }}" alt="User" class="rounded-circle profile-image"
+                    style="width: 40px; height: 35x; margin-top:-5px">
+
+                    @endif
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end custom-profile-dropdown">
                     <li class="dropdown-header d-flex align-items-center">
-                        <img src="{{ asset('frontend/dashboard/images/kad.jpg') }}" alt="User"
+                        @if (auth()->user()->image)
+                        <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User"
                             class="rounded-circle profile-image">
+                        @else
+                        <img src="{{ Avatar::create(auth()->user()->nom .' '.auth()->user()->prenom)->toBase64() }}" alt="User"
+                        class="rounded-circle profile-image">
+                        @endif
                         <div class="profile-info">
                             <h6 class="mt-2">{{ auth()->user()->nom .' '.auth()->user()->prenom }}</h6>
                             <a href="{{route('moncompte')}}" class="view-profile">Voir le profil</a>
@@ -389,6 +403,19 @@
                                 transform="translate(-32.568)" fill="#4a41c5" />
                         </svg> A propos</a>
                     </li>
+                    @elseif(auth()->user()->role_id === 4)
+                    <li><a class="dropdown-item" href="{{route('apropos.superadmin')}}">
+                        <!-- SVG pour A propos -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
+                            viewBox="0 0 13.729 27.457">
+                            <path id="Tracé_452" data-name="Tracé 452"
+                                d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
+                                transform="translate(-24 -25.704)" fill="#4a41c5" />
+                            <path id="Tracé_453" data-name="Tracé 453"
+                                d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
+                                transform="translate(-32.568)" fill="#4a41c5" />
+                        </svg> A propos</a>
+                    </li>
                     @endif
 
                     @if (auth()->user()->role_id === 3)
@@ -404,8 +431,21 @@
                                     transform="translate(-31.584 -45.505)" fill="#4a41c5" />
                             </svg> Aide & confidentialité</a>
                     </li>
-                    @elseif((auth()->user()->role_id === 2))
+                    @elseif(auth()->user()->role_id === 2)
                     <li><a class="dropdown-item" href="{{route('aideconfidentialite.professeur')}}">
+                        <!-- SVG pour Aide & Confidentialité -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
+                            viewBox="0 0 17.664 35.327">
+                            <path id="Tracé_450" data-name="Tracé 450"
+                                d="M32.832,0A8.842,8.842,0,0,0,24,8.832a2.208,2.208,0,1,0,4.416,0,4.416,4.416,0,0,1,8.832,0c0,1.915-1.126,3.09-2.976,4.8-1.712,1.576-3.648,3.362-3.648,6.242a2.208,2.208,0,0,0,4.416,0c0-.9.845-1.725,2.225-3,1.854-1.712,4.4-4.056,4.4-8.043A8.842,8.842,0,0,0,32.832,0Z"
+                                transform="translate(-24)" fill="#4a41c5" />
+                            <path id="Tracé_451" data-name="Tracé 451"
+                                d="M40.416,72a4.416,4.416,0,1,0,4.416,4.416A4.416,4.416,0,0,0,40.416,72Z"
+                                transform="translate(-31.584 -45.505)" fill="#4a41c5" />
+                        </svg> Aide & confidentialité</a>
+                    </li>
+                    @elseif(auth()->user()->role_id === 4)
+                    <li><a class="dropdown-item" href="{{route('aideconfidentialite.superadmin')}}">
                         <!-- SVG pour Aide & Confidentialité -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
                             viewBox="0 0 17.664 35.327">
@@ -707,10 +747,10 @@
 
 
 
-                    @if (auth()->user()->role_id === 3 || auth()->user()->role_id === 2)
+                    @if (auth()->user()->role_id === 3)
                         <!-- calendrier -->
                         <li class="nav-item" id="calendrier">
-                            <a class="nav-link " href="{{ route('calendrier') }}">
+                            <a class="nav-link " href="{{ route('calendrier.admin') }}">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
                                         viewBox="0 0 33.158 35">
@@ -730,6 +770,29 @@
                             </a>
                         </li>
 
+                        @elseif(auth()->user()->role_id === 2)
+
+                        <li class="nav-item" id="calendrier">
+                            <a class="nav-link " href="{{ route('calendrier.professeur') }}">
+                                <div class="icon-text-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
+                                        viewBox="0 0 33.158 35">
+                                        <g id="calendar-event-fill" transform="translate(-3 -2)"
+                                            style="isolation: isolate">
+                                            <path id="Tracé_374" data-name="Tracé 374"
+                                                d="M10.368,3A7.369,7.369,0,0,0,3,10.368v1.842H36.158V10.368A7.369,7.369,0,0,0,28.789,3H10.368Z"
+                                                transform="translate(0 0.842)" fill="#fff" />
+                                            <path id="Tracé_375" data-name="Tracé 375"
+                                                d="M12.211,2a1.842,1.842,0,0,1,1.842,1.842V7.526a1.842,1.842,0,1,1-3.684,0V3.842A1.842,1.842,0,0,1,12.211,2ZM3,16.737V29.632A7.369,7.369,0,0,0,10.368,37H28.789a7.369,7.369,0,0,0,7.368-7.368V16.737Zm23.947,3.684h1.842a1.843,1.843,0,0,1,1.842,1.842v1.842a1.843,1.843,0,0,1-1.842,1.842H26.947a1.843,1.843,0,0,1-1.842-1.842V22.263A1.843,1.843,0,0,1,26.947,20.421ZM28.789,3.842a1.842,1.842,0,0,0-3.684,0V7.526a1.842,1.842,0,0,0,3.684,0Z"
+                                                transform="translate(0 0)" fill="#fff" fill-rule="evenodd" />
+                                        </g>
+                                    </svg>
+
+                                    <span>Calendrier</span>
+                                </div>
+                            </a>
+                        </li>
+                        @endif
                         <!-- sujet -->
                         @if (auth()->user()->role_id === 2)
                         <li class="nav-item" id="sujet">
@@ -747,25 +810,7 @@
                                 </div>
                             </a>
                         </li>
-                        @elseif(auth()->user()->role_id === 3)
 
-                        <li class="nav-item" id="sujet">
-                            <a class="nav-link" href="{{ route('sujet.admin') }}">
-                                <div class="icon-text-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
-                                        viewBox="0 0 35 35">
-                                        <path id="Soustraction_4" data-name="Soustraction 4"
-                                            d="M27.223,35H7.777A7.786,7.786,0,0,1,0,27.223V7.777A7.786,7.786,0,0,1,7.777,0H27.223A7.786,7.786,0,0,1,35,7.777V27.223A7.786,7.786,0,0,1,27.223,35Zm-3.89-13.608a1.944,1.944,0,1,0,1.944,1.944A1.946,1.946,0,0,0,23.333,21.392Zm-11.665,0a1.944,1.944,0,1,0,1.944,1.944A1.946,1.946,0,0,0,11.667,21.392Zm11.665-5.833A1.944,1.944,0,1,0,25.277,17.5,1.946,1.946,0,0,0,23.333,15.559Zm-11.665,0A1.944,1.944,0,1,0,13.611,17.5,1.946,1.946,0,0,0,11.667,15.559ZM23.333,9.725a1.945,1.945,0,1,0,1.944,1.946A1.947,1.947,0,0,0,23.333,9.725Zm-11.665,0a1.945,1.945,0,1,0,1.944,1.946A1.947,1.947,0,0,0,11.667,9.725Z"
-                                            fill="#fff" />
-                                    </svg>
-
-
-                                    <span>Sujet</span>
-                                </div>
-                            </a>
-                        </li>
-
-                        @endif
                         <!-- correction -->
                         <li class="nav-item" id="correction">
                             <a class="nav-link " href="#">
@@ -786,7 +831,47 @@
                                 </div>
                             </a>
                         </li>
-                    @endif
+
+                        @elseif(auth()->user()->role_id === 3)
+
+                        <li class="nav-item" id="sujet">
+                            <a class="nav-link" href="{{ route('sujet.admin') }}">
+                                <div class="icon-text-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
+                                        viewBox="0 0 35 35">
+                                        <path id="Soustraction_4" data-name="Soustraction 4"
+                                            d="M27.223,35H7.777A7.786,7.786,0,0,1,0,27.223V7.777A7.786,7.786,0,0,1,7.777,0H27.223A7.786,7.786,0,0,1,35,7.777V27.223A7.786,7.786,0,0,1,27.223,35Zm-3.89-13.608a1.944,1.944,0,1,0,1.944,1.944A1.946,1.946,0,0,0,23.333,21.392Zm-11.665,0a1.944,1.944,0,1,0,1.944,1.944A1.946,1.946,0,0,0,11.667,21.392Zm11.665-5.833A1.944,1.944,0,1,0,25.277,17.5,1.946,1.946,0,0,0,23.333,15.559Zm-11.665,0A1.944,1.944,0,1,0,13.611,17.5,1.946,1.946,0,0,0,11.667,15.559ZM23.333,9.725a1.945,1.945,0,1,0,1.944,1.946A1.947,1.947,0,0,0,23.333,9.725Zm-11.665,0a1.945,1.945,0,1,0,1.944,1.946A1.947,1.947,0,0,0,11.667,9.725Z"
+                                            fill="#fff" />
+                                    </svg>
+
+
+                                    <span>Sujet</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <!-- correction -->
+                        <li class="nav-item" id="correction">
+                            <a class="nav-link " href="#">
+                                <div class="icon-text-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="38.889" height="35"
+                                        viewBox="0 0 38.889 35">
+                                        <g id="printer2" transform="translate(-2 -3)" style="isolation: isolate">
+                                            <path id="Tracé_379" data-name="Tracé 379"
+                                                d="M2,11.833A5.833,5.833,0,0,1,7.833,6h3.889a1.945,1.945,0,0,1,.87.205L16.07,7.944H35.056a5.833,5.833,0,0,1,5.833,5.833V23.5a5.833,5.833,0,0,1-5.833,5.833H31.167V25.444h3.889A1.944,1.944,0,0,0,37,23.5V13.778a1.944,1.944,0,0,0-1.944-1.944H15.611a1.944,1.944,0,0,1-.87-.205L11.263,9.889H7.833a1.944,1.944,0,0,0-1.944,1.944V23.5a1.944,1.944,0,0,0,1.944,1.944h3.889v3.889H7.833A5.833,5.833,0,0,1,2,23.5Z"
+                                                transform="translate(0 2.833)" fill="#fff" fill-rule="evenodd" />
+                                            <path id="Tracé_380" data-name="Tracé 380"
+                                                d="M8.889,6.889A3.889,3.889,0,0,1,12.778,3H24.444a3.889,3.889,0,0,1,3.889,3.889v3.889H24.444V6.889H12.778v3.659L9.758,9.039a1.945,1.945,0,0,0-.87-.205ZM28.333,28.278v5.833A3.889,3.889,0,0,1,24.444,38H12.778a3.889,3.889,0,0,1-3.889-3.889V24.389a1.944,1.944,0,0,1,0-3.889H28.333a1.944,1.944,0,1,1,0,3.889Zm-3.889-3.889H12.778v9.722H24.444ZM8.889,16.611a1.944,1.944,0,1,1-1.944-1.944A1.944,1.944,0,0,1,8.889,16.611Z"
+                                                transform="translate(2.833)" fill="#fff" fill-rule="evenodd" />
+                                        </g>
+                                    </svg>
+
+                                    <span>Correction</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        @endif
 
 
                 </ul>

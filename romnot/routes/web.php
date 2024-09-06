@@ -11,6 +11,7 @@ use App\Http\Controllers\EtablissementController;
 use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatiereController;
+use App\Http\Controllers\MonCompteController;
 use App\Http\Controllers\NiveauController;
 use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\SujetController;
@@ -57,6 +58,12 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::post('/acceptdemandedemo/{id}', [DemoController::class, 'accept'])->name('demo.accept');
     Route::post('/rejectdemandedemo/{id}', [DemoController::class, 'reject'])->name('demo.reject');
 
+    Route::get('/apropos',[ClientController::class,'apropos'])->name('apropos.superadmin');
+    Route::get('/aideconfidentialite',[ClientController::class,'aideconfidentialite'])->name('aideconfidentialite.superadmin');
+
+    Route::post('/changepassword/update', [MonCompteController::class, 'updatepassword'])->name('updatepassword.superadmin');
+    Route::post('/updateprofile/{id}', [MoncompteController::class, 'updateprofile'])->name('updateprofile.superadmin');
+
 });
 
 
@@ -70,10 +77,13 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::resource('niveau', NiveauController::class);
     Route::get('/professeur',[UserController::class,'professeur'])->name('professeur');
     Route::get('/etudiant',[UserController::class,'etudiant'])->name('etudiant');
-    Route::get('/calendrier',[CalendrierController::class,'index'])->name('calendrier');
+    Route::get('/calendrier',[CalendrierController::class,'index'])->name('calendrier.admin');
     Route::get('/sujet',[SujetController::class,'index'])->name('sujet.admin');
     Route::get('/apropos',[ClientController::class,'apropos'])->name('apropos.admin');
     Route::get('/aideconfidentialite',[ClientController::class,'aideconfidentialite'])->name('aideconfidentialite.admin');
+
+    Route::post('/changepassword/update', [MonCompteController::class, 'updatepassword'])->name('updatepassword.admin');
+    Route::post('/updateprofile/{id}', [MoncompteController::class, 'updateprofile'])->name('updateprofile.admin');
 });
 
 
@@ -82,9 +92,11 @@ Route::prefix('professeur')->middleware(['professeur','changepassword'])->group(
 
     Route::get('/',[DashboardController::class,'dashboard'])->name('professeur.dashboard');
     Route::get('/sujet',[SujetController::class,'index'])->name('sujet.professeur');
+    Route::get('/calendrier',[CalendrierController::class,'index'])->name('calendrier.professeur');
     Route::get('/apropos',[ClientController::class,'apropos'])->name('apropos.professeur');
     Route::get('/aideconfidentialite',[ClientController::class,'aideconfidentialite'])->name('aideconfidentialite.professeur');
-
+    Route::post('/changepassword/update', [MoncompteController::class, 'updatepassword'])->name('updatepassword.professeur');
+    Route::post('/updateprofile/{id}', [MoncompteController::class, 'updateprofile'])->name('updateprofile.professeur');
 });
 
 Route::post('/verify-email', [EmailVerificationController::class, 'verifyEmail']);

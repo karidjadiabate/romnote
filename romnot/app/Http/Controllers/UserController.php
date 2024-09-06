@@ -132,6 +132,7 @@ class UserController extends Controller
             'matricule' => $request->matricule,
             'genre' => $request->genre,
             'datenaiss' => $request->datenaiss,
+            'adresse' => $request->adresse,
         ];
 
         if ($request->role_id == 1) {
@@ -201,13 +202,12 @@ class UserController extends Controller
             $name = $media->hashName();
             $path = $media->storeAs('public/profile', $name);
 
-            dd('ok');
             // Mettre à jour les informations d'image de profil de l'utilisateur
             $data['image'] = $name;
 
             // Supprimer l'ancienne image de profil si elle existe
-            if ($user->title) {
-                Storage::delete('public/profile/' . $user->title);
+            if ($user->image) {
+                Storage::delete('public/profile/' . $user->image);
             }
         }
 
@@ -223,6 +223,7 @@ class UserController extends Controller
             //$user->role_id = $request->role_id;
             $user->genre = $request->genre;
             $user->datenaiss = $request->datenaiss;
+            $user->adresse = $request->adresse;
         } elseif ($user->role_id == 2) {
             if (is_array($request->matiere_id)) {
                 $user->matiere_id = implode(',', $request->matiere_id);
@@ -235,6 +236,7 @@ class UserController extends Controller
             $user->matricule = $request->matricule;
             $user->contact = $request->contact;
             $classes = $request->classe_id;
+            $user->adresse = $request->adresse;
             if (is_array($classes)) {
                 $user->selected_classes = json_encode($classes);
             } else {

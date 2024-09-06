@@ -249,11 +249,15 @@
         <div id="personal-info" class="tab-content active">
             <div class="profile-section">
                 <div class="profile-img-container">
-                    <img src="{{ asset('frontend/dashboard/images/kad.jpg') }}" alt="User" class="profile-img"
+                    @if (auth()->user()->image)
+                    <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User" class="profile-img"
                         id="user-image">
+                    @else
+                    <img src="{{ Avatar::create(auth()->user()->nom .' '.auth()->user()->prenom)->toBase64() }}" alt="User" class="profile-img"
+                    id="user-image">
+                    @endif
                     <button class="photo-btn" id="camera-btn"><i class="fas fa-camera"></i></button>
-                    <input type="file" id="upload-input" accept="image/*" style="display: none;"
-                        onchange="uploadImage(event)">
+
                 </div>
                 <div class="profile-actions">
                     <button class="upload-btn" onclick="document.getElementById('upload-input').click();"><i
@@ -262,16 +266,19 @@
                 </div>
             </div>
 
-            <form class="account-form">
+            <form class="account-form" action="{{route('updateprofile.professeur',auth()->user()->id)}}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <div class="form-row">
-                    <div class="form-group">
-                        <label for="prenom">Prénoms</label>
-                        <input type="text" id="prenom" name="prenom" value="{{auth()->user()->prenom}}">
-                    </div>
                     <div class="form-group">
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom" value="{{auth()->user()->nom}}">
                     </div>
+                    <input type="file" name="file" id="upload-input" accept="image/*" style="display: none;"onchange="uploadImage(event)">
+                    <div class="form-group">
+                        <label for="prenom">Prénoms</label>
+                        <input type="text" id="prenom" name="prenom" value="{{auth()->user()->prenom}}">
+                    </div>
+
                 </div>
 
                 <div class="form-row">
@@ -288,12 +295,12 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="adresse">Adresse</label>
-                        <input type="text" id="adresse" value="Bingerville">
+                        <input type="text" id="adresse" name="adresse" value="{{auth()->user()->adresse}}">
                     </div>
 
                     <div class="form-group">
                         <label for="fonction">Fonction</label>
-                        <input type="text" id="fonction" value="{{auth()->user()->role->nomrole}}" readonly>
+                        <input type="text" id="fonction" name="role_id" value="{{auth()->user()->role->nomrole}}" readonly>
                     </div>
                 </div>
                 {{-- <div class="form-row">
@@ -326,31 +333,121 @@
             </form>
         </div>
 
+        @if (auth()->user()->role_id === 3)
         <div id="security" class="tab-content">
-            <form class="account-form">
+            <form class="account-form" action="{{ route('updatepassword.admin') }}" method="POST">
+                @csrf
                 <h2>Mot de passe </h2>
+                <input type="text" name="email" class="form-control" value="{{ auth()->user()->email }}">
+
                 <hr>
                 <div class="form-group password-group">
                     <label for="current-password"></label>
-                    <input type="password" id="current-password" placeholder="Mot de passe actuel">
+                    <input type="password" id="current-password" name="current_password" placeholder="Mot de passe actuel">
                     <i class="fas fa-eye-slash" onclick="togglePassword('current-password', this)"></i>
+                    @if($errors->has('current_password'))
+                        <span class="text-danger">{{ $errors->first('current_password') }}</span>
+                    @endif
                 </div>
 
                 <div class="form-group password-group">
                     <label for="new-password"></label>
-                    <input type="password" id="new-password" placeholder="Nouveau mot de passe">
+                    <input type="password" id="new-password" name="password" placeholder="Nouveau mot de passe">
                     <i class="fas fa-eye-slash" onclick="togglePassword('new-password', this)"></i>
+                    @if($errors->has('password'))
+                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                    @endif
                 </div>
 
                 <div class="form-group password-group">
                     <label for="confirm-password"></label>
-                    <input type="password" id="confirm-password" placeholder="Confirmez le nouveau mot de passe">
+                    <input type="password" id="confirm-password" name="password_confirmation" placeholder="Confirmez le nouveau mot de passe">
                     <i class="fas fa-eye-slash" onclick="togglePassword('confirm-password', this)"></i>
+                    @if($errors->has('password_confirmation'))
+                        <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                    @endif
                 </div>
 
                 <button type="submit" class="save-btn">Sauvegarder</button>
             </form>
         </div>
+        @elseif(auth()->user()->role_id === 2)
+        <div id="security" class="tab-content">
+            <form class="account-form" action="{{ route('updatepassword.professeur') }}" method="POST">
+                @csrf
+                <h2>Mot de passe </h2>
+                <input type="text" name="email" class="form-control" value="{{ auth()->user()->email }}">
+
+                <hr>
+                <div class="form-group password-group">
+                    <label for="current-password"></label>
+                    <input type="password" id="current-password" name="current_password" placeholder="Mot de passe actuel">
+                    <i class="fas fa-eye-slash" onclick="togglePassword('current-password', this)"></i>
+                    @if($errors->has('current_password'))
+                        <span class="text-danger">{{ $errors->first('current_password') }}</span>
+                    @endif
+                </div>
+
+                <div class="form-group password-group">
+                    <label for="new-password"></label>
+                    <input type="password" id="new-password" name="password" placeholder="Nouveau mot de passe">
+                    <i class="fas fa-eye-slash" onclick="togglePassword('new-password', this)"></i>
+                    @if($errors->has('password'))
+                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                    @endif
+                </div>
+
+                <div class="form-group password-group">
+                    <label for="confirm-password"></label>
+                    <input type="password" id="confirm-password" name="password_confirmation" placeholder="Confirmez le nouveau mot de passe">
+                    <i class="fas fa-eye-slash" onclick="togglePassword('confirm-password', this)"></i>
+                    @if($errors->has('password_confirmation'))
+                        <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                    @endif
+                </div>
+
+                <button type="submit" class="save-btn">Sauvegarder</button>
+            </form>
+        </div>
+        @elseif(auth()->user()->role_id === 4)
+        <div id="security" class="tab-content">
+            <form class="account-form" action="{{ route('updatepassword.superadmin') }}" method="POST">
+                @csrf
+                <h2>Mot de passe </h2>
+                <input type="text" name="email" class="form-control" value="{{ auth()->user()->email }}">
+
+                <hr>
+                <div class="form-group password-group">
+                    <label for="current-password"></label>
+                    <input type="password" id="current-password" name="current_password" placeholder="Mot de passe actuel">
+                    <i class="fas fa-eye-slash" onclick="togglePassword('current-password', this)"></i>
+                    @if($errors->has('current_password'))
+                        <span class="text-danger">{{ $errors->first('current_password') }}</span>
+                    @endif
+                </div>
+
+                <div class="form-group password-group">
+                    <label for="new-password"></label>
+                    <input type="password" id="new-password" name="password" placeholder="Nouveau mot de passe">
+                    <i class="fas fa-eye-slash" onclick="togglePassword('new-password', this)"></i>
+                    @if($errors->has('password'))
+                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                    @endif
+                </div>
+
+                <div class="form-group password-group">
+                    <label for="confirm-password"></label>
+                    <input type="password" id="confirm-password" name="password_confirmation" placeholder="Confirmez le nouveau mot de passe">
+                    <i class="fas fa-eye-slash" onclick="togglePassword('confirm-password', this)"></i>
+                    @if($errors->has('password_confirmation'))
+                        <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                    @endif
+                </div>
+
+                <button type="submit" class="save-btn">Sauvegarder</button>
+            </form>
+        </div>
+        @endif
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

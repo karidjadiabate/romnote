@@ -18,12 +18,12 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->string('username')->unique()->nullable();
             $table->string('matricule')->unique()->nullable();
             $table->date('datenaiss')->nullable();
             $table->string('genre')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('contact')->nullable();
+            $table->string('adresse')->nullable();
             $table->foreignIdFor(Classe::class)->nullable();
             $table->foreignIdFor(Role::class);
             $table->foreignIdFor(Etablissement::class)->onDelete('cascade')->nullable();

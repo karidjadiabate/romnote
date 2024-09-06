@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un Enseignant</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome for icons (if needed) -->
@@ -94,7 +93,7 @@
                                 <td data-label="Nom Responsable">{{ $etablissement->nomresponsable }}</td>
                                 <td data-label="Prenom Responsable">{{ $etablissement->prenomresponsable }}</td>
                                 <td data-label="Contact">{{ $etablissement->contact }}</td>
-                                <td data-label="logo"><img src="{{ asset('storage/logo/' . $etablissement->image) }}"
+                                <td data-label="logo"><img src="{{ asset('storage/logo/' . $etablissement->logo) }}"
                                         width="50" height="50" class="img-circle elevation-2" alt="">
                                 </td>
                                 <td data-label="Action" class="action-icons no-print">
@@ -301,7 +300,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <input type="file" class="form-control" name="logo" placeholder="Logo"
+                                <input type="file" class="form-control" name="file" placeholder="Logo"
                                     required>
                                 <div class="invalid-feedback">
                                     Choisissez un logo valide.
@@ -340,7 +339,7 @@
     </script>
 
     <!-- Bootstrap JS -->
-   
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

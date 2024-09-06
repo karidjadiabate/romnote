@@ -39,7 +39,7 @@
         <div class="row">
         <div class="container">
           <div class="col-lg-12">
-            <form action="{{route('demandeinscription.store')}}" method="post" role="form">
+            <form action="{{route('demandeinscription.store')}}" id="" method="post" role="form">
                   @csrf
               <div class="form-row mt-2">
                 <div class="col-md-6 form-group">

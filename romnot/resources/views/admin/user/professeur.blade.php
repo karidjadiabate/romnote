@@ -107,9 +107,6 @@
                 </div>
 
 
-
-
-
             </div>
             <!-- Table for listing teachers -->
             <div id="noResults">Aucun résultat trouvé</div>
@@ -118,10 +115,10 @@
                     <thead class="table-aaa">
                         <tr class="aa">
                             <th>Identifiant</th>
-                            <th>Nom</th>
-                            <th>Prénoms</th>
+                            <th>Nom et Prénoms</th>
                             <th>Email</th>
                             <th>Contact</th>
+                            <th>Adresse</th>
                             <th>Matière</th>
                             <th>Classes</th>
                             <th class="no-print">Action</th>
@@ -135,10 +132,19 @@
                         @foreach ($professeurs as $professeur)
                             <tr>
                                 <td data-label="Identifiant">{{ $num++ }}</td>
-                                <td data-label="Nom">{{ $professeur->nom }}</td>
-                                <td data-label="Prénoms">{{ $professeur->prenom }}</td>
+                                <td data-label="Nom">
+                                @if ($professeur->image)
+                                    <img src="{{ asset('storage/profile/' . $professeur->image) }}" alt="User" class="rounded-circle profile-image"
+                                    style="width: 40px; height: 35x; margin-top:-5px">
+                                @else
+                                    <img src="{{ Avatar::create($professeur->nom .' '.$professeur->prenom)->toBase64() }}" alt="User" class="rounded-circle profile-image"
+                                    style="width: 40px; height: 35x; margin-top:-5px">
+                                @endif
+
+                                {{ $professeur->nom .' '.$professeur->prenom }}</td>
                                 <td data-label="Email">{{ $professeur->email }}</td>
                                 <td data-label="Contact">{{ $professeur->contact }}</td>
+                                <td data-label="Adresse">{{ $professeur->adresse }}</td>
                                 <td data-label="Matière">{{ $professeur->nommatieres }}</td>
                                 <td data-label="Classes">{{ $professeur->nomclasses }}</td>
                                 <td data-label="Action" class="action-icons no-print">
@@ -148,7 +154,7 @@
                                         data-prenom="{{ $professeur->prenom }}"
                                         data-email="{{ $professeur->email }}"
                                         data-matiere_id="{{ $professeur->matiere_id }}"
-                                        data-selected_classes="{{ $professeur->selected_classes }}">
+                                        data-selected_classes="{{ $professeur->selected_classes }}" data-adresse="{{ $professeur->adresse }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <button class="btn  btn-sm" data-bs-toggle="modal"
@@ -164,7 +170,7 @@
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <h1 class="text-center">Modifier</h1>
-                                        <form action="{{ route('user.update', $professeur->id) }}" method="POST"
+                                        <form action="{{ route('user.update', $professeur->id) }}" method="POST" enctype="multipart/form-data"
                                             class="needs-validation" novalidate>
                                             @csrf
                                             @method('PUT')
@@ -177,7 +183,6 @@
                                                             placeholder="Nom" value="{{ $professeur->nom }}"
                                                             required>
                                                         <div class="invalid-feedback">
-                                                            Nom est requis.
                                                         </div>
                                                     </div>
 
@@ -187,7 +192,6 @@
                                                             placeholder="Prénoms" value="{{ $professeur->prenom }}"
                                                             required>
                                                         <div class="invalid-feedback">
-                                                            Prénom est requis.
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -196,7 +200,6 @@
                                                             placeholder="Email" value="{{ $professeur->email }}"
                                                             required>
                                                         <div class="invalid-feedback">
-                                                            Email est requis.
                                                         </div>
                                                     </div>
 
@@ -206,7 +209,6 @@
                                                             placeholder="Contact" value="{{ $professeur->contact }}"
                                                             required>
                                                         <div class="invalid-feedback">
-                                                            Contact est requis.
                                                         </div>
                                                     </div>
 
@@ -223,12 +225,11 @@
                                                                 @endforeach
                                                             </select>
                                                             <div class="invalid-feedback">
-                                                                Matière est requise.
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {{--  --}}
-                                                    {{--  --}}
+
+
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <select class="select2-multiple form-control"
@@ -243,13 +244,26 @@
                                                                 @endforeach
                                                             </select>
                                                             <div class="invalid-feedback">
-                                                                Classe est requise.
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    {{--  --}}
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control"
+                                                            id="adresse{{ $professeur->id }}" name="adresse"
+                                                            placeholder="Adresse"
+                                                            value="{{ $professeur->adresse }}" required>
+                                                        <div class="invalid-feedback">
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="col-sm-6">
+                                                        <input type="file" class="form-control"
+                                                            id="file{{ $professeur->id }}" name="file"
+                                                            value="{{ $professeur->image }}" required>
+                                                        <div class="invalid-feedback">
+                                                        </div>
+                                                    </div>
 
 
                                                 </div>

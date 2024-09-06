@@ -48,7 +48,7 @@ class DemandeInscriptionController extends Controller
                 'nom' => 'required|string',
                 'prenom' => 'required|string',
                 'nometablissement' => 'required|string',
-                'email' => 'required|email|unique:demos,email',
+                'email' => 'required|email|unique:demande_inscriptions,email',
                 'contact' => 'required|string|max:20',
                 'adresseetablissement' => 'required|string',
             ],

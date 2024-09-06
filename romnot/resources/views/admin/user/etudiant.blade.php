@@ -115,11 +115,11 @@
                         <tr class="aa">
                             <th>Identifiant</th>
                             <th>Matricule</th>
-                            <th>Nom</th>
-                            <th>Prénom</th>
+                            <th>Nom et Prénoms</th>
                             <th>Genre</th>
                             <th>Email</th>
                             <th>Contact</th>
+                            <th>Adresse</th>
                             <th>Date de naissance</th>
                             <th>Classe</th>
                             <th class="no-print">Action</th>
@@ -133,19 +133,29 @@
                             <tr>
                                 <td data-label="Identifiant">{{ $num++ }}</td>
                                 <td data-label="Matricule">{{ $etudiant->matricule }}</td>
-                                <td data-label="Nom">{{ $etudiant->nom }}</td>
-                                <td data-label="Prénom">{{ $etudiant->prenom }}</td>
+                                <td data-label="Nom">
+                                    @if ($etudiant->image)
+                                        <img src="{{ asset('storage/profile/' . $etudiant->image) }}" alt="User" class="rounded-circle profile-image"
+                                        style="width: 40px; height: 35x; margin-top:-5px">
+                                    @else
+                                        <img src="{{ Avatar::create($etudiant->nom .' '.$etudiant->prenom)->toBase64() }}" alt="User" class="rounded-circle profile-image"
+                                        style="width: 40px; height: 35x; margin-top:-5px">
+                                    @endif
+
+                                    {{ $etudiant->nom .' '.$etudiant->prenom }}
+                                </td>
                                 <td data-label="Genre">{{ $etudiant->genre }}</td>
                                 <td data-label="Email">{{ $etudiant->email }}</td>
                                 <td data-label="Contact">{{ $etudiant->contact }}</td>
+                                <td data-label="Adresse">{{ $etudiant->adresse }}</td>
                                 <td data-label="Date-naissance">{{ $etudiant->datenaiss }}</td>
                                 <td data-label="Classe">{{ $etudiant->nomclasse }}</td>
                                 <td data-label="Action" class="action-icons no-print">
                                     <button class="btn  btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#editEtudiant{{ $etudiant->id }}"
+                                        data-bs-target="#editEtudiant{{ $etudiant->id }}" data-file="{{ $etudiant->image }}"
                                         data-id="{{ $etudiant->id }}" data-nom="{{ $etudiant->nom }}"
                                         data-prenom="{{ $etudiant->prenom }}" data-email="{{ $etudiant->email }}"
-                                        data-datenaiss="{{ $etudiant->datenaiss }}">
+                                        data-datenaiss="{{ $etudiant->datenaiss }}" data-adresse="{{ $etudiant->adresse }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <button class="btn  btn-sm" data-bs-toggle="modal"
@@ -161,7 +171,7 @@
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <h1 class="text-center">Modifier</h1>
-                                        <form action="{{ route('user.update', $etudiant->id) }}" method="POST"
+                                        <form action="{{ route('user.update', $etudiant->id) }}" method="POST" enctype="multipart/form-data"
                                             class="needs-validation" novalidate>
                                             @csrf
                                             @method('PUT')
@@ -174,7 +184,6 @@
                                                             placeholder="Matricule"
                                                             value="{{ $etudiant->matricule }}" required>
                                                         <div class="invalid-feedback">
-                                                            Nom est requis.
                                                         </div>
                                                     </div>
 
@@ -205,7 +214,6 @@
                                                             @endforeach
                                                         </select>
                                                         <div class="invalid-feedback">
-                                                            Valid class is required.
                                                         </div>
                                                     </div>
 
@@ -215,7 +223,6 @@
                                                             placeholder="Email" value="{{ $etudiant->email }}"
                                                             required>
                                                         <div class="invalid-feedback">
-                                                            Email est requis.
                                                         </div>
                                                     </div>
 
@@ -225,7 +232,6 @@
                                                             placeholder="Contact" value="{{ $etudiant->contact }}"
                                                             required>
                                                         <div class="invalid-feedback">
-                                                            Contact est requis.
                                                         </div>
                                                     </div>
 
@@ -235,7 +241,6 @@
                                                             placeholder="datenaiss"
                                                             value="{{ $etudiant->datenaiss }}" required>
                                                         <div class="invalid-feedback">
-                                                            Contact est requis.
                                                         </div>
                                                     </div>
 
@@ -250,7 +255,24 @@
                                                             </option>
                                                         </select>
                                                         <div class="invalid-feedback">
-                                                            Valid class is required.
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control"
+                                                            id="adresse{{ $etudiant->id }}" name="adresse"
+                                                            placeholder="Adresse"
+                                                            value="{{ $etudiant->adresse }}" required>
+                                                        <div class="invalid-feedback">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <input type="file" class="form-control"
+                                                            id="adresse{{ $etudiant->id }}" name="file"
+                                                            placeholder="datenaiss"
+                                                            value="{{ $etudiant->image }}" required>
+                                                        <div class="invalid-feedback">
                                                         </div>
                                                     </div>
 
@@ -370,7 +392,7 @@
                                 <div class="invalid-feedback">
                                 </div>
                             </div>
-                            {{--  --}}
+
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <select name="genre" id="genre" class="form-control">
@@ -380,9 +402,6 @@
 
                                 </div>
                             </div>
-                            {{--  --}}
-
-
 
                             <div class="col-sm-6">
                                 <input type="date" class="form-control" id="datenaiss" name="datenaiss"
@@ -397,11 +416,17 @@
                                     <select name="role_id" id="role_id" class="form-control">
                                         <option value="1">Etudiant</option>
                                     </select>
-
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="adresse" name="adresse"
+                                    placeholder="Adresse" value="" required>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <select name="classe_id" id="classe_id" class="form-control w-100">
                                         @foreach ($classes as $classe)

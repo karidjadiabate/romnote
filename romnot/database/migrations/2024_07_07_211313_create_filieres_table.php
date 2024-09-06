@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('nomfiliere');
             $table->foreignIdFor(Niveau::class);
-            $table->foreignIdFor(Etablissement::class);
+            $table->foreignIdFor(Etablissement::class)->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }

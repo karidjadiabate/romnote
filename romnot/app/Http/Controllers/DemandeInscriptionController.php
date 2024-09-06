@@ -51,16 +51,15 @@ class DemandeInscriptionController extends Controller
                 'email' => 'required|email|unique:demos,email',
                 'contact' => 'required|string|max:20',
                 'adresseetablissement' => 'required|string',
+            ],
+            [
+                'nom.required' => 'Le nom est obligatoire.',
+                'prenom.required' => 'Le prenom est obligatoire.',
+                'nometablissement.required' => 'Le Nom d\'etablissement est obligatoire.',
+                'contact.required' => 'Le contact est obligatoire.',
+                'email.required' => 'L\'adresse email est obligatoire.',
+                'email.unique' => 'Cet email est déjà associé à une demande d\'inscription.'
             ]
-            // ,[
-            //     'nom.required' => 'Le nom est obligatoire.',
-            //     'prenom.required' => 'Le prenom est obligatoire.',
-            //     'nometablissement.required' => 'Le Nom d\'etablissement est obligatoire.',
-            //     'contact.required' => 'Le contact est obligatoire.',
-            //     'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
-            //     'email.required' => 'L\'adresse email est obligatoire.',
-            //     'email.unique' => 'Cet email est déjà associé à une demande d\'inscription.'
-            // ]
         );
 
         $demandeinscription = DemandeInscription::create([

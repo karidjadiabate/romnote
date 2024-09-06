@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('image')->nullable();
             $table->boolean('must_change_password')->default(true);
+            $table->boolean('from_demande_inscription')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

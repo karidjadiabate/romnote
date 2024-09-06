@@ -20,4 +20,14 @@ class ClientController extends Controller
     {
         return view('frontend.demandeinscription');
     }
+
+    public function apropos()
+    {
+        return view('admin.apropos');
+    }
+
+    public function aideconfidentialite()
+    {
+        return view('admin.aide&confidentialite');
+    }
 }

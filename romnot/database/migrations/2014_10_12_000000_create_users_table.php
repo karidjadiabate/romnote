@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('matricule')->unique()->nullable();
             $table->date('datenaiss')->nullable();
             $table->string('genre')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('contact')->nullable();
             $table->foreignIdFor(Classe::class)->nullable();
             $table->foreignIdFor(Role::class);
@@ -32,6 +32,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('image')->nullable();
+            $table->boolean('must_change_password')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

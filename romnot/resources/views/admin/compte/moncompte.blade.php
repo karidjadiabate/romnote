@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons (if needed) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- pdf & excel -->
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
     <title>Compte</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -218,9 +232,13 @@
             width: 100%
         }
     </style>
-</head>
+
 
 <body>
+      <!-- header -->
+      @include('admin.include.menu')
+      <!-- accueil -->
+
     <h2 class="account-title">Compte</h2>
     <div class="tabs">
         <button class="tab-link active" data-tab="personal-info"><i class="fas fa-user"></i> Informations
@@ -248,22 +266,22 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="prenom">Prénoms</label>
-                        <input type="text" id="prenom" value="Judicaël Henock">
+                        <input type="text" id="prenom" name="prenom" value="{{auth()->user()->prenom}}">
                     </div>
                     <div class="form-group">
                         <label for="nom">Nom</label>
-                        <input type="text" id="nom" value="Kouabenan">
+                        <input type="text" id="nom" name="nom" value="{{auth()->user()->nom}}">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label for="contact">Contact</label>
-                        <input type="text" id="contact" value="+2250707070707">
+                        <input type="text" id="contact" name="contact" value="{{auth()->user()->contact}}">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" value="Kouabenan@pigier.ci">
+                        <input type="email" id="email" name="email" value="{{auth()->user()->email}}">
                     </div>
                 </div>
 
@@ -275,10 +293,10 @@
 
                     <div class="form-group">
                         <label for="fonction">Fonction</label>
-                        <input type="text" id="fonction" value="Professeur">
+                        <input type="text" id="fonction" value="{{auth()->user()->role->nomrole}}" readonly>
                     </div>
                 </div>
-                <div class="form-row">
+                {{-- <div class="form-row">
                     <div class="form-group">
                         <label for="role">Rôle</label>
                         <select id="role">
@@ -287,7 +305,7 @@
                             <option value="Enseignants">Enseignants</option>
                         </select>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group">
                     <label for="about">À propos</label>
@@ -334,6 +352,10 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
     <script>
         document.getElementById('camera-btn').addEventListener('click', () => {

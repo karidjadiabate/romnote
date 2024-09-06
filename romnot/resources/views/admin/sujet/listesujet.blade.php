@@ -16,7 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <link rel="stylesheet" href="../css/lists.css">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/lists.css') }}">
 
 </head>
 
@@ -665,7 +665,7 @@
     </script>
 
     <!-- Bootstrap JS -->
-    <script src="../js/list.js"></script>
+    <script src="{{ asset('frontend/dashboard/js/list.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

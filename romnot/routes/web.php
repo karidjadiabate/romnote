@@ -12,6 +12,7 @@ use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatiereController;
 use App\Http\Controllers\NiveauController;
+use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\SujetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ Route::post('/demandeinscription',[DemandeInscriptionController::class,'store'])
 Route::post('/demo',[DemoController::class,'store'])->name('demo.store');
 Route::get('/moncompte',[UserController::class,'moncompte'])->name('moncompte');
 
+
 Route::resource('user', UserController::class)->except(['create','show','edit']);
 
 //Route superUSer
@@ -46,11 +48,8 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::get('/administrateur',[UserController::class,'administrateur'])->name('administrateur');
     Route::resource('etablissement',EtablissementController::class);
 
-
-
     Route::get('/listedemandedemo/{notification}',[DemoController::class,'demonotification'])->name('demo.notification');
     Route::get('/listedemandeinscription/{notification}',[DemandeInscriptionController::class,'demandeinscriptionnotification'])->name('demandeinscription.notification');
-
 
     Route::post('/acceptdemandeinscription/{id}', [DemandeInscriptionController::class, 'accept'])->name('demandeinscription.accept');
     Route::post('/rejectdemandeinscription/{id}', [DemandeInscriptionController::class, 'reject'])->name('demandeinscription.reject');
@@ -58,16 +57,11 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::post('/acceptdemandedemo/{id}', [DemoController::class, 'accept'])->name('demo.accept');
     Route::post('/rejectdemandedemo/{id}', [DemoController::class, 'reject'])->name('demo.reject');
 
-
-
-    /* Route::post('/accept/{id}', [DemandeInscriptionController::class, 'accept'])->name('demande.accept');
-    Route::post('/reject/{id}', [DemandeInscriptionController::class, 'reject'])->name('demande.reject'); */
-
 });
 
 
  //ADMIN
- Route::prefix('admin')->middleware(['auth', 'admin', 'checkFromDemandeInscription'])->group(function () {
+ Route::prefix('admin')->middleware(['auth', 'admin', 'checkFromDemandeInscription','changepassword'])->group(function () {
 
     Route::get('/',[DashboardController::class,'dashboard'])->name('admin.dashboard');;
     Route::resource('matiere', MatiereController::class);
@@ -77,16 +71,23 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::get('/professeur',[UserController::class,'professeur'])->name('professeur');
     Route::get('/etudiant',[UserController::class,'etudiant'])->name('etudiant');
     Route::get('/calendrier',[CalendrierController::class,'index'])->name('calendrier');
-
+    Route::get('/sujet',[SujetController::class,'index'])->name('sujet.admin');
+    Route::get('/apropos',[ClientController::class,'apropos'])->name('apropos.admin');
+    Route::get('/aideconfidentialite',[ClientController::class,'aideconfidentialite'])->name('aideconfidentialite.admin');
 });
 
 
 //Professeur
-Route::prefix('professeur')->middleware('professeur')->group(function () {
+Route::prefix('professeur')->middleware(['professeur','changepassword'])->group(function () {
 
     Route::get('/',[DashboardController::class,'dashboard'])->name('professeur.dashboard');
-    Route::resource('sujet', SujetController::class);
+    Route::get('/sujet',[SujetController::class,'index'])->name('sujet.professeur');
+    Route::get('/apropos',[ClientController::class,'apropos'])->name('apropos.professeur');
+    Route::get('/aideconfidentialite',[ClientController::class,'aideconfidentialite'])->name('aideconfidentialite.professeur');
 
 });
 
 Route::post('/verify-email', [EmailVerificationController::class, 'verifyEmail']);
+
+Route::get('password/change', [PasswordChangeController::class, 'showChangeForm'])->name('password.change');
+Route::post('password/change', [PasswordChangeController::class, 'changePassword']);

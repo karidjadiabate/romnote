@@ -59,6 +59,11 @@ class User extends Authenticatable
         return $this->belongsTo(Etablissement::class);
     }
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     //Liste des administrateurs de chaque école
     public function administrateur()
     {

@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'professeur' => \App\Http\Middleware\ProfesseurMiddleware::class,
         'SuperUtilisateur' => \App\Http\Middleware\SuperUtilisateurMiddleware::class,
         'checkFromDemandeInscription' => \App\Http\Middleware\CheckFromDemandeInscription::class,
+        'changepassword' => \App\Http\Middleware\EnsurePasswordIsChanged::class,
     ];
 }

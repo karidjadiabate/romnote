@@ -82,12 +82,12 @@ class EtablissementController extends Controller
             $path = $media->storeAs('public/logo', $name);
 
             // Supprimer l'ancienne image de profil si elle existe
-            if ($ecole->image) {
-                Storage::delete('public/logo/' . $ecole->image);
+            if ($ecole->logo) {
+                Storage::delete('public/logo/' . $ecole->logo);
             }
 
             // Mettre à jour les informations du fichier
-            $ecole->image = $name;
+            $ecole->logo = $name;
         }
 
         // Mettre à jour les autres champs de l'école

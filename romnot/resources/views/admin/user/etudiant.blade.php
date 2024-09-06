@@ -568,7 +568,6 @@
                     },
 
                     email: {
-                        required: true,
                         email: true,
                         remote: {
                             url: "/verify-email",
@@ -602,7 +601,6 @@
                     },
 
                     email: {
-                        required: "Veuillez entrer une adresse e-mail.",
                         email: "Veuillez entrer une adresse e-mail valide.",
                         remote: "Cette adresse e-mail existe déjà."
                     }

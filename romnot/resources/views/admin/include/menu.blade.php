@@ -309,8 +309,8 @@
                         <img src="{{ asset('frontend/dashboard/images/kad.jpg') }}" alt="User"
                             class="rounded-circle profile-image">
                         <div class="profile-info">
-                            <h6 class="mt-2">{{ auth()->user()->username }}</h6>
-                            <a href="#" class="view-profile">Voir le profil</a>
+                            <h6 class="mt-2">{{ auth()->user()->nom .' '.auth()->user()->prenom }}</h6>
+                            <a href="{{route('moncompte')}}" class="view-profile">Voir le profil</a>
                         </div>
                     </li>
                     <li><a class="dropdown-item" href="#">
@@ -363,19 +363,36 @@
                                     transform="translate(0 -16)" fill="#4a41c5" />
                             </svg> Compte</a>
                     </li>
-                    <li><a class="dropdown-item" href="#">
-                            <!-- SVG pour A propos -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
-                                viewBox="0 0 13.729 27.457">
-                                <path id="Tracé_452" data-name="Tracé 452"
-                                    d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
-                                    transform="translate(-24 -25.704)" fill="#4a41c5" />
-                                <path id="Tracé_453" data-name="Tracé 453"
-                                    d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
-                                    transform="translate(-32.568)" fill="#4a41c5" />
-                            </svg> A propos</a>
+                    @if (auth()->user()->role_id === 3)
+                    <li><a class="dropdown-item" href="{{route('apropos.admin')}}">
+                        <!-- SVG pour A propos -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
+                            viewBox="0 0 13.729 27.457">
+                            <path id="Tracé_452" data-name="Tracé 452"
+                                d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
+                                transform="translate(-24 -25.704)" fill="#4a41c5" />
+                            <path id="Tracé_453" data-name="Tracé 453"
+                                d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
+                                transform="translate(-32.568)" fill="#4a41c5" />
+                        </svg> A propos</a>
                     </li>
-                    <li><a class="dropdown-item" href="#">
+                    @elseif(auth()->user()->role_id === 2)
+                    <li><a class="dropdown-item" href="{{route('apropos.professeur')}}">
+                        <!-- SVG pour A propos -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
+                            viewBox="0 0 13.729 27.457">
+                            <path id="Tracé_452" data-name="Tracé 452"
+                                d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
+                                transform="translate(-24 -25.704)" fill="#4a41c5" />
+                            <path id="Tracé_453" data-name="Tracé 453"
+                                d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
+                                transform="translate(-32.568)" fill="#4a41c5" />
+                        </svg> A propos</a>
+                    </li>
+                    @endif
+
+                    @if (auth()->user()->role_id === 3)
+                    <li><a class="dropdown-item" href="{{route('aideconfidentialite.admin')}}">
                             <!-- SVG pour Aide & Confidentialité -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
                                 viewBox="0 0 17.664 35.327">
@@ -387,6 +404,20 @@
                                     transform="translate(-31.584 -45.505)" fill="#4a41c5" />
                             </svg> Aide & confidentialité</a>
                     </li>
+                    @elseif((auth()->user()->role_id === 2))
+                    <li><a class="dropdown-item" href="{{route('aideconfidentialite.professeur')}}">
+                        <!-- SVG pour Aide & Confidentialité -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
+                            viewBox="0 0 17.664 35.327">
+                            <path id="Tracé_450" data-name="Tracé 450"
+                                d="M32.832,0A8.842,8.842,0,0,0,24,8.832a2.208,2.208,0,1,0,4.416,0,4.416,4.416,0,0,1,8.832,0c0,1.915-1.126,3.09-2.976,4.8-1.712,1.576-3.648,3.362-3.648,6.242a2.208,2.208,0,0,0,4.416,0c0-.9.845-1.725,2.225-3,1.854-1.712,4.4-4.056,4.4-8.043A8.842,8.842,0,0,0,32.832,0Z"
+                                transform="translate(-24)" fill="#4a41c5" />
+                            <path id="Tracé_451" data-name="Tracé 451"
+                                d="M40.416,72a4.416,4.416,0,1,0,4.416,4.416A4.416,4.416,0,0,0,40.416,72Z"
+                                transform="translate(-31.584 -45.505)" fill="#4a41c5" />
+                        </svg> Aide & confidentialité</a>
+                    </li>
+                    @endif
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -700,8 +731,9 @@
                         </li>
 
                         <!-- sujet -->
+                        @if (auth()->user()->role_id === 2)
                         <li class="nav-item" id="sujet">
-                            <a class="nav-link" href="{{ route('sujet.index') }}">
+                            <a class="nav-link" href="{{ route('sujet.professeur') }}">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
                                         viewBox="0 0 35 35">
@@ -715,6 +747,25 @@
                                 </div>
                             </a>
                         </li>
+                        @elseif(auth()->user()->role_id === 3)
+
+                        <li class="nav-item" id="sujet">
+                            <a class="nav-link" href="{{ route('sujet.admin') }}">
+                                <div class="icon-text-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
+                                        viewBox="0 0 35 35">
+                                        <path id="Soustraction_4" data-name="Soustraction 4"
+                                            d="M27.223,35H7.777A7.786,7.786,0,0,1,0,27.223V7.777A7.786,7.786,0,0,1,7.777,0H27.223A7.786,7.786,0,0,1,35,7.777V27.223A7.786,7.786,0,0,1,27.223,35Zm-3.89-13.608a1.944,1.944,0,1,0,1.944,1.944A1.946,1.946,0,0,0,23.333,21.392Zm-11.665,0a1.944,1.944,0,1,0,1.944,1.944A1.946,1.946,0,0,0,11.667,21.392Zm11.665-5.833A1.944,1.944,0,1,0,25.277,17.5,1.946,1.946,0,0,0,23.333,15.559Zm-11.665,0A1.944,1.944,0,1,0,13.611,17.5,1.946,1.946,0,0,0,11.667,15.559ZM23.333,9.725a1.945,1.945,0,1,0,1.944,1.946A1.947,1.947,0,0,0,23.333,9.725Zm-11.665,0a1.945,1.945,0,1,0,1.944,1.946A1.947,1.947,0,0,0,11.667,9.725Z"
+                                            fill="#fff" />
+                                    </svg>
+
+
+                                    <span>Sujet</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        @endif
                         <!-- correction -->
                         <li class="nav-item" id="correction">
                             <a class="nav-link " href="#">

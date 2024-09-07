@@ -229,6 +229,107 @@
         margin: 0.5rem 0;
         border-top: 1px solid #ddd;
     }
+
+    /* modal signature */
+
+    /* .modal {
+        width: 500px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        padding: 20px;
+    } */
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+        margin: 0;
+        color: #4a3dbb;
+        font-size: 24px;
+    }
+
+    .close-btn {
+        cursor: pointer;
+        color: #4a3dbb;
+        font-size: 24px;
+        border: none;
+        background: none;
+    }
+
+    .tab-container {
+        display: flex;
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 20px;
+    }
+
+    .tab-link {
+        padding: 10px 20px;
+        color: #4a3dbb;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+    }
+
+    .tab-link.active {
+        border-bottom: 2px solid #4a3dbb;
+        font-weight: bold;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .signature-area {
+        width: 100%;
+        height: 200px;
+        border: 1px solid #ddd;
+        background-color: #f8f8f8;
+    }
+
+    .upload-area {
+        border: 2px dashed #4a3dbb;
+        border-radius: 10px;
+        background-color: #f8f8f8;
+        padding: 40px;
+        text-align: center;
+        color: #aaa;
+        font-size: 18px;
+        position: relative;
+    }
+
+    /* .upload-area::after {
+            content: "OU";
+            display: block;
+            margin: 20px 0;
+            color: #777;
+        } */
+
+    .upload-button {
+        background-color: #38B293;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 0%;
+        cursor: pointer;
+        font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .upload-button i {
+        margin-right: 5px;
+    }
 </style>
 <nav class="navbar navbar-expand-lg  ">
     <div class="container-fluid">
@@ -302,32 +403,31 @@
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     @if (auth()->user()->image)
-
-                    <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User" class="rounded-circle profile-image"
-                    style="width: 40px; height: 35x; margin-top:-5px">
-
+                        <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User"
+                            class="rounded-circle profile-image" style="width: 40px; height: 35x; margin-top:-5px">
                     @else
-
-                    <img src="{{ Avatar::create(auth()->user()->nom .' '.auth()->user()->prenom)->toBase64() }}" alt="User" class="rounded-circle profile-image"
-                    style="width: 40px; height: 35x; margin-top:-5px">
-
+                        <img src="{{ Avatar::create(auth()->user()->nom . ' ' . auth()->user()->prenom)->toBase64() }}"
+                            alt="User" class="rounded-circle profile-image"
+                            style="width: 40px; height: 35x; margin-top:-5px">
                     @endif
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end custom-profile-dropdown">
                     <li class="dropdown-header d-flex align-items-center">
                         @if (auth()->user()->image)
-                        <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User"
-                            class="rounded-circle profile-image">
+                            <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User"
+                                class="rounded-circle profile-image">
                         @else
-                        <img src="{{ Avatar::create(auth()->user()->nom .' '.auth()->user()->prenom)->toBase64() }}" alt="User"
-                        class="rounded-circle profile-image">
+                            <img src="{{ Avatar::create(auth()->user()->nom . ' ' . auth()->user()->prenom)->toBase64() }}"
+                                alt="User" class="rounded-circle profile-image">
                         @endif
+
+
                         <div class="profile-info">
-                            <h6 class="mt-2">{{ auth()->user()->nom .' '.auth()->user()->prenom }}</h6>
-                            <a href="{{route('moncompte')}}" class="view-profile">Voir le profil</a>
+                            <h6 class="mt-2">{{ auth()->user()->nom . "\n" . auth()->user()->prenom }}</h6>
+                            <a href="{{ route('moncompte') }}" class="view-profile">Voir le profil</a>
                         </div>
                     </li>
-                    <li><a class="dropdown-item" href="#">
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="">
                             <!-- SVG pour Signature -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="25.943" height="25.125"
                                 viewBox="0 0 25.943 25.125">
@@ -378,85 +478,85 @@
                             </svg> Compte</a>
                     </li>
                     @if (auth()->user()->role_id === 3)
-                    <li><a class="dropdown-item" href="{{route('apropos.admin')}}">
-                        <!-- SVG pour A propos -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
-                            viewBox="0 0 13.729 27.457">
-                            <path id="Tracé_452" data-name="Tracé 452"
-                                d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
-                                transform="translate(-24 -25.704)" fill="#4a41c5" />
-                            <path id="Tracé_453" data-name="Tracé 453"
-                                d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
-                                transform="translate(-32.568)" fill="#4a41c5" />
-                        </svg> A propos</a>
-                    </li>
+                        <li><a class="dropdown-item" href="{{ route('apropos.admin') }}">
+                                <!-- SVG pour A propos -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
+                                    viewBox="0 0 13.729 27.457">
+                                    <path id="Tracé_452" data-name="Tracé 452"
+                                        d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
+                                        transform="translate(-24 -25.704)" fill="#4a41c5" />
+                                    <path id="Tracé_453" data-name="Tracé 453"
+                                        d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
+                                        transform="translate(-32.568)" fill="#4a41c5" />
+                                </svg> A propos</a>
+                        </li>
                     @elseif(auth()->user()->role_id === 2)
-                    <li><a class="dropdown-item" href="{{route('apropos.professeur')}}">
-                        <!-- SVG pour A propos -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
-                            viewBox="0 0 13.729 27.457">
-                            <path id="Tracé_452" data-name="Tracé 452"
-                                d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
-                                transform="translate(-24 -25.704)" fill="#4a41c5" />
-                            <path id="Tracé_453" data-name="Tracé 453"
-                                d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
-                                transform="translate(-32.568)" fill="#4a41c5" />
-                        </svg> A propos</a>
-                    </li>
+                        <li><a class="dropdown-item" href="{{ route('apropos.professeur') }}">
+                                <!-- SVG pour A propos -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
+                                    viewBox="0 0 13.729 27.457">
+                                    <path id="Tracé_452" data-name="Tracé 452"
+                                        d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
+                                        transform="translate(-24 -25.704)" fill="#4a41c5" />
+                                    <path id="Tracé_453" data-name="Tracé 453"
+                                        d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
+                                        transform="translate(-32.568)" fill="#4a41c5" />
+                                </svg> A propos</a>
+                        </li>
                     @elseif(auth()->user()->role_id === 4)
-                    <li><a class="dropdown-item" href="{{route('apropos.superadmin')}}">
-                        <!-- SVG pour A propos -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
-                            viewBox="0 0 13.729 27.457">
-                            <path id="Tracé_452" data-name="Tracé 452"
-                                d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
-                                transform="translate(-24 -25.704)" fill="#4a41c5" />
-                            <path id="Tracé_453" data-name="Tracé 453"
-                                d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
-                                transform="translate(-32.568)" fill="#4a41c5" />
-                        </svg> A propos</a>
-                    </li>
+                        <li><a class="dropdown-item" href="{{ route('apropos.superadmin') }}">
+                                <!-- SVG pour A propos -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
+                                    viewBox="0 0 13.729 27.457">
+                                    <path id="Tracé_452" data-name="Tracé 452"
+                                        d="M36.012,49.728H32.58V37.716A1.715,1.715,0,0,0,30.864,36H27.432a1.716,1.716,0,0,0,0,3.432h1.716v10.3H25.716a1.716,1.716,0,1,0,0,3.432h10.3a1.716,1.716,0,0,0,0-3.432Z"
+                                        transform="translate(-24 -25.704)" fill="#4a41c5" />
+                                    <path id="Tracé_453" data-name="Tracé 453"
+                                        d="M39.432,6.864A3.432,3.432,0,1,0,36,3.432a3.432,3.432,0,0,0,3.432,3.432Z"
+                                        transform="translate(-32.568)" fill="#4a41c5" />
+                                </svg> A propos</a>
+                        </li>
                     @endif
 
                     @if (auth()->user()->role_id === 3)
-                    <li><a class="dropdown-item" href="{{route('aideconfidentialite.admin')}}">
-                            <!-- SVG pour Aide & Confidentialité -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
-                                viewBox="0 0 17.664 35.327">
-                                <path id="Tracé_450" data-name="Tracé 450"
-                                    d="M32.832,0A8.842,8.842,0,0,0,24,8.832a2.208,2.208,0,1,0,4.416,0,4.416,4.416,0,0,1,8.832,0c0,1.915-1.126,3.09-2.976,4.8-1.712,1.576-3.648,3.362-3.648,6.242a2.208,2.208,0,0,0,4.416,0c0-.9.845-1.725,2.225-3,1.854-1.712,4.4-4.056,4.4-8.043A8.842,8.842,0,0,0,32.832,0Z"
-                                    transform="translate(-24)" fill="#4a41c5" />
-                                <path id="Tracé_451" data-name="Tracé 451"
-                                    d="M40.416,72a4.416,4.416,0,1,0,4.416,4.416A4.416,4.416,0,0,0,40.416,72Z"
-                                    transform="translate(-31.584 -45.505)" fill="#4a41c5" />
-                            </svg> Aide & confidentialité</a>
-                    </li>
+                        <li><a class="dropdown-item" href="{{ route('aideconfidentialite.admin') }}">
+                                <!-- SVG pour Aide & Confidentialité -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
+                                    viewBox="0 0 17.664 35.327">
+                                    <path id="Tracé_450" data-name="Tracé 450"
+                                        d="M32.832,0A8.842,8.842,0,0,0,24,8.832a2.208,2.208,0,1,0,4.416,0,4.416,4.416,0,0,1,8.832,0c0,1.915-1.126,3.09-2.976,4.8-1.712,1.576-3.648,3.362-3.648,6.242a2.208,2.208,0,0,0,4.416,0c0-.9.845-1.725,2.225-3,1.854-1.712,4.4-4.056,4.4-8.043A8.842,8.842,0,0,0,32.832,0Z"
+                                        transform="translate(-24)" fill="#4a41c5" />
+                                    <path id="Tracé_451" data-name="Tracé 451"
+                                        d="M40.416,72a4.416,4.416,0,1,0,4.416,4.416A4.416,4.416,0,0,0,40.416,72Z"
+                                        transform="translate(-31.584 -45.505)" fill="#4a41c5" />
+                                </svg> Aide & confidentialité</a>
+                        </li>
                     @elseif(auth()->user()->role_id === 2)
-                    <li><a class="dropdown-item" href="{{route('aideconfidentialite.professeur')}}">
-                        <!-- SVG pour Aide & Confidentialité -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
-                            viewBox="0 0 17.664 35.327">
-                            <path id="Tracé_450" data-name="Tracé 450"
-                                d="M32.832,0A8.842,8.842,0,0,0,24,8.832a2.208,2.208,0,1,0,4.416,0,4.416,4.416,0,0,1,8.832,0c0,1.915-1.126,3.09-2.976,4.8-1.712,1.576-3.648,3.362-3.648,6.242a2.208,2.208,0,0,0,4.416,0c0-.9.845-1.725,2.225-3,1.854-1.712,4.4-4.056,4.4-8.043A8.842,8.842,0,0,0,32.832,0Z"
-                                transform="translate(-24)" fill="#4a41c5" />
-                            <path id="Tracé_451" data-name="Tracé 451"
-                                d="M40.416,72a4.416,4.416,0,1,0,4.416,4.416A4.416,4.416,0,0,0,40.416,72Z"
-                                transform="translate(-31.584 -45.505)" fill="#4a41c5" />
-                        </svg> Aide & confidentialité</a>
-                    </li>
+                        <li><a class="dropdown-item" href="{{ route('aideconfidentialite.professeur') }}">
+                                <!-- SVG pour Aide & Confidentialité -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
+                                    viewBox="0 0 17.664 35.327">
+                                    <path id="Tracé_450" data-name="Tracé 450"
+                                        d="M32.832,0A8.842,8.842,0,0,0,24,8.832a2.208,2.208,0,1,0,4.416,0,4.416,4.416,0,0,1,8.832,0c0,1.915-1.126,3.09-2.976,4.8-1.712,1.576-3.648,3.362-3.648,6.242a2.208,2.208,0,0,0,4.416,0c0-.9.845-1.725,2.225-3,1.854-1.712,4.4-4.056,4.4-8.043A8.842,8.842,0,0,0,32.832,0Z"
+                                        transform="translate(-24)" fill="#4a41c5" />
+                                    <path id="Tracé_451" data-name="Tracé 451"
+                                        d="M40.416,72a4.416,4.416,0,1,0,4.416,4.416A4.416,4.416,0,0,0,40.416,72Z"
+                                        transform="translate(-31.584 -45.505)" fill="#4a41c5" />
+                                </svg> Aide & confidentialité</a>
+                        </li>
                     @elseif(auth()->user()->role_id === 4)
-                    <li><a class="dropdown-item" href="{{route('aideconfidentialite.superadmin')}}">
-                        <!-- SVG pour Aide & Confidentialité -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
-                            viewBox="0 0 17.664 35.327">
-                            <path id="Tracé_450" data-name="Tracé 450"
-                                d="M32.832,0A8.842,8.842,0,0,0,24,8.832a2.208,2.208,0,1,0,4.416,0,4.416,4.416,0,0,1,8.832,0c0,1.915-1.126,3.09-2.976,4.8-1.712,1.576-3.648,3.362-3.648,6.242a2.208,2.208,0,0,0,4.416,0c0-.9.845-1.725,2.225-3,1.854-1.712,4.4-4.056,4.4-8.043A8.842,8.842,0,0,0,32.832,0Z"
-                                transform="translate(-24)" fill="#4a41c5" />
-                            <path id="Tracé_451" data-name="Tracé 451"
-                                d="M40.416,72a4.416,4.416,0,1,0,4.416,4.416A4.416,4.416,0,0,0,40.416,72Z"
-                                transform="translate(-31.584 -45.505)" fill="#4a41c5" />
-                        </svg> Aide & confidentialité</a>
-                    </li>
+                        <li><a class="dropdown-item" href="{{ route('aideconfidentialite.superadmin') }}">
+                                <!-- SVG pour Aide & Confidentialité -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
+                                    viewBox="0 0 17.664 35.327">
+                                    <path id="Tracé_450" data-name="Tracé 450"
+                                        d="M32.832,0A8.842,8.842,0,0,0,24,8.832a2.208,2.208,0,1,0,4.416,0,4.416,4.416,0,0,1,8.832,0c0,1.915-1.126,3.09-2.976,4.8-1.712,1.576-3.648,3.362-3.648,6.242a2.208,2.208,0,0,0,4.416,0c0-.9.845-1.725,2.225-3,1.854-1.712,4.4-4.056,4.4-8.043A8.842,8.842,0,0,0,32.832,0Z"
+                                        transform="translate(-24)" fill="#4a41c5" />
+                                    <path id="Tracé_451" data-name="Tracé 451"
+                                        d="M40.416,72a4.416,4.416,0,1,0,4.416,4.416A4.416,4.416,0,0,0,40.416,72Z"
+                                        transform="translate(-31.584 -45.505)" fill="#4a41c5" />
+                                </svg> Aide & confidentialité</a>
+                        </li>
                     @endif
                     <li>
                         <hr class="dropdown-divider">
@@ -769,9 +869,7 @@
                                 </div>
                             </a>
                         </li>
-
-                        @elseif(auth()->user()->role_id === 2)
-
+                    @elseif(auth()->user()->role_id === 2)
                         <li class="nav-item" id="calendrier">
                             <a class="nav-link " href="{{ route('calendrier.professeur') }}">
                                 <div class="icon-text-container">
@@ -792,9 +890,9 @@
                                 </div>
                             </a>
                         </li>
-                        @endif
-                        <!-- sujet -->
-                        @if (auth()->user()->role_id === 2)
+                    @endif
+                    <!-- sujet -->
+                    @if (auth()->user()->role_id === 2)
                         <li class="nav-item" id="sujet">
                             <a class="nav-link" href="{{ route('sujet.professeur') }}">
                                 <div class="icon-text-container">
@@ -831,9 +929,7 @@
                                 </div>
                             </a>
                         </li>
-
-                        @elseif(auth()->user()->role_id === 3)
-
+                    @elseif(auth()->user()->role_id === 3)
                         <li class="nav-item" id="sujet">
                             <a class="nav-link" href="{{ route('sujet.admin') }}">
                                 <div class="icon-text-container">
@@ -870,8 +966,7 @@
                                 </div>
                             </a>
                         </li>
-
-                        @endif
+                    @endif
 
 
                 </ul>
@@ -880,7 +975,44 @@
             </div>
         </div>
     </div>
+
+
+    {{-- modal --}}
+    <div class="modal fade" id="signature" tabindex="-1" aria-labelledby="signatureModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <h2>Signature</h2>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+
+        <!-- Tabs pour Dessiner et Importer -->
+        <div class="tab-container">
+            <a href="#" class="tab-link active" onclick="openTab(event, 'draw')">Dessiner</a>
+            <a href="#" class="tab-link" onclick="openTab(event, 'import')">Importer</a>
+        </div>
+
+        <!-- Contenu des tabs -->
+        <div id="draw" class="tab-content active">
+            <div class="signature-area"></div>
+        </div>
+
+        <div id="import" class="tab-content">
+            <div class="upload-area" onclick="triggerFileUpload()">
+                Glisser déposer une signature
+                <br>
+                OU
+                <br>
+                <button class="upload-button" onclick="triggerFileUpload()">
+                    <i class="fas fa-plus"></i> Charger
+                </button>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            </div>
+        </div>
+    </div>
+    {{--  --}}
 </nav>
+
+
+
 
 
 <script>
@@ -904,4 +1036,28 @@
             sessionStorage.setItem('activeLink', link.getAttribute('href'));
         }));
     });
+
+    function openTab(event, tabName) {
+        // Cache tous les contenus de tabs
+        document.querySelectorAll('.tab-content').forEach(function(tabContent) {
+            tabContent.classList.remove('active');
+        });
+
+        // Supprime la classe active de tous les liens de tabs
+        document.querySelectorAll('.tab-link').forEach(function(tabLink) {
+            tabLink.classList.remove('active');
+        });
+
+        // Affiche le contenu du tab sélectionné
+        document.getElementById(tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function closeModal() {
+        alert('Modal fermé');
+    }
+
+    function triggerFileUpload() {
+        document.getElementById('fileInput').click();
+    }
 </script>

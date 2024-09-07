@@ -135,14 +135,16 @@
                                 <td data-label="Matricule">{{ $etudiant->matricule }}</td>
                                 <td data-label="Nom">
                                     @if ($etudiant->image)
-                                        <img src="{{ asset('storage/profile/' . $etudiant->image) }}" alt="User" class="rounded-circle profile-image"
-                                        style="width: 40px; height: 35x; margin-top:-5px">
+                                        <img src="{{ asset('storage/profile/' . $etudiant->image) }}" alt="User"
+                                            class="rounded-circle profile-image"
+                                            style="width: 40px; height: 35x; margin-top:-5px">
                                     @else
-                                        <img src="{{ Avatar::create($etudiant->nom .' '.$etudiant->prenom)->toBase64() }}" alt="User" class="rounded-circle profile-image"
-                                        style="width: 40px; height: 35x; margin-top:-5px">
+                                        <img src="{{ Avatar::create($etudiant->nom . ' ' . $etudiant->prenom)->toBase64() }}"
+                                            alt="User" class="rounded-circle profile-image"
+                                            style="width: 40px; height: 35x; margin-top:-5px">
                                     @endif
 
-                                    {{ $etudiant->nom .' '.$etudiant->prenom }}
+                                    {{ $etudiant->nom . ' ' . $etudiant->prenom }}
                                 </td>
                                 <td data-label="Genre">{{ $etudiant->genre }}</td>
                                 <td data-label="Email">{{ $etudiant->email }}</td>
@@ -152,10 +154,12 @@
                                 <td data-label="Classe">{{ $etudiant->nomclasse }}</td>
                                 <td data-label="Action" class="action-icons no-print">
                                     <button class="btn  btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#editEtudiant{{ $etudiant->id }}" data-file="{{ $etudiant->image }}"
-                                        data-id="{{ $etudiant->id }}" data-nom="{{ $etudiant->nom }}"
-                                        data-prenom="{{ $etudiant->prenom }}" data-email="{{ $etudiant->email }}"
-                                        data-datenaiss="{{ $etudiant->datenaiss }}" data-adresse="{{ $etudiant->adresse }}">
+                                        data-bs-target="#editEtudiant{{ $etudiant->id }}"
+                                        data-file="{{ $etudiant->image }}" data-id="{{ $etudiant->id }}"
+                                        data-nom="{{ $etudiant->nom }}" data-prenom="{{ $etudiant->prenom }}"
+                                        data-email="{{ $etudiant->email }}"
+                                        data-datenaiss="{{ $etudiant->datenaiss }}"
+                                        data-adresse="{{ $etudiant->adresse }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <button class="btn  btn-sm" data-bs-toggle="modal"
@@ -171,8 +175,8 @@
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <h1 class="text-center">Modifier</h1>
-                                        <form action="{{ route('user.update', $etudiant->id) }}" method="POST" enctype="multipart/form-data"
-                                            class="needs-validation" novalidate>
+                                        <form action="{{ route('user.update', $etudiant->id) }}" method="POST"
+                                            enctype="multipart/form-data" class="needs-validation" novalidate>
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-body">
@@ -261,8 +265,8 @@
                                                     <div class="col-sm-6">
                                                         <input type="text" class="form-control"
                                                             id="adresse{{ $etudiant->id }}" name="adresse"
-                                                            placeholder="Adresse"
-                                                            value="{{ $etudiant->adresse }}" required>
+                                                            placeholder="Adresse" value="{{ $etudiant->adresse }}"
+                                                            required>
                                                         <div class="invalid-feedback">
                                                         </div>
                                                     </div>
@@ -270,8 +274,8 @@
                                                     <div class="col-sm-6">
                                                         <input type="file" class="form-control"
                                                             id="adresse{{ $etudiant->id }}" name="file"
-                                                            placeholder="datenaiss"
-                                                            value="{{ $etudiant->image }}" required>
+                                                            placeholder="datenaiss" value="{{ $etudiant->image }}"
+                                                            required>
                                                         <div class="invalid-feedback">
                                                         </div>
                                                     </div>
@@ -296,7 +300,7 @@
                                     <div class="modal-content">
                                         <div class="modal-body text-center">
                                             <img src="{{ asset('frontend/dashboard/images/images.png') }}"
-                                                width="150" height="150" alt=""><br><br>
+                                                width="50" height="50" alt=""><br><br>
                                             <p id="sure">Êtes-vous sûr?</p>
                                             <p>Supprimer cet etudiant ?</p>
                                         </div>
@@ -405,7 +409,7 @@
 
                             <div class="col-sm-6">
                                 <input type="date" class="form-control" id="datenaiss" name="datenaiss"
-                                    placeholder="Date de naissance" value="" required>
+                                    placeholder="Date de naissance" max="{{ date('Y-m-d') }}" required>
                                 <div class="invalid-feedback">
                                 </div>
                             </div>
@@ -422,7 +426,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="adresse" name="adresse"
-                                    placeholder="Adresse" value="" required>
+                                        placeholder="Adresse" value="" required>
                                 </div>
                             </div>
 

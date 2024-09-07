@@ -516,6 +516,39 @@ h2 {
     color: #E80C0C !important;
 }
 
+.fa-eye {
+    color: #38B293 !important;
+
+}
+
+
+
+.fa-list {
+    color: #4A41C5 !important;
+}
+
+.fa-box-archive {
+    color: #4A41C5 !important;
+}
+
+#corrigé span {
+    background-color: #F9D465;
+}
+
+#corrigé span,
+#non-corrigé span {
+    border-radius: 25px;
+    font-size: 14px;
+    color: #6E5400;
+
+
+}
+
+#non-corrigé span {
+    background-color: #9FE4B6;
+}
+
+
 .action-icons button {
     background-color: transparent;
     border: none;
@@ -663,6 +696,8 @@ footer p {
     color: #293D7A !important;
 
 }
+
+/* modal */
 
 
 

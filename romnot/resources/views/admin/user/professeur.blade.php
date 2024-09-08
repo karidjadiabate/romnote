@@ -390,6 +390,13 @@
 
                             </div>
 
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="adresse" name="adresse"
+                                        placeholder="Adresse" value="" required>
+                                </div>
+                            </div>
+
 
                             <div class="col-sm-6">
                                 <div class="form-group">

@@ -173,9 +173,18 @@
 
                         </ul>
                     </div>
-                    <button class="btn btn-custom btn-ajouter"
+
+                    @if(auth()->user()->role_id === 2)
+                        <a href="{{route('sujetprofesseur.create')}}" class="btn btn-custom btn-ajouter"
                         onclick="window.location.href='{{ asset('frontend/dashboard/html/sujt.html') }}'"><i
-                            class="fa fa-plus"></i> Creer un sujet</button>
+                            class="fa fa-plus"></i> Creer un sujet</a>
+
+                    @elseif(auth()->user()->role_id === 3)
+
+                    <a href="{{route('sujetadmin.create')}}" class="btn btn-custom btn-ajouter"
+                    onclick="window.location.href='{{ asset('frontend/dashboard/html/sujt.html') }}'"><i
+                        class="fa fa-plus"></i> Creer un sujet</a>
+                    @endif
 
                     <div class="dropdown" id="filterMenu">
                         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -254,14 +263,15 @@
                         </tr>
                     </thead>&nbsp;&nbsp;
                     <tbody>
+                        @foreach ($listesujets as $listesujet)
                         <tr>
-                            <td data-label="Identifiant">0001</td>
-                            <td data-label="Code">MATH01</td>
-                            <td data-label="Matière">MATHS</td>
-                            <td data-label="Filière">MATHS-INFO</td>
-                            <td data-label="Classes">TERMINALA1</td>
-                            <td data-label="Date de création">03-04-2024</td>
-                            <td data-label="statut" id="corrigé"><span>corrigé</span></td>
+                            <td data-label="Identifiant">{{$listesujet->id}}</td>
+                            <td data-label="Code">{{$listesujet->code}}</td>
+                            <td data-label="Matière">{{$listesujet->nommatiere}}</td>
+                            <td data-label="Filière">{{$listesujet->nomfiliere}}</td>
+                            <td data-label="Classes">{{$listesujet->nomclasse}}</td>
+                            <td data-label="Date de création">{{$listesujet->created_at}}</td>
+                            <td data-label="statut" id="corrigé"><span>{{$listesujet->status}}</span></td>
                             <td data-label="Action" class="action-icons no-print">
                                 <button data-bs-toggle="modal" data-bs-target="#editTeacher"> <i
                                         class="fas fa-eye"></i></button>
@@ -273,26 +283,8 @@
                                         class="fa-solid fa-box-archive"></i></button>
                             </td>
                         </tr>
-                        <tr>
-                            <td data-label="Identifiant">0001</td>
-                            <td data-label="Code">MATH01</td>
-                            <td data-label="Matière">MATHS</td>
-                            <td data-label="Filière">MATHS-INFO</td>
-                            <td data-label="Classes">TERMINALA1</td>
-                            <td data-label="Date de création">03-04-2024</td>
-                            <td data-label="statut" id="non-corrigé"><span>non-corrigé</span></td>
-                            <td data-label="Action" class="action-icons no-print">
-                                <button data-bs-toggle="modal" data-bs-target="#editTeacher"> <i
-                                        class="fas fa-eye"></i></button>
-                                <button data-bs-toggle="modal" data-bs-target="#scann"> <i
-                                        class="fa-solid fa-print"style="color: #4A41C5;"></i>
-                                </button>
-                                <button data-bs-toggle="modal" data-bs-target="#editTeacher"> <i
-                                        class="fa-solid fa-list"></i></button>
-                                <button data-bs-toggle="modal" data-bs-target="#deleteTeacher"><i
-                                        class="fa-solid fa-box-archive"></i></button>
-                            </td>
-                        </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>

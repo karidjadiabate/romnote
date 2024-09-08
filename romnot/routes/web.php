@@ -78,12 +78,17 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
     Route::get('/professeur',[UserController::class,'professeur'])->name('professeur');
     Route::get('/etudiant',[UserController::class,'etudiant'])->name('etudiant');
     Route::get('/calendrier',[CalendrierController::class,'index'])->name('calendrier.admin');
-    Route::get('/sujet',[SujetController::class,'index'])->name('sujet.admin');
     Route::get('/apropos',[ClientController::class,'apropos'])->name('apropos.admin');
     Route::get('/aideconfidentialite',[ClientController::class,'aideconfidentialite'])->name('aideconfidentialite.admin');
 
     Route::post('/changepassword/update', [MonCompteController::class, 'updatepassword'])->name('updatepassword.admin');
     Route::post('/updateprofile/{id}', [MoncompteController::class, 'updateprofile'])->name('updateprofile.admin');
+
+    Route::get('/sujet',[SujetController::class,'index'])->name('sujet.admin');
+    Route::get('/creersujet',[SujetController::class,'create'])->name('sujetadmin.create');
+    Route::post('/sujet',[SujetController::class,'store'])->name('sujetadmin.store');
+
+
 });
 
 
@@ -91,10 +96,16 @@ Route::prefix('superadmin')->middleware('SuperUtilisateur')->group(function () {
 Route::prefix('professeur')->middleware(['professeur','changepassword'])->group(function () {
 
     Route::get('/',[DashboardController::class,'dashboard'])->name('professeur.dashboard');
+
     Route::get('/sujet',[SujetController::class,'index'])->name('sujet.professeur');
+    Route::get('/creersujet',[SujetController::class,'create'])->name('sujetprofesseur.create');
+    Route::post('/sujet',[SujetController::class,'store'])->name('sujetprofesseur.store');
+
     Route::get('/calendrier',[CalendrierController::class,'index'])->name('calendrier.professeur');
+
     Route::get('/apropos',[ClientController::class,'apropos'])->name('apropos.professeur');
     Route::get('/aideconfidentialite',[ClientController::class,'aideconfidentialite'])->name('aideconfidentialite.professeur');
+
     Route::post('/changepassword/update', [MoncompteController::class, 'updatepassword'])->name('updatepassword.professeur');
     Route::post('/updateprofile/{id}', [MoncompteController::class, 'updateprofile'])->name('updateprofile.professeur');
 });

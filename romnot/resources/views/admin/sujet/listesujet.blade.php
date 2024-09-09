@@ -254,6 +254,9 @@
                         <tr class="aa">
                             <th>Identifiant</th>
                             <th>Code</th>
+                            @if(auth()->user()->role_id === 3)
+                            <th>Professeur</th>
+                            @endif
                             <th>Matière</th>
                             <th>Filière</th>
                             <th>Classes</th>
@@ -267,6 +270,9 @@
                         <tr>
                             <td data-label="Identifiant">{{$listesujet->id}}</td>
                             <td data-label="Code">{{$listesujet->code}}</td>
+                            @if(auth()->user()->role_id === 3)
+                            <td data-label="User">{{$listesujet->nom.' '.$listesujet->prenom}}</td>
+                            @endif
                             <td data-label="Matière">{{$listesujet->nommatiere}}</td>
                             <td data-label="Filière">{{$listesujet->nomfiliere}}</td>
                             <td data-label="Classes">{{$listesujet->nomclasse}}</td>

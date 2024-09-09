@@ -36,4 +36,21 @@ class Sujet extends Model
 
         return $listesujet;
     }
+
+    public function listesujetbyadmin()
+    {
+
+        $ecoleId = auth()->user()->etablissement_id;
+
+        $listesujet = DB::table('sujets AS s')
+            ->join('matieres AS m','m.id','=','s.matiere_id')
+            ->join('filieres AS f','f.id','=','s.filiere_id')
+            ->join('classes AS c','c.id','=','s.classe_id')
+            ->join('users AS u','u.id','=','s.user_id')
+            ->select('s.id','s.code','m.nommatiere','f.nomfiliere','c.nomclasse','s.created_at','s.status','u.nom','u.prenom')
+            ->where('s.etablissement_id',$ecoleId)
+            ->get();
+
+        return $listesujet;
+    }
 }

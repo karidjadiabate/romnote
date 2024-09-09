@@ -20,7 +20,14 @@ class SujetController extends Controller
     {
         $flistesujet = new Sujet();
 
-        $listesujets = $flistesujet->listesujetbyprof();
+        $ecoleId = auth()->user()->etablissement_id;
+
+        if(auth()->user()->role_id === 2){
+            $listesujets = $flistesujet->listesujetbyprof();
+        }elseif(auth()->user()->role_id === 3){
+            $listesujets = $flistesujet->listesujetbyadmin();
+        }
+
 
         return view('admin.sujet.listesujet',compact('listesujets'));
     }
@@ -87,7 +94,7 @@ class SujetController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
+        /* dd($request->all()); */
         // Validation des données du sujet
         $validated = $request->validate([
             'type_sujet_id' => 'required',

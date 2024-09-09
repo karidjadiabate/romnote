@@ -512,370 +512,329 @@
             }
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
-            // Déclaration de l'objet pour regrouper tous les compteurs
-            let counters = {
-                section: document.querySelectorAll(".frm").length,
-                question: 0,
-                response: 0,
-                image: 0,
-                file: 0,
-            };
+        document.addEventListener("DOMContentLoaded", function () {
+    let counters = {
+        section: document.querySelectorAll(".frm").length,
+        question: 0,
+        response: 0,
+        image: 0,
+        file: 0,
+    };
 
-            // Définition des fonctions
+    function handleSelectChanges(event) {
+        const selectElement = event.target;
+        const inputElement = selectElement.nextElementSibling;
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
 
-            function getUniqueId(prefix) {
-                return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+        selectElement.classList.remove("yellow", "red", "green");
+
+        if (selectedOption) {
+            if (selectedOption.className) {
+                selectElement.classList.add(selectedOption.className);
             }
 
-            function handleSelectChanges(event) {
-                const selectElement = event.target;
-                const inputElement = selectElement.nextElementSibling;
-                const selectedOption = selectElement.options[selectElement.selectedIndex];
-
-                console.log("ID du select :", selectElement.id);
-
-                selectElement.classList.remove("yellow", "red", "green");
-
-                if (selectedOption) {
-                    if (selectedOption.className) {
-                        selectElement.classList.add(selectedOption.className);
-                    }
-
-                    if (inputElement) {
-                        inputElement.className = "";
-                        if (selectedOption.className) {
-                            inputElement.classList.add(selectedOption.className);
-                        }
-
-                        if (selectedOption.value === "Manager") {
-                            inputElement.disabled = true;
-                        } else {
-                            inputElement.disabled = false;
-                        }
-                    }
+            if (inputElement) {
+                inputElement.className = "";
+                if (selectedOption.className) {
+                    inputElement.classList.add(selectedOption.className);
                 }
-            }
 
-            function attachAllEvents(sectionElement) {
-                attachResponseEvent(sectionElement);
-                attachDeleteEvent(sectionElement);
-                attachAddQuestionEvent(sectionElement);
-                attachDeleteQuestionnaireEvent(sectionElement);
-                attachDeleteSectionEvent(sectionElement);
-
-                sectionElement.querySelectorAll('.Select').forEach(selectElement => {
-                    selectElement.addEventListener("change", handleSelectChanges);
-
-                    const initialSelectedOption = selectElement.options[selectElement.selectedIndex];
-                    if (initialSelectedOption) {
-                        if (initialSelectedOption.className) {
-                            selectElement.classList.add(initialSelectedOption.className);
-                        }
-                        const inputElement = selectElement.nextElementSibling;
-                        if (inputElement) {
-                            inputElement.className = "";
-                            if (initialSelectedOption.className) {
-                                inputElement.classList.add(initialSelectedOption.className);
-                            }
-                            if (initialSelectedOption.value === "Manager") {
-                                inputElement.disabled = true;
-                            } else {
-                                inputElement.disabled = false;
-                            }
-                        }
-                    }
-                });
-            }
-
-            function attachResponseEvent(sectionElement) {
-                const addResponseButton = sectionElement.querySelector(".add-response");
-                if (addResponseButton) {
-                    addResponseButton.addEventListener("click", function(event) {
-                        event.preventDefault();
-
-                        const list = sectionElement.querySelector(".circle-list");
-                        const newItem = document.createElement("li");
-
-                        newItem.innerHTML = `
-                 <input type="text" class="heckbox-reponce" placeholder="reponse ${list.children.length + 1}" required />
-                 <label for="imagine${counters.file++}"><i class="fa-regular fa-image"></i></label>
-                 <input type="file" id="imagine${counters.file++}" class="file-input" data-preview="revange${counters.image++}" name="" style="display: none" />
-                 <img id="revange${counters.image++}" class="img" alt="" />
-                 <select id="responseselect${counters.section}${++counters.response}" class="Select">
-                   <option value="" disabled selected hidden>resultat</option>
-                   <option value="Manager" class="yellow" data-target="">Mauvaise réponse</option>
-                   <option value="Managers" class="red" data-target="">Mauvaise réponse(-)</option>
-                   <option value="Designer" class="green" data-target="">Bonne réponse</option>
-                 </select>
-                 <input type="number" class="point" required placeholder="not ${list.children.length + 1}" />
-                 <i class="fa-regular fa-trash-can delete delete-btn"></i>`;
-                        list.appendChild(newItem);
-                        attachDeleteEvent(newItem);
-                        newItem.querySelector('.Select').addEventListener("change", handleSelectChanges);
-                    });
-                }
-            }
-
-            function attachDeleteEvent(element) {
-                const deleteButton = element.querySelector(".delete-btn");
-                if (deleteButton) {
-                    deleteButton.addEventListener("click", function() {
-                        this.closest("li").remove();
-                    });
-                }
-            }
-
-            function attachAddQuestionEvent(sectionElement) {
-                const addQuestionButton = sectionElement.querySelector(".Ajouter-question");
-                if (addQuestionButton) {
-                    addQuestionButton.addEventListener("click", function(event) {
-                        event.preventDefault();
-
-                        counters.question++;
-                        const questionnaireContainer = sectionElement.querySelector(
-                            ".questionnaire-container");
-                        if (!questionnaireContainer) return;
-
-                        const spacer = document.createElement("div");
-                        spacer.className = "question-separator";
-
-                        const newQuestionnaire = document.createElement("div");
-                        newQuestionnaire.className = "input-group";
-
-                        newQuestionnaire.innerHTML = `
-             <div class="questionnaire">
-                 <div class="input-group">
-                     <div class="display-1">
-                         <div class="textarea">
-                             <textarea name="" id="previews${counters.file++}" required placeholder="Question"></textarea>
-                         </div>
-                         <div class="file-inputa">
-                             <div class="eme">
-                             <label for="fileinputs${counters.file++}"><i class="fa-regular fa-image"></i></label>
-                             <input type="file" id="fileinputs${counters.file++}" data-preview="imagepreviews${counters.image++}" data-result="previews${counters.file++}" class="file-input" name="" style="display: none;">
-                             <img id="imagepreviews${counters.image++}" alt="Aperçu de l'image" />
-                             </div>
-                         </div>
-                         <div>
-                             <i class="fa-solid fa-xmark deletes delete-questionnaire"></i>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="input-group">
-                     <ol class="circle-list">
-                         <li>
-                             <input type="text" class="heckbox-reponce" placeholder="reponse 1" required />
-                             <label for="imagine${counters.file++}"><i class="fa-regular fa-image"></i></label>
-                             <input type="file" id="imagine${counters.file++}" class="file-input" data-preview="imaginationss${counters.image++}" name="" style="display: none" />
-                             <img id="imaginationss${counters.image++}" class="img" alt="" />
-                             <select id="responseselect${counters.section}${++counters.response}" class="Select">
-                                 <option value="" disabled selected hidden>resultat</option>
-                                 <option value="Manager" class="yellow" data-target="">Mauvaise réponse</option>
-                                 <option value="Managers" class="red" data-target="">Mauvaise réponse(-)</option>
-                                 <option value="Designer" class="green" data-target="">Bonne réponse</option>
-                             </select>
-                             <input type="number" class="point" required placeholder="not 1" />
-                             <i class="fa-regular fa-trash-can delete delete-btn"></i>
-                         </li>
-                     </ol>
-                     <a class="add-response" href="#"><input type="radio"><p>Ajouter une autre proposition de réponse ou <span>ajouter '' Autre ''</span></p></a>
-                 </div>
-             </div>`;
-
-                        questionnaireContainer.appendChild(spacer);
-                        questionnaireContainer.appendChild(newQuestionnaire);
-                        attachAllEvents(newQuestionnaire);
-                    });
-                }
-            }
-
-            function attachDeleteQuestionnaireEvent(sectionElement) {
-                const deleteQuestionnaireButtons = sectionElement.querySelectorAll(".delete-questionnaire");
-
-                deleteQuestionnaireButtons.forEach(function(button) {
-                    button.addEventListener("click", function() {
-                        const questionnaire = this.closest(".questionnaire");
-
-                        if (questionnaire) {
-                            const inputGroup = questionnaire.closest(".input-group");
-
-                            if (inputGroup) {
-                                const previousElement = inputGroup.previousElementSibling;
-
-                                if (previousElement && previousElement.classList.contains(
-                                        "question-separator")) {
-                                    previousElement.remove();
-                                    console.log('question-separator suivant supprimé');
-                                }
-                                questionnaire.remove();
-                                inputGroup.remove();
-                            }
-                        }
-                    });
-                });
-            }
-
-            function attachDeleteSectionEvent(sectionElement) {
-                const deleteSectionButton = sectionElement.querySelector(".delete-section");
-                if (deleteSectionButton) {
-                    deleteSectionButton.addEventListener("click", function() {
-                        this.closest(".sectio-container").remove();
-                    });
-                }
-            }
-
-            function attachDeleteQuestionnaireEvents(sectionElement) {
-                const deleteQuestionnaireButtons = sectionElement.querySelectorAll(".delete-questionnaires");
-                let firstParentRemoved = false;
-
-                deleteQuestionnaireButtons.forEach(function(button) {
-                    button.addEventListener("click", function() {
-                        if (!firstParentRemoved) {
-                            const parentElement = this.parentElement;
-                            if (parentElement) {
-                                parentElement.remove();
-                                firstParentRemoved = true;
-                            }
-                        }
-                    });
-                });
-            }
-
-            // Gestionnaires d'événements initiaux
-
-            document.querySelector(".valid-not")?.addEventListener("click", function(event) {
-                var input = document.querySelector('.note-value');
-                var errorMessage = document.getElementById('error-message');
-
-                if (input.value.trim() === '') {
-                    event.preventDefault();
-                    errorMessage.style.display = 'block';
-                    input.focus();
+                if (selectedOption.value === "Manager") {
+                    inputElement.disabled = true;
                 } else {
-                    errorMessage.style.display = 'none';
-                    const noteValue = document.querySelector(".note-value").value;
-                    const frm = document.querySelector(".frm");
-
-                    if (frm) {
-                        frm.style.display = "block";
-                        input.disabled = true;
-                    }
-
-                    this.classList.remove("valid-not");
-                    this.classList.add("edit-button");
-                    this.id = 'edit-buttons';
-                    this.innerHTML = '<i class="fa-solid fa-pen-to-square" id="square"></i>';
-
-                    const frmNoteInput = document.querySelector(".frm .note-value");
-                    if (frmNoteInput) {
-                        frmNoteInput.value = noteValue;
-                    }
-                    document.getElementById('edit-buttons').addEventListener("click", function() {
-                        const frmNoteInputs = document.querySelector(".note-value");
-                        frmNoteInputs.disabled = false;
-                        frmNoteInputs.focus();
-                    });
+                    inputElement.disabled = false;
                 }
-            });
+            }
+        }
+    }
 
-            document.querySelector(".Ajouter-section")?.addEventListener("click", function(event) {
+    function attachAllEvents(sectionElement) {
+        attachResponseEvent(sectionElement);
+        attachDeleteEvent(sectionElement);
+        attachAddQuestionEvent(sectionElement);
+        attachDeleteQuestionnaireEvent(sectionElement);
+        attachDeleteSectionEvent(sectionElement);
+
+        sectionElement.querySelectorAll('.Select').forEach(selectElement => {
+            selectElement.addEventListener("change", handleSelectChanges);
+            const initialSelectedOption = selectElement.options[selectElement.selectedIndex];
+            if (initialSelectedOption) {
+                if (initialSelectedOption.className) {
+                    selectElement.classList.add(initialSelectedOption.className);
+                }
+                const inputElement = selectElement.nextElementSibling;
+                if (inputElement) {
+                    inputElement.className = "";
+                    if (initialSelectedOption.className) {
+                        inputElement.classList.add(initialSelectedOption.className);
+                    }
+                    if (initialSelectedOption.value === "Manager") {
+                        inputElement.disabled = true;
+                    } else {
+                        inputElement.disabled = false;
+                    }
+                }
+            }
+        });
+    }
+
+    function attachResponseEvent(sectionElement) {
+        const addResponseButton = sectionElement.querySelector(".add-response");
+        if (addResponseButton) {
+            addResponseButton.addEventListener("click", function (event) {
+                event.preventDefault();
+                const list = sectionElement.querySelector(".circle-list");
+                const newItem = document.createElement("li");
+                const questionIndex = sectionElement.getAttribute('data-question-index');
+                const responseIndex = list.children.length;
+
+                newItem.innerHTML = `
+                    <input type="text" class="heckbox-reponce" name="sections[${counters.section - 1}][questions][${questionIndex}][reponses][${responseIndex}][libreponse]" placeholder="reponse ${responseIndex + 1}" required />
+                    <label for="imagine${counters.file++}"><i class="fa-regular fa-image"></i></label>
+                    <input type="file" id="imagine${counters.file++}" class="file-input" data-preview="revange${counters.image++}" name="sections[${counters.section - 1}][questions][${questionIndex}][reponses][${responseIndex}][image]" style="display: none" />
+                    <img id="revange${counters.image++}" class="img" alt="" />
+                    <select name="sections[${counters.section - 1}][questions][${questionIndex}][reponses][${responseIndex}][result]" id="responseselect${counters.section}${++counters.response}" class="Select">
+                        <option value="" disabled selected hidden>resultat</option>
+                        <option value="bonne_reponse" class="green" data-target="1">Bonne réponse</option>
+                        <option value="mauvaise_reponse" class="yellow" data-target="2">Mauvaise réponse</option>
+                        <option value="mauvaise_reponse-" class="red" data-target="3">Mauvaise réponse(-)</option>
+                    </select>
+                    <input type="number" class="point" name="sections[${counters.section - 1}][questions][${questionIndex}][reponses][${responseIndex}][points]" required placeholder="not ${responseIndex + 1}" />
+                    <i class="fa-regular fa-trash-can delete delete-btn"></i>`;
+                list.appendChild(newItem);
+                attachDeleteEvent(newItem);
+                newItem.querySelector('.Select').addEventListener("change", handleSelectChanges);
+            });
+        }
+    }
+
+    function attachDeleteEvent(element) {
+        const deleteButton = element.querySelector(".delete-btn");
+        if (deleteButton) {
+            deleteButton.addEventListener("click", function () {
+                this.closest("li").remove();
+            });
+        }
+    }
+
+    function attachAddQuestionEvent(sectionElement) {
+        const addQuestionButton = sectionElement.querySelector(".Ajouter-question");
+        if (addQuestionButton) {
+            addQuestionButton.addEventListener("click", function (event) {
                 event.preventDefault();
 
-                const sectionsContainer = document.querySelector(".section-container");
-                if (sectionsContainer) {
-                    counters.section++;
-                    counters.image++;
-                    counters.file++;
+                const questionIndex = sectionElement.querySelectorAll('.questionnaire').length;
+                counters.question++;
+                const questionnaireContainer = sectionElement.querySelector(".questionnaire-container");
+                if (!questionnaireContainer) return;
 
-                    const newSections = document.createElement("div");
-                    newSections.className = "sa";
-                    newSections.innerHTML = `
-             <div class="btnas-ends">
-               <i class="fa-solid fa-x delete-questionnaires"></i>
-             </div>
-             <div class="input-group">
-               <input
-                 type="text"
-                 name="phone"
-                 id="phone"
-                 placeholder="Sous titre ${counters.section} "
-                 required
-               />
-             </div>
-             <div class="input-group input-with-icon">
-               <input
-                 type="text"
-                 name="email"
-                 id="preview${counters.file++}"
-                 placeholder="Libellé du sous titre"
-                 required
-               />
-               <label for="file-input${counters.file++}" class="icon-label"><i class="fa-regular fa-image"></i></label>
-               <input type="file" class="file-input" id="file-input${counters.file++}" data-preview="image-preview${counters.image++}" data-result="preview${counters.file++}" name="" style="display: none" />
-               <img id="image-preview${counters.image++}" alt="Aperçu de l'image" />
-             </div>`;
-                    const newSection = document.createElement("div");
-                    newSection.className = "sectio-container";
-                    newSection.innerHTML = `
-               <div class="btnas-end">
-                 <!-- <i class="fa-solid fa-x delete-section"></i>-->
-               </div>
-               <div class="sa-1">
-                 <div class="questionnaire-container" id="section-${counters.section}">
-                   <div class="input-group">
-                   <div class="questionnaire">
-                     <div class="input-group">
-                       <div class="display-1">
-                         <div class="textarea">
-                           <textarea name="" id="previewz${counters.file++}" required placeholder="Question"></textarea>
-                         </div>
-                         <div class="file-inputa">
-                           <div class="eme">
-                             <label for="fileinputs${counters.file++}"><i class="fa-regular fa-image"></i></label>
-                             <input type="file" id="fileinputs${counters.file++}" data-preview="imagepreviews${counters.image++}" data-result="previewz${counters.file++}" class="file-input" name="" style="display: none;">
-                             <img id="imagepreviews${counters.image++}" alt="Aperçu de l'image" />
-                           </div>
-                         </div>
-                         <div>
-                             <i class="fa-solid fa-xmark deletes delete-questionnaire"></i>
-                         </div>
-                       </div>
-                     </div>
-                     <div class="input-group">
-                       <ol class="circle-list">
-                         <li>
-                           <input type="text" class="heckbox-reponce" placeholder="reponse 1" required />
-                           <label for="imagine${counters.file++}"><i class="fa-regular fa-image"></i></label>
-                           <input type="file" id="imagine${counters.file++}" class="file-input" data-preview="cool${counters.image++}" name="" style="display: none" />
-                           <img id="cool${counters.image++}" class="img" alt="" />
-                           <select id="responseselect${counters.section}${++counters.response}" class="Select">
-                             <option value="" disabled selected hidden>resultat</option>
-                             <option value="Manager" class="yellow" data-target="">Mauvaise réponse</option>
-                             <option value="Managers" class="red" data-target="">Mauvaise réponse(-)</option>
-                             <option value="Designer" class="green" data-target="">Bonne réponse</option>
-                           </select>
-                           <input type="number" class="point" required placeholder="not 1" />
-                           <i class="fa-regular fa-trash-can delete delete-btn"></i>
-                         </li>
-                       </ol>
-                       <a class="add-response" href="#"><input type="radio"><p>Ajouter une autre proposition de réponse ou <span>ajouter '' Autre ''</span></p></a>
-                     </div>
-                   </div>
-                   </div>
-                 </div>
-                 <a href="#" class="Ajouter-question"> <i class="fa-solid fa-circle-plus"></i>Ajouter une question</a>
-               </div>`;
-                    sectionsContainer.appendChild(newSections);
-                    attachAllEvents(newSections);
-                    sectionsContainer.appendChild(newSection);
-                    attachAllEvents(newSection);
+                const spacer = document.createElement("div");
+                spacer.className = "question-separator";
+
+                const newQuestionnaire = document.createElement("div");
+                newQuestionnaire.className = "input-group";
+                newQuestionnaire.setAttribute('data-question-index', questionIndex);
+
+                newQuestionnaire.innerHTML = `
+                    <div class="questionnaire">
+                        <div class="input-group">
+                            <div class="display-1">
+                                <div class="textarea">
+                                    <textarea name="sections[${counters.section - 1}][questions][${questionIndex}][libquestion]" id="previews${counters.file++}" required placeholder="Question"></textarea>
+                                </div>
+                                <div class="file-inputa">
+                                    <div class="eme">
+                                        <label for="fileinputs${counters.file++}"><i class="fa-regular fa-image"></i></label>
+                                        <input type="file" id="fileinputs${counters.file++}" data-preview="imagepreviews${counters.image++}" data-result="previews${counters.file++}" class="file-input" name="sections[${counters.section - 1}][questions][${questionIndex}][image]" style="display: none;">
+                                        <img id="imagepreviews${counters.image++}" alt="Aperçu de l'image" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <i class="fa-solid fa-xmark deletes delete-questionnaire"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <ol class="circle-list">
+                                <li>
+                                    <input type="text" class="heckbox-reponce" name="sections[${counters.section - 1}][questions][${questionIndex}][reponses][0][libreponse]" placeholder="reponse 1" required />
+                                    <label for="imagine${counters.file++}"><i class="fa-regular fa-image"></i></label>
+                                    <input type="file" id="imagine${counters.file++}" class="file-input" data-preview="imaginationss${counters.image++}" name="sections[${counters.section - 1}][questions][${questionIndex}][reponses][0][image]" style="display: none" />
+                                    <img id="imaginationss${counters.image++}" class="img" alt="" />
+                                    <select name="sections[${counters.section - 1}][questions][${questionIndex}][reponses][0][result]" id="responseselect${counters.section}${++counters.response}" class="Select">
+                                        <option value="" disabled selected hidden>resultat</option>
+                                        <option value="bonne_reponse" class="green" data-target="1">Bonne réponse</option>
+                                        <option value="mauvaise_reponse" class="yellow" data-target="2">Mauvaise réponse</option>
+                                        <option value="mauvaise_reponse-" class="red" data-target="3">Mauvaise réponse(-)</option>
+                                    </select>
+                                    <input type="number" class="point" name="sections[${counters.section - 1}][questions][${questionIndex}][reponses][0][points]" required placeholder="not 1" />
+                                    <i class="fa-regular fa-trash-can delete delete-btn"></i>
+                                </li>
+                            </ol>
+                            <a class="add-response" href="#"><input type="radio"><p>Ajouter une autre proposition de réponse ou <span>ajouter '' Autre ''</span></p></a>
+                        </div>
+                    </div>`;
+
+                questionnaireContainer.appendChild(spacer);
+                questionnaireContainer.appendChild(newQuestionnaire);
+                attachAllEvents(newQuestionnaire);
+            });
+        }
+    }
+
+    function attachDeleteQuestionnaireEvent(sectionElement) {
+        const deleteQuestionnaireButtons = sectionElement.querySelectorAll(".delete-questionnaire");
+
+        deleteQuestionnaireButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                const questionnaire = this.closest(".questionnaire");
+
+                if (questionnaire) {
+                    const inputGroup = questionnaire.closest(".input-group");
+
+                    if (inputGroup) {
+                        const previousElement = inputGroup.previousElementSibling;
+
+                        if (previousElement && previousElement.classList.contains("question-separator")) {
+                            previousElement.remove();
+                        }
+                        questionnaire.remove();
+                        inputGroup.remove();
+                    }
                 }
             });
-
-            document.querySelectorAll(".sectio-container").forEach(attachAllEvents);
         });
-    </script> 
+    }
+
+    function attachDeleteSectionEvent(sectionElement) {
+        const deleteSectionButton = sectionElement.querySelector(".delete-section");
+        if (deleteSectionButton) {
+            deleteSectionButton.addEventListener("click", function () {
+                this.closest(".sectio-container").remove();
+            });
+        }
+    }
+
+    document.querySelector(".Ajouter-section")?.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const sectionsContainer = document.querySelector(".section-container");
+        if (sectionsContainer) {
+            counters.section++;
+
+            const newSections = document.createElement("div");
+            newSections.className = "sa";
+            newSections.innerHTML = `
+                <div class="btnas-ends">
+                    <i class="fa-solid fa-x delete-questionnaires"></i>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="sections[${counters.section - 1}][titre]" id="phone" placeholder="Sous titre ${counters.section}" required />
+                </div>
+                <div class="input-group input-with-icon">
+                    <input type="text" name="sections[${counters.section - 1}][soustitre]" id="preview${counters.file++}" placeholder="Libellé du sous titre" required />
+                    <label for="file-input${counters.file++}" class="icon-label"><i class="fa-regular fa-image"></i></label>
+                    <input type="file" class="file-input" id="file-input${counters.file++}" data-preview="image-preview${counters.image++}" data-result="preview${counters.file++}" name="sections[${counters.section - 1}][image]" style="display: none" />
+                    <img id="image-preview${counters.image++}" alt="Aperçu de l'image" />
+                </div>`;
+            const newSection = document.createElement("div");
+            newSection.className = "sectio-container";
+            newSection.setAttribute('data-section-index', counters.section - 1);
+            newSection.innerHTML = `
+                <div class="btnas-end"></div>
+                <div class="sa-1">
+                    <div class="questionnaire-container">
+                        <div class="input-group">
+                            <div class="questionnaire">
+                                <div class="input-group">
+                                    <div class="display-1">
+                                        <div class="textarea">
+                                            <textarea name="sections[${counters.section - 1}][questions][0][libquestion]" id="previewz${counters.file++}" required placeholder="Question"></textarea>
+                                        </div>
+                                        <div class="file-inputa">
+                                            <div class="eme">
+                                                <label for="fileinputs${counters.file++}"><i class="fa-regular fa-image"></i></label>
+                                                <input type="file" id="fileinputs${counters.file++}" data-preview="imagepreviews${counters.image++}" data-result="previewz${counters.file++}" class="file-input" name="sections[${counters.section - 1}][questions][0][image]" style="display: none;">
+                                                <img id="imagepreviews${counters.image++}" alt="Aperçu de l'image" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <i class="fa-solid fa-xmark deletes delete-questionnaire"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <ol class="circle-list">
+                                        <li>
+                                            <input type="text" class="heckbox-reponce" name="sections[${counters.section - 1}][questions][0][reponses][0][libreponse]" placeholder="reponse 1" required />
+                                            <label for="imagine${counters.file++}"><i class="fa-regular fa-image"></i></label>
+                                            <input type="file" id="imagine${counters.file++}" class="file-input" data-preview="cool${counters.image++}" name="sections[${counters.section - 1}][questions][0][reponses][0][image]" style="display: none" />
+                                            <img id="cool${counters.image++}" class="img" alt="" />
+                                            <select name="sections[${counters.section - 1}][questions][0][reponses][0][result]" id="responseselect${counters.section}${++counters.response}" class="Select">
+                                                <option value="" disabled selected hidden>resultat</option>
+                                                <option value="bonne_reponse" class="green" data-target="1">Bonne réponse</option>
+                                                <option value="mauvaise_reponse" class="yellow" data-target="2">Mauvaise réponse</option>
+                                                <option value="mauvaise_reponse-" class="red" data-target="3">Mauvaise réponse(-)</option>
+                                            </select>
+                                            <input type="number" class="point" name="sections[${counters.section - 1}][questions][0][reponses][0][points]" required placeholder="not 1" />
+                                            <i class="fa-regular fa-trash-can delete delete-btn"></i>
+                                        </li>
+                                    </ol>
+                                    <a class="add-response" href="#"><input type="radio"><p>Ajouter une autre proposition de réponse ou <span>ajouter '' Autre ''</span></p></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="Ajouter-question"> <i class="fa-solid fa-circle-plus"></i>Ajouter une question</a>
+                </div>`;
+            sectionsContainer.appendChild(newSections);
+            attachAllEvents(newSections);
+            sectionsContainer.appendChild(newSection);
+            attachAllEvents(newSection);
+        }
+    });
+
+    // Correct Validation Handling
+    document.querySelector(".valid-not")?.addEventListener("click", function (event) {
+        var input = document.querySelector('.note-value');
+        var errorMessage = document.getElementById('error-message');
+
+        if (input.value.trim() === '') {
+            event.preventDefault();
+            errorMessage.style.display = 'block';
+            input.focus();
+        } else {
+            errorMessage.style.display = 'none';
+            const noteValue = document.querySelector(".note-value").value;
+            const frm = document.querySelector(".frm");
+
+            if (frm) {
+                frm.style.display = "block";
+                input.disabled = true;
+            }
+
+            this.classList.remove("valid-not");
+            this.classList.add("edit-button");
+            this.id = 'edit-buttons';
+            this.innerHTML = '<i class="fa-solid fa-pen-to-square" id="square"></i>';
+
+            const frmNoteInput = document.querySelector(".frm .note-value");
+            if (frmNoteInput) {
+                frmNoteInput.value = noteValue;
+            }
+
+            document.getElementById('edit-buttons').addEventListener("click", function () {
+                const frmNoteInputs = document.querySelector(".note-value");
+                frmNoteInputs.disabled = false;
+                frmNoteInputs.focus();
+            });
+        }
+    });
+
+    document.querySelectorAll(".sectio-container").forEach(attachAllEvents);
+});
+
+    </script>
 </body>
 
 </html>

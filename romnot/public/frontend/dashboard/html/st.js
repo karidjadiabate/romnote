@@ -1,4 +1,4 @@
-<script>
+{/* <script>
 // JavaScript pour ouvrir et fermer le modal
 document.getElementById('close-modal-btn').addEventListener('click', function () {
     document.getElementById('myModal').style.display = 'flex';
@@ -78,55 +78,55 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
-</script>
+</script> */}
 
 
 
 
-            // Handle adding a new section
-            document.querySelector(".Ajouter-section")?.addEventListener("click", function (event) {
-                event.preventDefault();
+// Handle adding a new section
+document.querySelector(".Ajouter-section")?.addEventListener("click", function (event) {
+    event.preventDefault();
 
-                const sectionsContainer = document.querySelector(".section-container");
-                if (sectionsContainer) {
-                    sectionCounter++;
-                    sectionCounters++;
-                    sectionCounters0++;
-                    sectionCounters00++;
-                    sectionCounterss0++;
-                    sectionCounterss1++;
-                    imagerevue++;
-                    imagerevu++;
-                    imageprevu++;
-                    imageprevus++;
-                    imagerevue0++;
-                    imagerevu0++;
-                    imageprevu0++;
-                    imageprevus0++;
-                    imaginons++;
-                    imaginons0++;
-                    imaginons1++;
-                    imaginons2++;
-                    imaginons4++;
-                    imaginons5++;
-                    imaginons6++;
-                    imaginons7++;
-                    imaginons8++;
-                    imaginons9++;
-                    imaginons10++;
-                    imaginons11++;
-                    imaginons12++;
-                    imaginons13++;
-                    bryans++;
-                    bryans1++;
-                    bryans2++;
-                    bryans3++;
-                    bryans4++;
-                    bryans5++;
+    const sectionsContainer = document.querySelector(".section-container");
+    if (sectionsContainer) {
+        sectionCounter++;
+        sectionCounters++;
+        sectionCounters0++;
+        sectionCounters00++;
+        sectionCounterss0++;
+        sectionCounterss1++;
+        imagerevue++;
+        imagerevu++;
+        imageprevu++;
+        imageprevus++;
+        imagerevue0++;
+        imagerevu0++;
+        imageprevu0++;
+        imageprevus0++;
+        imaginons++;
+        imaginons0++;
+        imaginons1++;
+        imaginons2++;
+        imaginons4++;
+        imaginons5++;
+        imaginons6++;
+        imaginons7++;
+        imaginons8++;
+        imaginons9++;
+        imaginons10++;
+        imaginons11++;
+        imaginons12++;
+        imaginons13++;
+        bryans++;
+        bryans1++;
+        bryans2++;
+        bryans3++;
+        bryans4++;
+        bryans5++;
 
-                    const newSections = document.createElement("div");
-                    newSections.className = "sa";
-                    newSections.innerHTML = `
+        const newSections = document.createElement("div");
+        newSections.className = "sa";
+        newSections.innerHTML = `
         <div class="btnas-ends">
           <i class="fa-solid fa-x delete-questionnaires"></i>
         </div>
@@ -161,9 +161,9 @@ document.addEventListener('DOMContentLoaded', function () {
           />
           <img id="image-preview${sectionCounters00}"  alt="Aperçu de l'image" />
         </div>`;
-                    const newSection = document.createElement("div");
-                    newSection.className = "sectio-container";
-                    newSection.innerHTML = `
+        const newSection = document.createElement("div");
+        newSection.className = "sectio-container";
+        newSection.innerHTML = `
           <div class="btnas-end">
             <!-- <i class="fa-solid fa-x delete-section"></i>-->
           </div>
@@ -221,60 +221,60 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <a href="#" class="Ajouter-question"> <i class="fa-solid fa-circle-plus"></i>Ajouter une question</a>
           </div>`;
-                    sectionsContainer.appendChild(newSections);
-                    attachAllEvents(newSections);
-                    sectionsContainer.appendChild(newSection);
-                    attachAllEvents(newSection);
+        sectionsContainer.appendChild(newSections);
+        attachAllEvents(newSections);
+        sectionsContainer.appendChild(newSection);
+        attachAllEvents(newSection);
 
-                }
-            });
+    }
+});
 
-            // Attach events to a newly added section or questionnaire
-            function attachAllEvents(sectionElement) {
-                attachResponseEvent(sectionElement);
-                attachDeleteEvent(sectionElement);
-                attachAddQuestionEvent(sectionElement);
-                attachDeleteQuestionnaireEvent(sectionElement);
-                attachDeleteSectionEvent(sectionElement);
+// Attach events to a newly added section or questionnaire
+function attachAllEvents(sectionElement) {
+    attachResponseEvent(sectionElement);
+    attachDeleteEvent(sectionElement);
+    attachAddQuestionEvent(sectionElement);
+    attachDeleteQuestionnaireEvent(sectionElement);
+    attachDeleteSectionEvent(sectionElement);
 
-                // Re-attach change event for newly added selects
-                sectionElement.querySelectorAll('.Select').forEach(selectElement => {
-                    selectElement.addEventListener("change", handleSelectChanges);
+    // Re-attach change event for newly added selects
+    sectionElement.querySelectorAll('.Select').forEach(selectElement => {
+        selectElement.addEventListener("change", handleSelectChanges);
 
-                    // Initialize the state of the select on page load
-                    const initialSelectedOption = selectElement.options[selectElement.selectedIndex];
-                    if (initialSelectedOption) {
-                        if (initialSelectedOption.className) {
-                            selectElement.classList.add(initialSelectedOption.className);
-                        }
-                        const inputElement = selectElement.nextElementSibling;
-                        if (inputElement) {
-                            inputElement.className = ""; // Reset the input's classes
-                            if (initialSelectedOption.className) {
-                                inputElement.classList.add(initialSelectedOption.className);
-                            }
-                            // Manage the disabled state of the input on page load
-                            if (initialSelectedOption.value === "Manager") {
-                                inputElement.disabled = true; // Disable the input if value is "Manager"
-                            } else {
-                                inputElement.disabled = false; // Enable the input otherwise
-                            }
-                        }
-                    }
-                });
+        // Initialize the state of the select on page load
+        const initialSelectedOption = selectElement.options[selectElement.selectedIndex];
+        if (initialSelectedOption) {
+            if (initialSelectedOption.className) {
+                selectElement.classList.add(initialSelectedOption.className);
             }
+            const inputElement = selectElement.nextElementSibling;
+            if (inputElement) {
+                inputElement.className = ""; // Reset the input's classes
+                if (initialSelectedOption.className) {
+                    inputElement.classList.add(initialSelectedOption.className);
+                }
+                // Manage the disabled state of the input on page load
+                if (initialSelectedOption.value === "Manager") {
+                    inputElement.disabled = true; // Disable the input if value is "Manager"
+                } else {
+                    inputElement.disabled = false; // Enable the input otherwise
+                }
+            }
+        }
+    });
+}
 
-            // Handle adding responses
-            function attachResponseEvent(sectionElement) {
-                const addResponseButton = sectionElement.querySelector(".add-response");
-                if (addResponseButton) {
-                    addResponseButton.addEventListener("click", function (event) {
-                        event.preventDefault();
+// Handle adding responses
+function attachResponseEvent(sectionElement) {
+    const addResponseButton = sectionElement.querySelector(".add-response");
+    if (addResponseButton) {
+        addResponseButton.addEventListener("click", function (event) {
+            event.preventDefault();
 
-                        const list = sectionElement.querySelector(".circle-list");
-                        const newItem = document.createElement("li");
+            const list = sectionElement.querySelector(".circle-list");
+            const newItem = document.createElement("li");
 
-                        newItem.innerHTML = `
+            newItem.innerHTML = `
             <input type="text" class="heckbox-reponce" placeholder="reponse ${list.children.length + 1}" required />
              <label for="imagine${imaginons4++}"
                           ><i class="fa-regular fa-image"></i
@@ -296,44 +296,44 @@ document.addEventListener('DOMContentLoaded', function () {
             </select>
             <input type="number" class="point" required placeholder="not ${list.children.length + 1}" />
             <i class="fa-regular fa-trash-can delete delete-btn"></i>`;
-                        list.appendChild(newItem);
-                        attachDeleteEvent(newItem);
-                        // Re-attach change event for newly added selects
-                        newItem.querySelector('.Select').addEventListener("change", handleSelectChanges);
-                    });
-                }
-            }
+            list.appendChild(newItem);
+            attachDeleteEvent(newItem);
+            // Re-attach change event for newly added selects
+            newItem.querySelector('.Select').addEventListener("change", handleSelectChanges);
+        });
+    }
+}
 
-            // Handle deleting responses
-            function attachDeleteEvent(element) {
-                const deleteButton = element.querySelector(".delete-btn");
-                if (deleteButton) {
-                    deleteButton.addEventListener("click", function () {
-                        this.closest("li").remove();
-                    });
-                }
-            }
+// Handle deleting responses
+function attachDeleteEvent(element) {
+    const deleteButton = element.querySelector(".delete-btn");
+    if (deleteButton) {
+        deleteButton.addEventListener("click", function () {
+            this.closest("li").remove();
+        });
+    }
+}
 
-            // Handle adding a new question
-            function attachAddQuestionEvent(sectionElement) {
-                const addQuestionButton = sectionElement.querySelector(".Ajouter-question");
-                if (addQuestionButton) {
-                    addQuestionButton.addEventListener("click", function (event) {
-                        event.preventDefault();
+// Handle adding a new question
+function attachAddQuestionEvent(sectionElement) {
+    const addQuestionButton = sectionElement.querySelector(".Ajouter-question");
+    if (addQuestionButton) {
+        addQuestionButton.addEventListener("click", function (event) {
+            event.preventDefault();
 
-                        questionCounter++;
-                        const questionnaireContainer = sectionElement.querySelector(".questionnaire-container");
-                        if (!questionnaireContainer) return;
+            questionCounter++;
+            const questionnaireContainer = sectionElement.querySelector(".questionnaire-container");
+            if (!questionnaireContainer) return;
 
-                        // Créer un div pour l'espacement blanc
-                        const spacer = document.createElement("div");
-                        spacer.className = "question-separator";
+            // Créer un div pour l'espacement blanc
+            const spacer = document.createElement("div");
+            spacer.className = "question-separator";
 
-                        // Créer la nouvelle question
-                        const newQuestionnaire = document.createElement("div");
-                        newQuestionnaire.className = "input-group";
+            // Créer la nouvelle question
+            const newQuestionnaire = document.createElement("div");
+            newQuestionnaire.className = "input-group";
 
-                        newQuestionnaire.innerHTML = `
+            newQuestionnaire.innerHTML = `
         <div class="questionnaire">
             <div class="input-group">
                 <div class="display-1">
@@ -382,68 +382,68 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         </div>`;
 
-                        // Ajouter le div de séparation avant la nouvelle question
-                        questionnaireContainer.appendChild(spacer); // Ajoute l'espace blanc
-                        questionnaireContainer.appendChild(newQuestionnaire); // Ajoute la nouvelle question
+            // Ajouter le div de séparation avant la nouvelle question
+            questionnaireContainer.appendChild(spacer); // Ajoute l'espace blanc
+            questionnaireContainer.appendChild(newQuestionnaire); // Ajoute la nouvelle question
 
-                        // Attacher les événements à newQuestionnaire
-                        attachAllEvents(newQuestionnaire);
-                    });
-                }
-            }
-
-
-            // Handle deleting a questionnaire
-            function attachDeleteQuestionnaireEvent(sectionElement) {
-                const deleteQuestionnaireButtons = sectionElement.querySelectorAll(".delete-questionnaire");
-
-                deleteQuestionnaireButtons.forEach(function (button) {
-                    button.addEventListener("click", function () {
-                        // Trouver l'élément .questionnaire le plus proche
-                        const questionnaire = this.closest(".questionnaire");
-
-                        if (questionnaire) {
-                            // Trouver le parent .input-group contenant le questionnaire.
-                            const inputGroup = questionnaire.closest(".input-group");
-
-                            if (inputGroup) {
-                                // Trouver le .question-separator qui précède immédiatement le .input-group
-                                const previousElement = inputGroup.previousElementSibling;
-                                if (previousElement && previousElement.classList.contains("question-separator")) {
-                                    // Supprimer le .question-separator suivant
-                                    previousElement.remove();
-                                    console.log('question-separator suivant supprimé');
-                                }
-                                questionnaire.remove();
-                                inputGroup.remove();
-                            }
-                        }
-                    });
-                });
-            }
-            function attachDeleteSectionEvent(sectionElement) {
-                const deleteSectionButton = sectionElement.querySelector(".delete-section");
-                if (deleteSectionButton) {
-                    deleteSectionButton.addEventListener("click", function () {
-                        this.closest(".sectio-container").remove();
-                    });
-                }
-            }
-
-            function attachDeleteQuestionnaireEvents(sectionElement) {
-                const deleteQuestionnaireButtons = sectionElement.querySelectorAll(".delete-questionnaires");
-                let firstParentRemoved = false;
-                deleteQuestionnaireButtons.forEach(function (button) {
-                    button.addEventListener("click", function () {
-                        if (!firstParentRemoved) {
-                            const parentElement = this.parentElement;
-                            if (parentElement) {
-                                parentElement.remove();
-                                firstParentRemoved = true;
-                            }
-                        }
-                    });
-                });
-            }
-            document.querySelectorAll(".sectio-container").forEach(attachAllEvents);
+            // Attacher les événements à newQuestionnaire
+            attachAllEvents(newQuestionnaire);
         });
+    }
+}
+
+
+// Handle deleting a questionnaire
+function attachDeleteQuestionnaireEvent(sectionElement) {
+    const deleteQuestionnaireButtons = sectionElement.querySelectorAll(".delete-questionnaire");
+
+    deleteQuestionnaireButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            // Trouver l'élément .questionnaire le plus proche
+            const questionnaire = this.closest(".questionnaire");
+
+            if (questionnaire) {
+                // Trouver le parent .input-group contenant le questionnaire.
+                const inputGroup = questionnaire.closest(".input-group");
+
+                if (inputGroup) {
+                    // Trouver le .question-separator qui précède immédiatement le .input-group
+                    const previousElement = inputGroup.previousElementSibling;
+                    if (previousElement && previousElement.classList.contains("question-separator")) {
+                        // Supprimer le .question-separator suivant
+                        previousElement.remove();
+                        console.log('question-separator suivant supprimé');
+                    }
+                    questionnaire.remove();
+                    inputGroup.remove();
+                }
+            }
+        });
+    });
+}
+function attachDeleteSectionEvent(sectionElement) {
+    const deleteSectionButton = sectionElement.querySelector(".delete-section");
+    if (deleteSectionButton) {
+        deleteSectionButton.addEventListener("click", function () {
+            this.closest(".sectio-container").remove();
+        });
+    }
+}
+
+function attachDeleteQuestionnaireEvents(sectionElement) {
+    const deleteQuestionnaireButtons = sectionElement.querySelectorAll(".delete-questionnaires");
+    let firstParentRemoved = false;
+    deleteQuestionnaireButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            if (!firstParentRemoved) {
+                const parentElement = this.parentElement;
+                if (parentElement) {
+                    parentElement.remove();
+                    firstParentRemoved = true;
+                }
+            }
+        });
+    });
+}
+document.querySelectorAll(".sectio-container").forEach(attachAllEvents);
+// });

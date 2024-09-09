@@ -174,16 +174,14 @@
                         </ul>
                     </div>
 
-                    @if(auth()->user()->role_id === 2)
-                        <a href="{{route('sujetprofesseur.create')}}" class="btn btn-custom btn-ajouter"
-                        onclick="window.location.href='{{ asset('frontend/dashboard/html/sujt.html') }}'"><i
-                            class="fa fa-plus"></i> Creer un sujet</a>
-
+                    @if (auth()->user()->role_id === 2)
+                        <a href="{{ route('sujetprofesseur.create') }}" class="btn btn-custom btn-ajouter"
+                            onclick="window.location.href='{{ asset('frontend/dashboard/html/sujt.html') }}'"><i
+                                class="fa fa-plus"></i> Creer un sujet</a>
                     @elseif(auth()->user()->role_id === 3)
-
-                    <a href="{{route('sujetadmin.create')}}" class="btn btn-custom btn-ajouter"
-                    onclick="window.location.href='{{ asset('frontend/dashboard/html/sujt.html') }}'"><i
-                        class="fa fa-plus"></i> Creer un sujet</a>
+                        <a href="{{ route('sujetadmin.create') }}" class="btn btn-custom btn-ajouter"
+                            onclick="window.location.href='{{ asset('frontend/dashboard/html/sujt.html') }}'"><i
+                                class="fa fa-plus"></i> Creer un sujet</a>
                     @endif
 
                     <div class="dropdown" id="filterMenu">
@@ -254,8 +252,8 @@
                         <tr class="aa">
                             <th>Identifiant</th>
                             <th>Code</th>
-                            @if(auth()->user()->role_id === 3)
-                            <th>Professeur</th>
+                            @if (auth()->user()->role_id === 3)
+                                <th>Professeur</th>
                             @endif
                             <th>Matière</th>
                             <th>Filière</th>
@@ -267,28 +265,28 @@
                     </thead>&nbsp;&nbsp;
                     <tbody>
                         @foreach ($listesujets as $listesujet)
-                        <tr>
-                            <td data-label="Identifiant">{{$listesujet->id}}</td>
-                            <td data-label="Code">{{$listesujet->code}}</td>
-                            @if(auth()->user()->role_id === 3)
-                            <td data-label="User">{{$listesujet->nom.' '.$listesujet->prenom}}</td>
-                            @endif
-                            <td data-label="Matière">{{$listesujet->nommatiere}}</td>
-                            <td data-label="Filière">{{$listesujet->nomfiliere}}</td>
-                            <td data-label="Classes">{{$listesujet->nomclasse}}</td>
-                            <td data-label="Date de création">{{$listesujet->created_at}}</td>
-                            <td data-label="statut" id="corrigé"><span>{{$listesujet->status}}</span></td>
-                            <td data-label="Action" class="action-icons no-print">
-                                <button data-bs-toggle="modal" data-bs-target="#editTeacher"> <i
-                                        class="fas fa-eye"></i></button>
-                                <button data-bs-toggle="modal" data-bs-target="#impri"> <i style="color: #4A41C5;"
-                                        class="fa-solid fa-print"></i></button>
-                                <button data-bs-toggle="modal" data-bs-target="#editTeacher"> <i
-                                        class="fa-solid fa-list"></i></button>
-                                <button data-bs-toggle="modal" data-bs-target="#deleteTeacher"><i
-                                        class="fa-solid fa-box-archive"></i></button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td data-label="Identifiant">{{ $listesujet->id }}</td>
+                                <td data-label="Code">{{ $listesujet->code }}</td>
+                                @if (auth()->user()->role_id === 3)
+                                    <td data-label="User">{{ $listesujet->nom . ' ' . $listesujet->prenom }}</td>
+                                @endif
+                                <td data-label="Matière">{{ $listesujet->nommatiere }}</td>
+                                <td data-label="Filière">{{ $listesujet->nomfiliere }}</td>
+                                <td data-label="Classes">{{ $listesujet->nomclasse }}</td>
+                                <td data-label="Date de création">{{ $listesujet->created_date }}</td>
+                                <td data-label="statut" id="corrigé"><span>{{ $listesujet->status }}</span></td>
+                                <td data-label="Action" class="action-icons no-print">
+                                    <button data-bs-toggle="modal" data-bs-target="#editTeacher"> <i
+                                            class="fas fa-eye"></i></button>
+                                    <button data-bs-toggle="modal" data-bs-target="#impri"> <i
+                                            style="color: #4A41C5;" class="fa-solid fa-print"></i></button>
+                                    <button data-bs-toggle="modal" data-bs-target="#editTeacher"> <i
+                                            class="fa-solid fa-list"></i></button>
+                                    <button data-bs-toggle="modal" data-bs-target="#deleteTeacher"><i
+                                            class="fa-solid fa-box-archive"></i></button>
+                                </td>
+                            </tr>
                         @endforeach
 
                     </tbody>

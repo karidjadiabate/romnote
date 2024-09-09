@@ -10,7 +10,7 @@ class Sujet extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['code','type_sujet_id','filiere_id','matiere_id','classe_id','noteprincipale','heure','status','user_id','etablissement_id'];
+    protected $fillable = ['code', 'type_sujet_id', 'filiere_id', 'matiere_id', 'classe_id', 'noteprincipale', 'heure', 'status', 'user_id', 'etablissement_id'];
 
     public function sections()
     {
@@ -26,12 +26,12 @@ class Sujet extends Model
     {
 
         $listesujet = DB::table('sujets AS s')
-            ->join('matieres AS m','m.id','=','s.matiere_id')
-            ->join('filieres AS f','f.id','=','s.filiere_id')
-            ->join('classes AS c','c.id','=','s.classe_id')
-            ->join('users AS u','u.id','=','s.user_id')
-            ->select('s.id','s.code','m.nommatiere','f.nomfiliere','c.nomclasse','s.created_at','s.status')
-            ->where('s.user_id',auth()->user()->id)
+            ->join('matieres AS m', 'm.id', '=', 's.matiere_id')
+            ->join('filieres AS f', 'f.id', '=', 's.filiere_id')
+            ->join('classes AS c', 'c.id', '=', 's.classe_id')
+            ->join('users AS u', 'u.id', '=', 's.user_id')
+            ->select('s.id', 's.code', 'm.nommatiere', 'f.nomfiliere', 'c.nomclasse', DB::raw("DATE(s.created_at) as created_date"), 's.status')
+            ->where('s.user_id', auth()->user()->id)
             ->get();
 
         return $listesujet;
@@ -43,12 +43,12 @@ class Sujet extends Model
         $ecoleId = auth()->user()->etablissement_id;
 
         $listesujet = DB::table('sujets AS s')
-            ->join('matieres AS m','m.id','=','s.matiere_id')
-            ->join('filieres AS f','f.id','=','s.filiere_id')
-            ->join('classes AS c','c.id','=','s.classe_id')
-            ->join('users AS u','u.id','=','s.user_id')
-            ->select('s.id','s.code','m.nommatiere','f.nomfiliere','c.nomclasse','s.created_at','s.status','u.nom','u.prenom')
-            ->where('s.etablissement_id',$ecoleId)
+            ->join('matieres AS m', 'm.id', '=', 's.matiere_id')
+            ->join('filieres AS f', 'f.id', '=', 's.filiere_id')
+            ->join('classes AS c', 'c.id', '=', 's.classe_id')
+            ->join('users AS u', 'u.id', '=', 's.user_id')
+            ->select('s.id', 's.code', 'm.nommatiere', 'f.nomfiliere', 'c.nomclasse', DB::raw("DATE(s.created_at) as created_date"), 's.status', 'u.nom', 'u.prenom')
+            ->where('s.etablissement_id', $ecoleId)
             ->get();
 
         return $listesujet;

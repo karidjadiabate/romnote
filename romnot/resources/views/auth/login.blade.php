@@ -9,7 +9,8 @@
             <div class="col-lg-6 d-flex align-items-center justify-content-center box-conn">
                 <div class="col-lg-12 text-center conn-text">
                     <h1 class="conn-title">Bienvenue</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                    <p class="text-conn">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut
                         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                         laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
@@ -44,9 +45,9 @@
                 </div>
 
                 @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
                 @endif
                 <!-- Formulaire de connexion -->
                 <form action="{{ route('login') }}" method="post" role="form" id="form-contain-conn">
@@ -86,7 +87,8 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="form-control btn btn-save-register conn-btn w-100">Se
+                        <button type="submit"
+                            class="form-control btn btn-save-conn conn-btn w-100  d-flex align-items-center justify-content-center">Se
                             connecter</button>
                         <div class="validate"></div>
                     </div>
@@ -107,9 +109,9 @@
                             <label for="fg-email">Email</label>
                             <input type="email" name="email" class="form-control conn-input" id="fg-email"
                                 placeholder="Entrez votre email" data-rule="fg-email" />
-                                @if ($errors->has('email'))
+                            @if ($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
-                               @endif
+                            @endif
                             <i class="fa-regular fa-envelope"></i>
                             <div class="validate"></div>
                         </div>

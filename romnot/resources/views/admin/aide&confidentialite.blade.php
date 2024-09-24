@@ -20,73 +20,64 @@
     <title>Bienvenue sur ROMNote</title>
 
 </head>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: white;
-            margin: 0;
-            padding: 0;
-            color: #4a3dbb;
-            line-height: 1.3;
-        }
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: white;
+        margin: 0;
+        padding: 0;
+        color: #4a3dbb;
+        line-height: 1.3;
+    }
 
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 20px auto;
-            padding: 20px;
-        }
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 20px auto;
+        padding: 20px;
+        margin-top: 5%
+    }
 
-        h1 {
-            font-size: 26px;
-            text-align: center;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+    h1 {
+        font-size: 26px;
+        text-align: center;
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-        h2 {
-            font-size: 20px;
-            margin-top: 20px;
-            text-align: center;
-        }
+    h2 {
+        font-size: 20px;
+        margin-top: 20px;
+        text-align: center;
+    }
 
-        p {
-            text-align: center;
+    p {
+        text-align: center;
 
-        }
+    }
 
-        .section {
-            margin-bottom: 30px;
-        }
-
-
-
-        .text-center {
-            text-align: center;
-        }
+    .section {
+        margin-bottom: 30px;
+    }
 
 
-        .footer {
-            background-color: #243F70;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            left: 0;
-        }
 
-        strong {
-            font-style: italic;
-        }
-    </style>
+    .text-center {
+        text-align: center;
+    }
+
+
+
+    strong {
+        font-style: italic;
+    }
+</style>
 </head>
 
 <body>
-      <!-- header -->
-      @include('admin.include.menu')
-      <!-- accueil -->
+    <!-- header -->
+    @include('admin.include.menu')
+    <!-- accueil -->
     <div class="container">
         <h1>Ressources d'aide et Confidentialité ROMNote</h1>
         <div class="section">
@@ -152,11 +143,11 @@
                 informerons par email.</p>
         </div>
     </div>
-    <div class="footer">
-        © 2024 Tous Droits Réservés. AKPANY, Software & Media Solution
-    </div>
+    <!-- Footer -->
+    @include('admin.include.footer')
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+
 </html>

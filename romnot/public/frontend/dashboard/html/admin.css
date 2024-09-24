@@ -1,3 +1,19 @@
+.principal {
+    margin-top: 5.5rem !important;
+}
+
+@media (min-width: 1400px) {
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 1620px !important;
+    }
+}
+
 .chart-placeholder {
     height: 200px;
     background-color: #F1F4FE;
@@ -27,7 +43,7 @@
 .input-group-text .ka {
     box-shadow: none;
     max-width: 300px;
-    background-color: #6648ff;
+    background-color: #4A41C5;
     padding: 0rem 0.7rem 0rem 0.7rem;
     height: 80%;
     width: 100%;
@@ -85,7 +101,7 @@ button.navbar-toggler:focus {
 
 .perfo {
     background-color: #F1F4FE;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: none !important;
 }
 
 /* .dropdown-item:hover {
@@ -100,8 +116,9 @@ button.navbar-toggler:focus {
 
 .banner {
     width: 100%;
-    height: 200px;
-    background-color: #7366ea;
+    height: 40vh;
+    overflow: hidden;
+    background-color: #4A41C5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -118,31 +135,50 @@ button.navbar-toggler:focus {
     transform: translate(-50%, -50%);
 }
 
+.footer {
+    width: 100%;
+    height: 80px;
+    background-color: #293D7A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.footer-title {
+    font-size: 1rem;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .card {
     background-color: #F1F4FE;
     border-radius: 0%;
     border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: none !important;
 }
 
 .card-body {
-    color: #4a3dbb;
+    color: #4A41C5;
 }
 
 .icon path {
-    fill: #4a3dbb;
+    fill: #4A41C5;
 
 }
 
 .small-icon {
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
 }
 
 .card-title {
     font-size: 12px;
     margin-top: 7px;
-    color: #867af1;
+    color: #203D91;
 }
 
 .card-text {
@@ -160,15 +196,15 @@ button.navbar-toggler:focus {
 }
 
 .event-card {
-    background-color: #ff9e00;
+    background-color: #F69B23;
     color: white;
-    padding: 5px;
+    padding: 12px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
 }
 
 .event-card:first-child {
-    background-color: #6648ff;
+    background-color: #4A41C5;
 }
 
 .event-card p {
@@ -195,7 +231,7 @@ button.navbar-toggler:focus {
 }
 
 .calendar-header button {
-    background-color: #6648ff;
+    background-color: #A2ADCF;
     color: white;
     border: none;
     border-radius: 5px;
@@ -219,59 +255,99 @@ button.navbar-toggler:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 8px;
     border-radius: 5px;
 }
 
 .day-name {
     font-weight: bold;
-    color: #725aea;
+    color: #4A41C5;
 }
 
 .day {
     /* background-color: #f1f1f9; */
+    font-size: 1rem;
     cursor: pointer;
+    color: #A2ADCF;
+    font-weight: normal !important;
 }
 
-.day:hover {
+/*.day:hover {
 
     background-color: #ff9e00;
     border-radius: 50%;
+}*/
+h1.welcome {
+    color: #4A41C5;
 }
 
-h4 {
-    color: #4a3dbb;
-    font-size: 1.5rem;
+h1.welcome span {
+    font-size: 2.5rem;
     font-weight: bold;
 }
 
-.day:active {
-    background-color: #6648ff;
-    border-radius: 50%;
+h4 {
+    color: #293D7A;
+    font-size: 1.3rem;
+    font-weight: bold;
 }
 
+.filterdash {
+    position: absolute;
+    right: 5%;
+    top: 15%;
+}
+
+/*.day:active {
+    background-color: #4A41C5;
+    border-radius: 50%;
+}*/
+
 .calendar-header {
-    background-color: #6648ff;
+    background-color: #A2ADCF;
     border-radius: 10px;
 }
 
-.current-day {
-    background-color: #6648ff;
+/*.current-day {
+    background-color: #4A41C5;
     color: white;
     border-radius: 20px;
-}
+}*/
 
 .custom-select {
-    background-color: #6648ff;
+    background-color: #4A41C5;
     color: white;
-    border: 1px solid #6648ff;
-
-
 }
 
 .custom-select:focus {
     outline: none;
     box-shadow: none;
+}
+
+select.classic {
+    background-image:
+        linear-gradient(45deg, transparent 50%, white 50%),
+        linear-gradient(135deg, white 50%, transparent 50%),
+        linear-gradient(to right, #4A41C5, #4A41C5);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        100% 0;
+    background-size:
+        5px 5px,
+        5px 5px,
+        2.5em 2.5em;
+    background-repeat: no-repeat;
+}
+
+.bg-warning.bg-war {
+    color: #6E5400 !important;
+    background-color: #F9D465 !important;
+}
+
+.bg-success.bg-succ {
+    color: #024802 !important;
+    background-color: #9FE4B6 !important;
 }
 
 .tablest {
@@ -285,9 +361,13 @@ h4 {
 
 .tables td,
 .tables th {
-    padding: 5px 4px;
-    font-size: 11px;
+    padding: 12.7px 5px;
+    font-size: 13px;
 
+}
+
+.tables td:not(:first-child):not(:last-child) {
+    color: #A2ADCF;
 }
 
 @media (max-width: 992px) {
@@ -308,6 +388,8 @@ h4 {
         display: flex !important;
         align-items: center;
         order: 2;
+        max-width: 500px;
+        width: 100%;
     }
 
     #menuIcon {
@@ -360,8 +442,11 @@ h4 {
         justify-content: flex-start;
 
     }
+}
 
+/* Style enseignant */
 
-
-
+.text-title {
+    margin-left: 1rem;
+    margin-right: 1rem;
 }

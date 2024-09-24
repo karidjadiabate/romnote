@@ -30,309 +30,316 @@
     <!-- header -->
     @include('admin.include.menu')
     <!-- accueil -->
-    <div class="container">
-        <div class="printableArea">
-            <h2 class="text-start">Liste des enseignants</h2>
-            <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons mb-3 no-print">
-                <div class="d-flex search-container">
-                    <i class="fa fa-search"></i>
-                    <input id="searchInput" type="text" id="search" class="form-control search-bar"
-                        placeholder="Rechercher...">
-                </div>
-
-                <div class="d-flex justify-content-end flex-wrap">
-                    <button class="btn btn-custom btn-imprimer" id="printBtn" onclick="printDiv()"><i
-                            class="fa fa-print"></i> Imprimer</button>
-                    <button class="btn btn-custom btn-importer" data-bs-toggle="modal" data-bs-target="#importModal"><i
-                            class="fa fa-upload"></i> Importer</button>
-
-                    <!-- Dropdown for Export options -->
-                    <div class="btn-group">
-                        <button class="btn btn-custom btn-exporter dropdown-toggle" type="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-download"></i> Exporter
-                        </button>
-                        <ul class="dropdown-menu" id="menu">
-                            <!-- Assurez-vous que ces liens ont bien l'attribut href="#" et que onclick est correct -->
-                            <li><a class="dropdown-item" id="excel" href="#"
-                                    onclick="exportTableToExcel('#teacherTable')">Excel</a></li>
-                            <li><a class="dropdown-item" id="pdf" href="#"
-                                    onclick="exportTableToPDF('#teacherTable')">PDF</a></li>
-
-                        </ul>
-                    </div>
-                    <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#enseignant"><i
-                            class="fa fa-plus"></i> Ajouter un enseignant</button>
-
-                    <div class="dropdown" id="filterMenu">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-filter"></i> Filtrer par
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-submenu">
-                                <a class="dropdown-item dropdown-toggle" href="#"
-                                    data-bs-toggle="dropdown">Nom-Matière</a>
-                                <ul class="dropdown-menu">
-                                    @foreach ($professeurs as $professeur)
-                                        <li>
-                                            <a class="dropdown-item" href="#"
-                                                onclick="applyFilter('Nom-Matière', '{{ $professeur->nommatieres }}')">
-                                                {{ $professeur->nommatieres }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                            {{--  --}}
-                            <li class="dropdown-submenu">
-                                <a class="dropdown-item dropdown-toggle" href="#"
-                                    data-bs-toggle="dropdown">Classe</a>
-                                <ul class="dropdown-menu">
-                                    @foreach ($professeurs as $professeur)
-                                        <li>
-                                            <a class="dropdown-item" href="#"
-                                                onclick="applyFilter('Classe', '{{ $professeur->nomclasses }}')">
-                                                {{ $professeur->nomclasses }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-
-                            {{--  --}}
-
-                        </ul>
-                    </div>
-                </div>
-
-
+    <div class="container printableArea principal">
+        <h2 class="text-start text-title">Liste des enseignants</h2>
+        <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons  px-4  mb-3 no-print">
+            <div class="d-flex search-container">
+                <i class="fa fa-search"></i>
+                <input id="searchInput" type="text" id="search" class="form-control search-bar"
+                    placeholder="Rechercher...">
             </div>
-            <!-- Table for listing teachers -->
-            <div id="noResults">Aucun résultat trouvé</div>
-            <div class="table-responsive">
-                <table id="teacherTable" class="table">
-                    <thead class="table-aaa">
-                        <tr class="aa">
-                            <th>Identifiant</th>
-                            <th>Nom et Prénoms</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                            <th>Adresse</th>
-                            <th>Matière</th>
-                            <th>Classes</th>
-                            <th class="no-print">Action</th>
-                        </tr>
-                    </thead>&nbsp;&nbsp;
-                    <tbody id="teacherTable">
-                        @php
-                            $num = 1;
-                        @endphp
 
-                        @foreach ($professeurs as $professeur)
-                            <tr>
-                                <td data-label="Identifiant">{{ $num++ }}</td>
-                                <td data-label="Nom">
+            <div class="d-flex justify-content-end flex-wrap  ">
+                <button class="btn btn-custom btn-imprimer" id="printBtn" onclick="printDiv()"><i
+                        class="fa fa-print"></i> Imprimer</button>
+                <button class="btn btn-custom btn-importer" data-bs-toggle="modal" data-bs-target="#importModal"><i
+                        class="fa fa-upload"></i> Importer</button>
+
+                <!-- Dropdown for Export options -->
+                <div class="btn-group">
+                    <button class="btn btn-custom btn-exporter dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa fa-download"></i> Exporter
+                    </button>
+                    <ul class="dropdown-menu" id="menu">
+                        <!-- Assurez-vous que ces liens ont bien l'attribut href="#" et que onclick est correct -->
+                        <li><a class="dropdown-item" id="excel" href="#"
+                                onclick="exportTableToExcel('#teacherTable')">Excel</a></li>
+                        <li><a class="dropdown-item" id="pdf" href="#"
+                                onclick="exportTableToPDF('#teacherTable')">PDF</a></li>
+
+                    </ul>
+                </div>
+                <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#enseignant"><i
+                        class="fa fa-plus"></i> Ajouter un enseignant</button>
+
+                <div class="dropdown" id="filterMenu">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa fa-filter"></i> Filtrer par
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#"
+                                data-bs-toggle="dropdown">Nom-Matière</a>
+                            <ul class="dropdown-menu">
+                                @foreach ($professeurs as $professeur)
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                            onclick="applyFilter('Nom-Matière', '{{ $professeur->nommatieres }}')">
+                                            {{ $professeur->nommatieres }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        {{--  --}}
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Classe</a>
+                            <ul class="dropdown-menu">
+                                @foreach ($professeurs as $professeur)
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                            onclick="applyFilter('Classe', '{{ $professeur->nomclasses }}')">
+                                            {{ $professeur->nomclasses }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+
+                        {{--  --}}
+
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Table for listing teachers -->
+        <div id="noResults">Aucun résultat trouvé</div>
+        <div class="table-responsive">
+            <table id="teacherTable" class="table">
+                <thead class="table-aaa">
+                    <tr class="aa">
+                        <th>Identifiant</th>
+                        <th>Nom </th>
+                        <th>Prénoms</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Adresse</th>
+                        <th>Matière</th>
+                        <th>Classes</th>
+                        <th class="no-print">Action</th>
+                    </tr>
+                </thead>&nbsp;&nbsp;
+                <tbody id="teacherTable">
+                    @php
+                        $num = 1;
+                    @endphp
+
+                    @foreach ($professeurs as $professeur)
+                        <tr>
+                            <td data-label="Identifiant">{{ $num++ }}</td>
+                            <td data-label="Nom">
                                 @if ($professeur->image)
-                                    <img src="{{ asset('storage/profile/' . $professeur->image) }}" alt="User" class="rounded-circle profile-image"
-                                    style="width: 40px; height: 35x; margin-top:-5px">
+                                    <img src="{{ asset('storage/profile/' . $professeur->image) }}" alt="User"
+                                        class="rounded-circle profile-image"
+                                        style="width: 40px; height: 35x; margin-top:-5px">
                                 @else
-                                    <img src="{{ Avatar::create($professeur->nom .' '.$professeur->prenom)->toBase64() }}" alt="User" class="rounded-circle profile-image"
-                                    style="width: 40px; height: 35x; margin-top:-5px">
+                                    <img src="{{ Avatar::create($professeur->nom)->toBase64() }}" alt="User"
+                                        class="rounded-circle profile-image"
+                                        style="width: 40px; height: 35x; margin-top:-5px">
                                 @endif
 
-                                {{ $professeur->nom .' '.$professeur->prenom }}</td>
-                                <td data-label="Email">{{ $professeur->email }}</td>
-                                <td data-label="Contact">{{ $professeur->contact }}</td>
-                                <td data-label="Adresse">{{ $professeur->adresse }}</td>
-                                <td data-label="Matière">{{ $professeur->nommatieres }}</td>
-                                <td data-label="Classes">{{ $professeur->nomclasses }}</td>
-                                <td data-label="Action" class="action-icons no-print">
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#editTeacher{{ $professeur->id }}"
-                                        data-id="{{ $professeur->id }}" data-nom="{{ $professeur->nom }}"
-                                        data-prenom="{{ $professeur->prenom }}"
-                                        data-email="{{ $professeur->email }}"
-                                        data-matiere_id="{{ $professeur->matiere_id }}"
-                                        data-selected_classes="{{ $professeur->selected_classes }}" data-adresse="{{ $professeur->adresse }}">
-                                        <i class="fas fa-edit"></i>
+                                {{ $professeur->nom }}
+                            </td>
+                            <td data-label="Prenoms">{{ $professeur->prenom }}</td>
+                            <td data-label="Email">{{ $professeur->email }}</td>
+                            <td data-label="Contact">{{ $professeur->contact }}</td>
+                            <td data-label="Adresse">{{ $professeur->adresse }}</td>
+                            <td data-label="Matière">{{ $professeur->nommatieres }}</td>
+                            <td data-label="Classes">{{ $professeur->nomclasses }}</td>
+                            <td data-label="Action" class="action-icons no-print">
+                                <button class="btn  btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#editTeacher{{ $professeur->id }}"
+                                    data-id="{{ $professeur->id }}" data-nom="{{ $professeur->nom }}"
+                                    data-prenom="{{ $professeur->prenom }}" data-email="{{ $professeur->email }}"
+                                    data-matiere_id="{{ $professeur->matiere_id }}"
+                                    data-selected_classes="{{ $professeur->selected_classes }}"
+                                    data-adresse="{{ $professeur->adresse }}">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button class="btn  btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#deleteTeacher{{ $professeur->id }}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Modal de Modification -->
+                        <div class="modal fade" id="editTeacher{{ $professeur->id }}" tabindex="-1"
+                            aria-labelledby="editTeacherLabel{{ $professeur->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    {{-- <h1 class="text-center">Modifier</h1> --}}
+                                    <button type="button" class="custom-close-btn" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
                                     </button>
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#deleteTeacher{{ $professeur->id }}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- Modal de Modification -->
-                            <div class="modal fade" id="editTeacher{{ $professeur->id }}" tabindex="-1"
-                                aria-labelledby="editTeacherLabel{{ $professeur->id }}" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <h1 class="text-center">Modifier</h1>
-                                        <form action="{{ route('user.update', $professeur->id) }}" method="POST" enctype="multipart/form-data"
-                                            class="needs-validation" novalidate>
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-body">
-                                                <div class="row g-3">
-                                                    <!-- Fields for editing teacher details -->
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control"
-                                                            id="editNom{{ $professeur->id }}" name="nom"
-                                                            placeholder="Nom" value="{{ $professeur->nom }}"
-                                                            required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
+                                    <form action="{{ route('user.update', $professeur->id) }}" method="POST"
+                                        enctype="multipart/form-data" class="needs-validation" novalidate>
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body">
+                                            <div class="row g-3">
+                                                <!-- Fields for editing teacher details -->
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control"
+                                                        id="editNom{{ $professeur->id }}" name="nom"
+                                                        placeholder="Nom" value="{{ $professeur->nom }}" required>
+                                                    <div class="invalid-feedback">
                                                     </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control"
-                                                            id="editPrenom{{ $professeur->id }}" name="prenom"
-                                                            placeholder="Prénoms" value="{{ $professeur->prenom }}"
-                                                            required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <input type="email" class="form-control"
-                                                            id="editEmail{{ $professeur->id }}" name="email"
-                                                            placeholder="Email" value="{{ $professeur->email }}"
-                                                            required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="tel" class="form-control"
-                                                            id="editContact{{ $professeur->id }}" name="contact"
-                                                            placeholder="Contact" value="{{ $professeur->contact }}"
-                                                            required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    {{--  --}}
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <select name="matiere_id[]" id="matiereselect2"
-                                                                class="matiereprof-multiple form-control" multiple>
-                                                                @foreach ($matieres as $matiere)
-                                                                    <option value="{{ $matiere->id }}"
-                                                                        @if (in_array((string) $matiere->id, explode(',', $professeur->matiere_id))) selected @endif>
-                                                                        {{ $matiere->nommatiere }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            <div class="invalid-feedback">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <select class="select2-multiple form-control"
-                                                                name="classe_id[]" style="width: 100%"
-                                                                id="classeselect2" multiple>
-                                                                <option value="">Selectionnez une classe</option>
-                                                                @foreach ($classes as $classe)
-                                                                    <option value="{{ $classe->id }}"
-                                                                        @if (in_array($classe->id, json_decode($professeur->selected_classes))) selected @endif>
-                                                                        {{ $classe->nomclasse }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            <div class="invalid-feedback">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control"
-                                                            id="adresse{{ $professeur->id }}" name="adresse"
-                                                            placeholder="Adresse"
-                                                            value="{{ $professeur->adresse }}" required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="file" class="form-control"
-                                                            id="file{{ $professeur->id }}" name="file"
-                                                            value="{{ $professeur->image }}" required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-
                                                 </div>
-                                            </div>
-                                            <div class="d-flex justify-content-around">
-                                                <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                                <button type="button" class="btn btn-danger"
-                                                    data-bs-dismiss="modal">Annuler</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control"
+                                                        id="editPrenom{{ $professeur->id }}" name="prenom"
+                                                        placeholder="Prénoms" value="{{ $professeur->prenom }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input type="email" class="form-control"
+                                                        id="editEmail{{ $professeur->id }}" name="email"
+                                                        placeholder="Email" value="{{ $professeur->email }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="tel" class="form-control"
+                                                        id="editContact{{ $professeur->id }}" name="contact"
+                                                        placeholder="Contact" value="{{ $professeur->contact }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                {{--  --}}
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <select name="matiere_id[]" id="matiereselect2"
+                                                            class="matiereprof-multiple form-control" multiple>
+                                                            @foreach ($matieres as $matiere)
+                                                                <option value="{{ $matiere->id }}"
+                                                                    @if (in_array((string) $matiere->id, explode(',', $professeur->matiere_id))) selected @endif>
+                                                                    {{ $matiere->nommatiere }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div class="invalid-feedback">
+                                                        </div>
+                                                    </div>
+                                                </div>
 
 
-                            <!-- Modal de Suppression -->
-                            <div class="modal fade" id="deleteTeacher{{ $professeur->id }}" tabindex="-1"
-                                aria-labelledby="deleteTeacherLabel{{ $professeur->id }}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body text-center">
-                                            <img src="{{ asset('frontend/dashboard/images/images.png') }}"
-                                                width="50" height="50" alt=""><br><br>
-                                            <p id="sure">Êtes-vous sûr?</p>
-                                            <p>Supprimer cet enseignant ?</p>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <select class="select2-multiple form-control"
+                                                            name="classe_id[]" style="width: 100%" id="classeselect2"
+                                                            multiple>
+                                                            <option value="">Selectionnez une classe</option>
+                                                            @foreach ($classes as $classe)
+                                                                <option value="{{ $classe->id }}"
+                                                                    @if (in_array($classe->id, json_decode($professeur->selected_classes))) selected @endif>
+                                                                    {{ $classe->nomclasse }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div class="invalid-feedback">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control"
+                                                        id="adresse{{ $professeur->id }}" name="adresse"
+                                                        placeholder="Adresse" value="{{ $professeur->adresse }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                {{-- <div class="col-sm-6">
+                                                    <input type="file" class="form-control"
+                                                        id="file{{ $professeur->id }}" name="file"
+                                                        value="{{ $professeur->image }}" required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div> --}}
+
+
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-around">
-                                            <form action="{{ route('user.destroy', $professeur->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                            </form>
-                                            <button type="button" class="btn btn-secondary"
+                                        <div class="modal-footer d-flex justify-content-between">
+                                            <button type="submit"
+                                                class="btn btn-success p-3 border-0 rounded">Sauvegarder</button>
+                                            <button type="button" class="btn btn-danger  p-3 border-0 rounded"
                                                 data-bs-dismiss="modal">Annuler</button>
                                         </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal de Suppression -->
+                        <div class="modal fade" id="deleteTeacher{{ $professeur->id }}" tabindex="-1"
+                            aria-labelledby="deleteTeacherLabel{{ $professeur->id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <img src="{{ asset('frontend/dashboard/images/images.png') }}" width="50"
+                                            height="50" alt=""><br><br>
+                                        <p id="sure">Êtes-vous sûr?</p>
+                                        <p>Supprimer cet enseignant ?</p>
+                                    </div>
+                                    <div class="d-flex justify-content-around">
+                                        <form action="{{ route('user.destroy', $professeur->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Annuler</button>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
 
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="pagination-container  no-print">
-                <div class="pagination-info">
-                    Affiche
-                    <select id="rowsPerPageSelect" data-table-id="#teacherTable">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    de
-                </div>
-                <div class="pagination-buttons">
-                    <button class="btn prev">‹</button>
-                    <button class="btn active">1</button>
-                    <button class="btn next">›</button>
-                    <span id="nbr">sur 2</span>
-                </div>
-            </div><br>
+                </tbody>
+            </table>
         </div>
+
+        <div class="pagination-container  no-print">
+            <div class="pagination-info">
+                Affiche
+                <select class="classic" id="rowsPerPageSelect" data-table-id="#teacherTable">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                de
+            </div>
+            <div class="pagination-buttons">
+                <button class="btn prev"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="btn active">1</button>
+                <button class="btn next me-2"><i class="fa-solid fa-chevron-right"></i></button>
+                <span id="nbr">sur 2</span>
+            </div>
+        </div><br>
     </div>
     <!--  -->
-    <!--  -->
+    <!-- Footer -->
+    @include('admin.include.footer')
     <!-- Modal -->
     <div class="modal fade" id="enseignant" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -377,28 +384,6 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <input type="password" class="form-control" id="password" name="password"
-                                    placeholder="Password" value="" required>
-                                <div class="invalid-feedback">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <select name="role_id" id="role_id" class="form-control">
-                                    <option value="2">Professeur</option>
-                                </select>
-
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="adresse" name="adresse"
-                                        placeholder="Adresse" value="" required>
-                                </div>
-                            </div>
-
-
-                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <select name="matiere_id[]" id="matiereselect3"
                                         class="matiereprof-multiple form-control" multiple>
@@ -423,9 +408,33 @@
 
                                 </div>
                             </div>
+
+
+                            <div class="col-sm-6">
+                                <select name="role_id" id="role_id" class="form-control rounded-0">
+                                    <option value="2">Professeur</option>
+                                </select>
+
+                            </div>
+
+                            <!--- <div class="col-sm-6">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Password" value="" required>
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="adresse" name="adresse"
+                                        placeholder="Adresse" value="" required>
+                                </div>
+                            </div> -->
+
                             <div class="modal-footer d-flex justify-content-between">
-                                <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                <button type="button" class="btn btn-danger"
+                                <button type="submit"
+                                    class="btn btn-success p-3 border-0 rounded">Sauvegarder</button>
+                                <button type="button" class="btn btn-danger  p-3 border-0 rounded"
                                     data-bs-dismiss="modal">Annuler</button>
                             </div>
 
@@ -436,7 +445,7 @@
             </div>
         </div>
     </div>
-    <!--  -->
+    </div>
 
 
     <!-- importer -->
@@ -464,14 +473,15 @@
                 </form>
 
                 <!-- Modal Footer -->
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="submit" class="btn btn-success">Importer</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                <div class="modal-footer d-flex justify-content-between  mt-4">
+                    <button type="submit" class="btn btn-success p-3 border-0 rounded">Importer</button>
+                    <button type="button" class="btn btn-danger p-3 border-0 rounded"
+                        data-bs-dismiss="modal">Annuler</button>
                 </div>
             </div>
         </div>
     </div>
-    <!--  -->
+    </div>
 
 
     <script>

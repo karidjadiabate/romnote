@@ -21,7 +21,35 @@
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
 
 </head>
+<style>
+    /* Style select */
+    select.classic {
+        margin: 0;
+        padding: .1rem .2em;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
 
+    select.classic,
+    select.classic:focus {
+        background-image:
+            linear-gradient(45deg, transparent 50%, #293D7A 50%),
+            linear-gradient(135deg, #293D7A 50%, transparent 50%),
+            linear-gradient(to right, #fff, #fff);
+        background-position:
+            calc(100% - 10px) calc(.6em + 2px),
+            calc(100% - 5px) calc(.6em + 2px),
+            100% 0;
+        background-size:
+            5px 5px,
+            5px 5px,
+            2.5em 2.5em;
+        background-repeat: no-repeat;
+    }
+</style>
 
 <body>
     <!-- header -->
@@ -134,11 +162,11 @@
                                         data-bs-target="#editFiliere{{ $filiere->id }}"
                                         data-id="{{ $filiere->id }}" data-code="{{ $filiere->code }}"
                                         data-nomfiliere="{{ $filiere->nomfiliere }}">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-pen"></i>
                                     </button>
                                     <button class="btn  btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#deletefiliere{{ $filiere->id }}">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>

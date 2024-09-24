@@ -1,10 +1,5 @@
 <style>
     /* Style pour l'élément actif */
-    .dropdown-toggle.cool::after {
-        content: "" !important;
-        border: none !important;
-    }
-
     .custom-profile-dropdown {
         background-color: #FFFFFF;
         border-radius: 12px;
@@ -58,12 +53,8 @@
         display: none;
     }
 
-    .search-bar {
-        width: 70%;
-    }
-
     .search-bar .input-group-text {
-        border: 1px solid white;
+        border: 2px solid white;
         background-color: #4a3dbb;
         border-radius: 6px;
         padding: 5px 6px;
@@ -82,10 +73,6 @@
         height: 30px;
         font-size: 12px;
         padding-left: 0;
-    }
-
-    .input-group-text {
-        with: 100%;
     }
 
     .search-bar .search-input::placeholder {
@@ -195,7 +182,7 @@
     .dropdown-header {
         display: flex;
         align-items: center;
-        padding: 15px 10.5px;
+        padding: 15px;
         border-bottom: 1px solid #ddd;
     }
 
@@ -219,7 +206,7 @@
 
     .dropdown-header .view-profile {
         font-size: 12px;
-        color: #4A41C5;
+        color: #666;
         text-decoration: none;
     }
 
@@ -343,42 +330,18 @@
     .upload-button i {
         margin-right: 5px;
     }
-
-    .navbar-brand {
-        margin-left: 5px;
-        font-size: 20px;
-    }
-
-    .navbar-brand span {
-        font-size: 20px;
-    }
-
-    .dropdown-menu-end[data-bs-popper] {
-        right: -30% !important;
-    }
-
-    .icon-chevron:hover,
-    .icon-chevron.active {
-        color: #fff !important;
-    }
-
-    .li-item :hover {
-        background-color: #EDECFF !important;
-        border-radius: 10px !important;
-        color: #4A41C5 !important;
-    }
 </style>
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg  ">
     <div class="container-fluid">
         <!-- logo -->
-        <a class="navbar-brand" href="#" style="">AKP <span>ROM-Note</span></a>
+        <a class="navbar-brand" href="#" style="margin-left:5px;">AKP <span>ROM-Note</span></a>
         <!-- menu -->
         <button class="navbar-toggler" type="button" id="toggleButton" aria-controls="offcanvasScrolling"
             aria-expanded="false" aria-label="Toggle navigation">
 
             <form class="d-flex search-bar" id="sea" role="search">
                 <div class="input-group">
-                    <span class="input-group-text w-100">
+                    <span class="input-group-text">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <input class="form-control search-input" type="search" placeholder="Rechercher..."
                             aria-label="Search">
@@ -392,12 +355,12 @@
             <li class="nav-item dropdown" id="noti">
                 <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-bell fa-fw"></i>
-                    @if (auth()->check() && !auth()->user()->unreadNotifications->isEmpty())
+                    @unless (auth()->user()->unreadNotifications->isEmpty())
                         <span id="notificationCounter"
                             class="badge notification">{{ auth()->user()->unreadNotifications->count() }}</span>
-                    @endif
-                </a>
+                    @endunless
 
+                </a>
                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
                     <li class="notification-empty">
                         <div class="notification-icon">
@@ -437,21 +400,19 @@
             </span>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <li class="nav-item dropdown" id="profi">
-                <a class="nav-link dropdown-toggle d-flex align-items-center cool" href="#" role="button"
+                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     @if (auth()->user()->image)
                         <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User"
                             class="rounded-circle profile-image" style="width: 40px; height: 35x; margin-top:-5px">
-                        <i class="fa-solid fa-chevron-down icon-chevron"></i>
                     @else
                         <img src="{{ Avatar::create(auth()->user()->nom . ' ' . auth()->user()->prenom)->toBase64() }}"
                             alt="User" class="rounded-circle profile-image"
                             style="width: 40px; height: 35x; margin-top:-5px">
-                        <i class="fa-solid fa-chevron-down icon-chevron"></i>
                     @endif
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end custom-profile-dropdown">
-                    <li class="dropdown-header d-flex align-items-center border-0">
+                    <li class="dropdown-header d-flex align-items-center">
                         @if (auth()->user()->image)
                             <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User"
                                 class="rounded-circle profile-image">
@@ -466,7 +427,7 @@
                             <a href="{{ route('moncompte') }}" class="view-profile">Voir le profil</a>
                         </div>
                     </li>
-                    <li><a class="dropdown-item li-item" href="#" data-bs-toggle="modal" data-bs-target="">
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="">
                             <!-- SVG pour Signature -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="25.943" height="25.125"
                                 viewBox="0 0 25.943 25.125">
@@ -475,7 +436,7 @@
                                     transform="translate(-3 -3)" fill="#4a41c5" />
                             </svg> Signature</a>
                     </li>
-                    <li><a class="dropdown-item li-item" href="#">
+                    <li><a class="dropdown-item" href="#">
                             <!-- SVG pour Signature -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="34.52" height="25.119"
                                 viewBox="0 0 34.52 25.119">
@@ -507,7 +468,7 @@
                                 </g>
                             </svg>Apparence & <br>accessibilité </a>
                     </li>
-                    <li><a class="dropdown-item li-item" href="{{ route('moncompte') }}">
+                    <li><a class="dropdown-item" href="{{ route('moncompte') }}">
                             <!-- SVG pour Compte -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="26.173" height="24.538"
                                 viewBox="0 0 26.173 24.538">
@@ -516,8 +477,8 @@
                                     transform="translate(0 -16)" fill="#4a41c5" />
                             </svg> Compte</a>
                     </li>
-                    @if (intval(auth()->user()->role_id) === 3)
-                        <li><a class="dropdown-item li-item" href="{{ route('apropos.admin') }}">
+                    @if (auth()->user()->role_id === 3)
+                        <li><a class="dropdown-item" href="{{ route('apropos.admin') }}">
                                 <!-- SVG pour A propos -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
                                     viewBox="0 0 13.729 27.457">
@@ -529,8 +490,8 @@
                                         transform="translate(-32.568)" fill="#4a41c5" />
                                 </svg> A propos</a>
                         </li>
-                    @elseif(intval(auth()->user()->role_id) === 2)
-                        <li><a class="dropdown-item li-item" href="{{ route('apropos.professeur') }}">
+                    @elseif(auth()->user()->role_id === 2)
+                        <li><a class="dropdown-item" href="{{ route('apropos.professeur') }}">
                                 <!-- SVG pour A propos -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
                                     viewBox="0 0 13.729 27.457">
@@ -542,8 +503,8 @@
                                         transform="translate(-32.568)" fill="#4a41c5" />
                                 </svg> A propos</a>
                         </li>
-                    @elseif(intval(auth()->user()->role_id) === 4)
-                        <li><a class="dropdown-item li-item" href="{{ route('apropos.superadmin') }}">
+                    @elseif(auth()->user()->role_id === 4)
+                        <li><a class="dropdown-item" href="{{ route('apropos.superadmin') }}">
                                 <!-- SVG pour A propos -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="13.729" height="27.457"
                                     viewBox="0 0 13.729 27.457">
@@ -557,8 +518,8 @@
                         </li>
                     @endif
 
-                    @if (intval(auth()->user()->role_id) === 3)
-                        <li><a class="dropdown-item li-item" href="{{ route('aideconfidentialite.admin') }}">
+                    @if (auth()->user()->role_id === 3)
+                        <li><a class="dropdown-item" href="{{ route('aideconfidentialite.admin') }}">
                                 <!-- SVG pour Aide & Confidentialité -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
                                     viewBox="0 0 17.664 35.327">
@@ -570,8 +531,8 @@
                                         transform="translate(-31.584 -45.505)" fill="#4a41c5" />
                                 </svg> Aide & confidentialité</a>
                         </li>
-                    @elseif(intval(auth()->user()->role_id) === 2)
-                        <li><a class="dropdown-item li-item" href="{{ route('aideconfidentialite.professeur') }}">
+                    @elseif(auth()->user()->role_id === 2)
+                        <li><a class="dropdown-item" href="{{ route('aideconfidentialite.professeur') }}">
                                 <!-- SVG pour Aide & Confidentialité -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
                                     viewBox="0 0 17.664 35.327">
@@ -583,8 +544,8 @@
                                         transform="translate(-31.584 -45.505)" fill="#4a41c5" />
                                 </svg> Aide & confidentialité</a>
                         </li>
-                    @elseif(intval(auth()->user()->role_id) === 4)
-                        <li><a class="dropdown-item li-item" href="{{ route('aideconfidentialite.superadmin') }}">
+                    @elseif(auth()->user()->role_id === 4)
+                        <li><a class="dropdown-item" href="{{ route('aideconfidentialite.superadmin') }}">
                                 <!-- SVG pour Aide & Confidentialité -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="17.664" height="35.327"
                                     viewBox="0 0 17.664 35.327">
@@ -598,8 +559,9 @@
                         </li>
                     @endif
                     <li>
+                        <hr class="dropdown-divider">
                     </li>
-                    <li><a href="{{ route('logout') }}" class="dropdown-item li-item"
+                    <li><a href="{{ route('logout') }}" class="dropdown-item"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <!-- SVG pour Déconnexion -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="26.81" height="30.726"
@@ -643,7 +605,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     </li>
                     <!-- tableau de bord -->
-                    @if (intval(auth()->user()->role_id) === 4)
+                    @if (auth()->user()->role_id === 4)
                         <li class="nav-item" id="tableau">
                             <a class="nav-link " href="/superadmin">
                                 <div class="icon-text-container">
@@ -657,7 +619,7 @@
                                 </div>
                             </a>
                         </li>
-                    @elseif (intval(auth()->user()->role_id) === 3)
+                    @elseif (auth()->user()->role_id === 3)
                         <li class="nav-item" id="tableau">
                             <a class="nav-link" href="/admin">
                                 <div class="icon-text-container">
@@ -671,7 +633,7 @@
                                 </div>
                             </a>
                         </li>
-                    @elseif(intval(auth()->user()->role_id) === 2)
+                    @elseif(auth()->user()->role_id === 2)
                         <li class="nav-item" id="tableau">
                             <a class="nav-link" href="/professeur">
                                 <div class="icon-text-container">
@@ -687,7 +649,7 @@
                         </li>
                     @endif
                     <!-- role -->
-                    @if (intval(auth()->user()->role_id) === 4)
+                    @if (auth()->user()->role_id === 4)
                         {{--  <li class="nav-item" id="role">
                             <a class="nav-link" href="#"onclick="setActive(event, 'role')">
                                 <div class="icon-text-container">
@@ -778,8 +740,8 @@
                         </li>
                     @endif
 
-                    @if (intval(auth()->user()->role_id) === 3)
-                        <!-- niveaux
+                    @if (auth()->user()->role_id === 3)
+                        <!-- niveaux -->
                         <li class="nav-item" id="niveaux">
                             <a class="nav-link " href="{{ route('niveau.index') }}">
                                 <div class="icon-text-container">
@@ -794,19 +756,56 @@
                                     </div>
                                 </div>
                             </a>
-                        </li>-->
+                        </li>
 
-                        <!-- Enseignants -->
-                        <li class="nav-item" id="enseignants">
-                            <a class="nav-link " href="{{ route('professeur') }}">
+
+                        <!-- filieres -->
+                        <li class="nav-item" id="Filiere">
+                            <a class="nav-link " href="{{ route('filiere.index') }}">
                                 <div class="icon-text-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30.448" height="34.798"
-                                        viewBox="0 0 30.448 34.798">
-                                        <path id="user-tie-solid"
-                                            d="M6.525,8.7a8.7,8.7,0,1,0,8.7-8.7A8.7,8.7,0,0,0,6.525,8.7Zm6.423,13.607,1.264,2.107-2.263,8.421L9.5,22.85a1.006,1.006,0,0,0-1.217-.768A10.961,10.961,0,0,0,0,32.711,2.087,2.087,0,0,0,2.087,34.8H28.362a2.087,2.087,0,0,0,2.087-2.087,10.961,10.961,0,0,0-8.285-10.63,1.016,1.016,0,0,0-1.217.768L18.5,32.834l-2.263-8.421L17.5,22.306a1.086,1.086,0,0,0-.931-1.645H13.885a1.087,1.087,0,0,0-.931,1.645Z"
-                                            fill="#fff" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
+                                        viewBox="0 0 31.318 34.798">
+                                        <path id="Tracé_381" data-name="Tracé 381"
+                                            d="M34.318,5.48H9.96a3.48,3.48,0,0,0,0,6.96H34.318V35.058a1.74,1.74,0,0,1-1.74,1.74H9.96A6.96,6.96,0,0,1,3,29.838V8.96A6.96,6.96,0,0,1,9.96,2H32.578a1.74,1.74,0,0,1,1.74,1.74Zm-1.74,5.22H9.96a1.74,1.74,0,0,1,0-3.48H32.578Z"
+                                            transform="translate(-3 -2)" fill="#fff" />
                                     </svg>
-                                    <span>Enseignants</span>
+                                    <span>Filière</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" id="Filiere">
+                            <a class="nav-link" href="{{ route('matiere.index') }}">
+                                <div class="icon-text-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
+                                        viewBox="0 0 31.318 34.798">
+                                        <path id="Tracé_381" data-name="Tracé 381"
+                                            d="M34.318,5.48H9.96a3.48,3.48,0,0,0,0,6.96H34.318V35.058a1.74,1.74,0,0,1-1.74,1.74H9.96A6.96,6.96,0,0,1,3,29.838V8.96A6.96,6.96,0,0,1,9.96,2H32.578a1.74,1.74,0,0,1,1.74,1.74Zm-1.74,5.22H9.96a1.74,1.74,0,0,1,0-3.48H32.578Z"
+                                            transform="translate(-3 -2)" fill="#fff" />
+                                    </svg>
+                                    <span>Matiere</span>
+                                </div>
+                            </a>
+                        </li>
+                        <!-- classe -->
+                        <li class="nav-item" id="classe">
+                            <a class="nav-link " href="{{ route('classe.index') }}">
+                                <div class="icon-text-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="38.889" height="35"
+                                        viewBox="0 0 38.889 35">
+                                        <g id="book" transform="translate(-2 -3.998)"
+                                            style="isolation: isolate">
+                                            <path id="Tracé_376" data-name="Tracé 376"
+                                                d="M9.778,4A7.778,7.778,0,0,0,2,11.776V27.331a7.778,7.778,0,0,0,7.778,7.778l5.851.019a4.017,4.017,0,0,1,2.689,1.3,10.169,10.169,0,0,1,1.165,1.223A2.364,2.364,0,0,0,21.444,39c1.155-.006,1.53-.791,1.944-1.338a11.068,11.068,0,0,1,1.075-1.11,4.57,4.57,0,0,1,2.814-1.441h5.833a7.778,7.778,0,0,0,7.778-7.778V11.776A7.778,7.778,0,0,0,33.111,4H27.278a7.672,7.672,0,0,0-5.833,2.734A7.672,7.672,0,0,0,15.611,4Zm0,3.889h5.833A3.888,3.888,0,0,1,19.5,11.776l.012,20.706a7.135,7.135,0,0,0-3.9-1.262H9.778a3.888,3.888,0,0,1-3.889-3.889V11.776A3.888,3.888,0,0,1,9.778,7.887Zm17.5,0h5.833A3.888,3.888,0,0,1,37,11.776V27.331a3.888,3.888,0,0,1-3.889,3.889H27.278a7.153,7.153,0,0,0-3.9,1.287l.008-20.732A3.888,3.888,0,0,1,27.278,7.887Z"
+                                                transform="translate(0 0)" fill="#fff" />
+                                            <path id="Tracé_377" data-name="Tracé 377"
+                                                d="M11.833,8H6v3.889h5.833Zm0,5.833H6v3.889h5.833ZM6,19.667h5.833v3.889H6ZM29.333,8H23.5v3.889h5.833ZM23.5,13.833h5.833v3.889H23.5Zm5.833,5.833H23.5v3.889h5.833Z"
+                                                transform="translate(3.778 3.78)" fill="#fff"
+                                                fill-rule="evenodd" />
+                                        </g>
+                                    </svg>
+
+                                    <span>Classe</span>
                                 </div>
                             </a>
                         </li>
@@ -828,54 +827,18 @@
                             </a>
                         </li>
 
-                        <!-- filieres -->
-                        <li class="nav-item" id="Filiere">
-                            <a class="nav-link " href="{{ route('filiere.index') }}">
-                                <div class="icon-text-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="31.318" height="34.798"
-                                        viewBox="0 0 31.318 34.798">
-                                        <path id="Tracé_381" data-name="Tracé 381"
-                                            d="M34.318,5.48H9.96a3.48,3.48,0,0,0,0,6.96H34.318V35.058a1.74,1.74,0,0,1-1.74,1.74H9.96A6.96,6.96,0,0,1,3,29.838V8.96A6.96,6.96,0,0,1,9.96,2H32.578a1.74,1.74,0,0,1,1.74,1.74Zm-1.74,5.22H9.96a1.74,1.74,0,0,1,0-3.48H32.578Z"
-                                            transform="translate(-3 -2)" fill="#fff" />
-                                    </svg>
-                                    <span>Filières</span>
-                                </div>
-                            </a>
-                        </li>
 
-                        <li class="nav-item" id="Filiere">
-                            <a class="nav-link" href="{{ route('matiere.index') }}">
+                        <!-- Enseignants -->
+                        <li class="nav-item" id="enseignants">
+                            <a class="nav-link " href="{{ route('professeur') }}">
                                 <div class="icon-text-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
-                                        viewBox="0 0 39.9 42">
-                                        <g id="books" transform="translate(-2 -2)">
-                                            <path id="Tracé_511" data-name="Tracé 511"
-                                                d="M41.2,20.2h-.7V12.5h.7a.7.7,0,0,0,0-1.4H37.406A5.243,5.243,0,0,0,33.85,2H7.6a.7.7,0,0,0,0,1.4h.7v7.7H7.6a.7.7,0,0,0,0,1.4h3.794a5.222,5.222,0,0,0,0,7.7H2.7a.7.7,0,1,0,0,1.4h.7v7.7H2.7a.7.7,0,1,0,0,1.4H8.587l-.154.14A5.25,5.25,0,0,0,12.15,39.8h.35v3.5a.7.7,0,0,0,1.2.5l2.3-2.31,2.3,2.31a.7.7,0,0,0,.5.2.588.588,0,0,0,.266-.056A.7.7,0,0,0,19.5,43.3V39.8H38.4a.7.7,0,1,0,0-1.4h-.7V30.7h.7a.7.7,0,1,0,0-1.4H32.506a5.222,5.222,0,0,0,0-7.7H41.2a.7.7,0,0,0,0-1.4ZM36.3,30.7v7.7H19.5V35.6a.7.7,0,0,0-.7-.7H13.2a.7.7,0,0,0-.7.7v2.8h-.35a3.85,3.85,0,1,1,0-7.7Zm2.8-10.5H14.95a3.85,3.85,0,1,1,0-7.7H39.1Z"
-                                                transform="translate(0 0)" fill="#fff" />
-                                        </g>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30.448" height="34.798"
+                                        viewBox="0 0 30.448 34.798">
+                                        <path id="user-tie-solid"
+                                            d="M6.525,8.7a8.7,8.7,0,1,0,8.7-8.7A8.7,8.7,0,0,0,6.525,8.7Zm6.423,13.607,1.264,2.107-2.263,8.421L9.5,22.85a1.006,1.006,0,0,0-1.217-.768A10.961,10.961,0,0,0,0,32.711,2.087,2.087,0,0,0,2.087,34.8H28.362a2.087,2.087,0,0,0,2.087-2.087,10.961,10.961,0,0,0-8.285-10.63,1.016,1.016,0,0,0-1.217.768L18.5,32.834l-2.263-8.421L17.5,22.306a1.086,1.086,0,0,0-.931-1.645H13.885a1.087,1.087,0,0,0-.931,1.645Z"
+                                            fill="#fff" />
                                     </svg>
-                                    <span>Matieres</span>
-                                </div>
-                            </a>
-                        </li>
-                        <!-- classe -->
-                        <li class="nav-item" id="classe">
-                            <a class="nav-link " href="{{ route('classe.index') }}">
-                                <div class="icon-text-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
-                                        viewBox="0 0 39.065 39.055">
-                                        <g id="Classroom" transform="translate(-46 -46.058)">
-                                            <path id="Tracé_509" data-name="Tracé 509"
-                                                d="M46,330.433v2.439a1.224,1.224,0,0,0,1.224,1.224H53.39l-2.264,6.221a2.035,2.035,0,0,0,3.824,1.392l.7-1.916H75.419l.7,1.916a2.035,2.035,0,0,0,3.824-1.392L77.676,334.1H73.345l1.185,3.256h-18L57.72,334.1H83.842a1.224,1.224,0,0,0,1.224-1.224v-2.439Z"
-                                                transform="translate(0 -257.924)" fill="#fff" />
-                                            <path id="Tracé_510" data-name="Tracé 510"
-                                                d="M88.527,64.781a1.224,1.224,0,0,1,1.224-1.224h12.2a1.224,1.224,0,0,1,1.224,1.224v5.286h3.255V47.28a1.222,1.222,0,0,0-1.222-1.222H73.472A1.222,1.222,0,0,0,72.25,47.28V70.067H88.527Z"
-                                                transform="translate(-23.808)" fill="#fff" />
-                                            <rect id="Rectangle_228" data-name="Rectangle 228" width="9.766"
-                                                height="4.069" transform="translate(67.16 65.998)" fill="#fff" />
-                                        </g>
-                                    </svg>
-                                    <span>Classes</span>
+                                    <span>Enseignants</span>
                                 </div>
                             </a>
                         </li>
@@ -884,38 +847,52 @@
 
 
 
-                    @if (intval(auth()->user()->role_id) === 3)
+                    @if (auth()->user()->role_id === 3)
                         <!-- calendrier -->
                         <li class="nav-item" id="calendrier">
                             <a class="nav-link " href="{{ route('calendrier.admin') }}">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
-                                        viewBox="0 0 33.93 38.777">
-                                        <path id="calendar-check-regular"
-                                            d="M30.295,4.847H26.659V.909A.912.912,0,0,0,25.751,0H22.721a.912.912,0,0,0-.909.909V4.847H12.118V.909A.912.912,0,0,0,11.209,0H8.18a.912.912,0,0,0-.909.909V4.847H3.635A3.636,3.636,0,0,0,0,8.483V35.142a3.636,3.636,0,0,0,3.635,3.635H30.295a3.636,3.636,0,0,0,3.635-3.635V8.483A3.636,3.636,0,0,0,30.295,4.847ZM29.84,35.142H4.09a.454.454,0,0,1-.454-.454V12.118H30.295v22.57A.454.454,0,0,1,29.84,35.142Zm-4-15.2L15.057,30.636a.91.91,0,0,1-1.288-.008L8.081,24.895a.91.91,0,0,1,.008-1.288l1.719-1.7a.91.91,0,0,1,1.288.008l3.34,3.37,8.414-8.346a.91.91,0,0,1,1.288.008l1.7,1.719a.91.91,0,0,1-.008,1.288Z"
-                                            transform="translate(0 0)" fill="#fff" />
+                                        viewBox="0 0 33.158 35">
+                                        <g id="calendar-event-fill" transform="translate(-3 -2)"
+                                            style="isolation: isolate">
+                                            <path id="Tracé_374" data-name="Tracé 374"
+                                                d="M10.368,3A7.369,7.369,0,0,0,3,10.368v1.842H36.158V10.368A7.369,7.369,0,0,0,28.789,3H10.368Z"
+                                                transform="translate(0 0.842)" fill="#fff" />
+                                            <path id="Tracé_375" data-name="Tracé 375"
+                                                d="M12.211,2a1.842,1.842,0,0,1,1.842,1.842V7.526a1.842,1.842,0,1,1-3.684,0V3.842A1.842,1.842,0,0,1,12.211,2ZM3,16.737V29.632A7.369,7.369,0,0,0,10.368,37H28.789a7.369,7.369,0,0,0,7.368-7.368V16.737Zm23.947,3.684h1.842a1.843,1.843,0,0,1,1.842,1.842v1.842a1.843,1.843,0,0,1-1.842,1.842H26.947a1.843,1.843,0,0,1-1.842-1.842V22.263A1.843,1.843,0,0,1,26.947,20.421ZM28.789,3.842a1.842,1.842,0,0,0-3.684,0V7.526a1.842,1.842,0,0,0,3.684,0Z"
+                                                transform="translate(0 0)" fill="#fff" fill-rule="evenodd" />
+                                        </g>
                                     </svg>
+
                                     <span>Calendrier</span>
                                 </div>
                             </a>
                         </li>
-                    @elseif(intval(auth()->user()->role_id) === 2)
+                    @elseif(auth()->user()->role_id === 2)
                         <li class="nav-item" id="calendrier">
                             <a class="nav-link " href="{{ route('calendrier.professeur') }}">
                                 <div class="icon-text-container">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="33.158" height="35"
-                                        viewBox="0 0 33.93 38.777">
-                                        <path id="calendar-check-regular"
-                                            d="M30.295,4.847H26.659V.909A.912.912,0,0,0,25.751,0H22.721a.912.912,0,0,0-.909.909V4.847H12.118V.909A.912.912,0,0,0,11.209,0H8.18a.912.912,0,0,0-.909.909V4.847H3.635A3.636,3.636,0,0,0,0,8.483V35.142a3.636,3.636,0,0,0,3.635,3.635H30.295a3.636,3.636,0,0,0,3.635-3.635V8.483A3.636,3.636,0,0,0,30.295,4.847ZM29.84,35.142H4.09a.454.454,0,0,1-.454-.454V12.118H30.295v22.57A.454.454,0,0,1,29.84,35.142Zm-4-15.2L15.057,30.636a.91.91,0,0,1-1.288-.008L8.081,24.895a.91.91,0,0,1,.008-1.288l1.719-1.7a.91.91,0,0,1,1.288.008l3.34,3.37,8.414-8.346a.91.91,0,0,1,1.288.008l1.7,1.719a.91.91,0,0,1-.008,1.288Z"
-                                            transform="translate(0 0)" fill="#fff" />
+                                        viewBox="0 0 33.158 35">
+                                        <g id="calendar-event-fill" transform="translate(-3 -2)"
+                                            style="isolation: isolate">
+                                            <path id="Tracé_374" data-name="Tracé 374"
+                                                d="M10.368,3A7.369,7.369,0,0,0,3,10.368v1.842H36.158V10.368A7.369,7.369,0,0,0,28.789,3H10.368Z"
+                                                transform="translate(0 0.842)" fill="#fff" />
+                                            <path id="Tracé_375" data-name="Tracé 375"
+                                                d="M12.211,2a1.842,1.842,0,0,1,1.842,1.842V7.526a1.842,1.842,0,1,1-3.684,0V3.842A1.842,1.842,0,0,1,12.211,2ZM3,16.737V29.632A7.369,7.369,0,0,0,10.368,37H28.789a7.369,7.369,0,0,0,7.368-7.368V16.737Zm23.947,3.684h1.842a1.843,1.843,0,0,1,1.842,1.842v1.842a1.843,1.843,0,0,1-1.842,1.842H26.947a1.843,1.843,0,0,1-1.842-1.842V22.263A1.843,1.843,0,0,1,26.947,20.421ZM28.789,3.842a1.842,1.842,0,0,0-3.684,0V7.526a1.842,1.842,0,0,0,3.684,0Z"
+                                                transform="translate(0 0)" fill="#fff" fill-rule="evenodd" />
+                                        </g>
                                     </svg>
+
                                     <span>Calendrier</span>
                                 </div>
                             </a>
                         </li>
                     @endif
                     <!-- sujet -->
-                    @if (intval(auth()->user()->role_id) === 2)
+                    @if (auth()->user()->role_id === 2)
                         <li class="nav-item" id="sujet">
                             <a class="nav-link" href="{{ route('sujet.professeur') }}">
                                 <div class="icon-text-container">
@@ -927,7 +904,7 @@
                                     </svg>
 
 
-                                    <span>Sujets</span>
+                                    <span>Sujet</span>
                                 </div>
                             </a>
                         </li>
@@ -948,11 +925,11 @@
                                         </g>
                                     </svg>
 
-                                    <span>Corrections</span>
+                                    <span>Correction</span>
                                 </div>
                             </a>
                         </li>
-                    @elseif(intval(auth()->user()->role_id) === 3)
+                    @elseif(auth()->user()->role_id === 3)
                         <li class="nav-item" id="sujet">
                             <a class="nav-link" href="{{ route('sujet.admin') }}">
                                 <div class="icon-text-container">
@@ -964,7 +941,7 @@
                                     </svg>
 
 
-                                    <span>Sujets</span>
+                                    <span>Sujet</span>
                                 </div>
                             </a>
                         </li>
@@ -985,19 +962,7 @@
                                         </g>
                                     </svg>
 
-                                    <span>Corrections</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item" id="parametre">
-                            <a class="nav-link " href="#">
-                                <div class="icon-text-container">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path
-                                            d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"
-                                            fill="#fff" />
-                                    </svg>
-                                    <span>Paramètres</span>
+                                    <span>Correction</span>
                                 </div>
                             </a>
                         </li>
@@ -1095,23 +1060,4 @@
     function triggerFileUpload() {
         document.getElementById('fileInput').click();
     }
-
-    var iconchevron = document.querySelector('.icon-chevron');
-    document.querySelector('.cool').addEventListener('click', function() {
-        var verify = this.classList.contains('show');
-        if (!verify) {
-            iconchevron.classList.remove('fa-chevron-up');
-            iconchevron.classList.add('fa-chevron-down');
-        } else {
-            iconchevron.classList.remove('fa-chevron-down');
-            iconchevron.classList.add('fa-chevron-up');
-        }
-    });
-    document.addEventListener('click', function() {
-        var verify = document.querySelector('.cool').classList.contains('show');
-        if (verify) {
-            iconchevron.classList.remove('fa-chevron-up');
-            iconchevron.classList.add('fa-chevron-down');
-        }
-    });
 </script>

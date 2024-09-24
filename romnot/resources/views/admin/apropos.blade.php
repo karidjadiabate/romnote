@@ -22,57 +22,59 @@
 </head>
 
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: white;
-            color: #4a3dbb;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: white;
+        color: #4a3dbb;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
 
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            text-align: center;
-        }
+    }
 
-        .container h1,
-        .container h2 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
+    .container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        text-align: center;
+    }
 
-        .container h2 {
-            font-size: 20px;
-            margin-top: 20px;
-        }
+    .container h1,
+    .container h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        margin-top: 5%
+    }
 
-        .content-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+    .container h2 {
+        font-size: 20px;
+        margin-top: 20px;
+    }
 
-        .content-section h2 {
-            margin-bottom: 10px;
-        }
+    .content-section {
+        text-align: center;
+        margin-bottom: 30px;
+    }
 
-        .content-section p {
-            margin: 5px 0;
-            font-size: 16px;
-        }
+    .content-section h2 {
+        margin-bottom: 10px;
+    }
 
-        .footer {
-            background-color: #243F70;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 14px;
-            margin-top: 30px;
-        }
-    </style>
+    .content-section p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    .footer {
+        background-color: #243F70;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 30px;
+    }
+</style>
 </head>
 
 
@@ -149,12 +151,12 @@
         </div>
     </div>
 
-    <div class="footer">
-        &copy; 2024 Tous Droits Réservés. AKPANY, Software & Media Solution
-    </div>
+    <!-- Footer -->
+    @include('admin.include.footer')
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+
 </html>

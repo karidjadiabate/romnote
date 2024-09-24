@@ -27,322 +27,332 @@
     <!-- header -->
     @include('admin.include.menu')
     <!-- accueil -->
-    <div class="container">
-        <div class="printableArea">
-            <h2 class="text-start">Liste des Etudiants</h2>
-            <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons mb-3 no-print">
-                <div class="d-flex search-container">
-                    <i class="fa fa-search"></i>
-                    <input id="searchInput" type="text" id="search" class="form-control search-bar"
-                        placeholder="Rechercher...">
-                </div>
+    <div class="container printableArea principal">
+        <h2 class="text-start text-title">Liste des Etudiants</h2>
 
-                <div class="d-flex justify-content-end flex-wrap action-buttons">
-                    <button class="btn btn-custom btn-imprimer" id="printBtn" onclick="printDiv()"><i
-                            class="fa fa-print"></i> Imprimer</button>
-                    <button class="btn btn-custom btn-importer" data-bs-toggle="modal" data-bs-target="#importModal"><i
-                            class="fa fa-upload"></i> Importer</button>
-
-                    <!-- Dropdown for Export options -->
-                    <div class="btn-group">
-                        <button class="btn btn-custom btn-exporter dropdown-toggle" type="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-download"></i> Exporter
-                        </button>
-                        <ul class="dropdown-menu" id="menu">
-                            <!-- Assurez-vous que ces liens ont bien l'attribut href="#" et que onclick est correct -->
-                            <li><a class="dropdown-item" id="excel" href="#"
-                                    onclick="exportTableToExcel('#etudiantTable')">Excel</a></li>
-                            <li><a class="dropdown-item" id="pdf" href="#"
-                                    onclick="exportTableToPDF('#etudiantTable')">PDF</a></li>
-
-                        </ul>
-                    </div>
-                    <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#etudiant"><i
-                            class="fa fa-plus"></i> Ajouter un etudiant</button>
-                    <div class="dropdown" id="filterMenu">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-filter"></i> Filtrer par
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-submenu">
-                                <a class="dropdown-item dropdown-toggle" href="#"
-                                    data-bs-toggle="dropdown">Genre</a>
-                                <ul class="dropdown-menu">
-                                    @foreach ($etudiants as $etudiant)
-                                        <li>
-                                            <a class="dropdown-item" href="#"
-                                                onclick="applyFilter('Genre', '{{ $etudiant->genre }}')">
-                                                {{ $etudiant->genre }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                            {{--  --}}
-                            <li class="dropdown-submenu">
-                                <a class="dropdown-item dropdown-toggle" href="#"
-                                    data-bs-toggle="dropdown">Classe</a>
-                                <ul class="dropdown-menu">
-                                    @foreach ($etudiants as $etudiant)
-                                        <li>
-                                            <a class="dropdown-item" href="#"
-                                                onclick="applyFilter('Classe', '{{ $etudiant->nomclasse }}')">
-                                                {{ $etudiant->nomclasse }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-
-                            {{--  --}}
-
-                        </ul>
-                    </div>
-                </div>
-
-
-
-
-
+        <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons mb-3 no-print">
+            <div class="d-flex search-container">
+                <i class="fa fa-search"></i>
+                <input id="searchInput" type="text" id="search" class="form-control search-bar"
+                    placeholder="Rechercher...">
             </div>
-            <!-- Table for listing teachers -->
-            <div id="noResults">Aucun résultat trouvé</div>
-            <div class="table-responsive">
-                <table id="etudiantTable" class="table">
-                    <thead class="table-aaa">
-                        <tr class="aa">
-                            <th>Identifiant</th>
-                            <th>Matricule</th>
-                            <th>Nom et Prénoms</th>
-                            <th>Genre</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                            <th>Adresse</th>
-                            <th>Date de naissance</th>
-                            <th>Classe</th>
-                            <th class="no-print">Action</th>
+
+            <div class="d-flex justify-content-end flex-wrap">
+                <button class="btn btn-custom btn-imprimer" id="printBtn" onclick="printDiv()"><i
+                        class="fa fa-print"></i> Imprimer</button>
+                <button class="btn btn-custom btn-importer" data-bs-toggle="modal" data-bs-target="#importModal"><i
+                        class="fa fa-upload"></i> Importer</button>
+
+                <!-- Dropdown for Export options -->
+                <div class="btn-group">
+                    <button class="btn btn-custom btn-exporter dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa fa-download"></i> Exporter
+                    </button>
+                    <ul class="dropdown-menu" id="menu">
+                        <!-- Assurez-vous que ces liens ont bien l'attribut href="#" et que onclick est correct -->
+                        <li><a class="dropdown-item" id="excel" href="#"
+                                onclick="exportTableToExcel('#etudiantTable')">Excel</a></li>
+                        <li><a class="dropdown-item" id="pdf" href="#"
+                                onclick="exportTableToPDF('#etudiantTable')">PDF</a></li>
+
+                    </ul>
+                </div>
+                <button class="btn btn-custom btn-ajouter" data-bs-toggle="modal" data-bs-target="#etudiant"><i
+                        class="fa fa-plus"></i> Ajouter un etudiant</button>
+                <div class="dropdown" id="filterMenu">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa fa-filter"></i> Filtrer par
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Genre</a>
+                            <ul class="dropdown-menu">
+                                @foreach ($etudiants as $etudiant)
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                            onclick="applyFilter('Genre', '{{ $etudiant->genre }}')">
+                                            {{ $etudiant->genre }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        {{--  --}}
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Classe</a>
+                            <ul class="dropdown-menu">
+                                @foreach ($etudiants as $etudiant)
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                            onclick="applyFilter('Classe', '{{ $etudiant->nomclasse }}')">
+                                            {{ $etudiant->nomclasse }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+
+                        {{--  --}}
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#"
+                                data-bs-toggle="dropdown">Adresse</a>
+                            <ul class="dropdown-menu">
+                                @foreach ($etudiants as $etudiant)
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                            onclick="applyFilter('Adresse', '{{ $etudiant->adresse }}')">
+                                            {{ $etudiant->adresse }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Table for listing teachers -->
+        <div id="noResults">Aucun résultat trouvé</div>
+        <div class="table-responsive">
+            <table id="etudiantTable" class="table">
+                <thead class="table-aaa">
+                    <tr class="aa">
+                        {{-- <th>Identifiant</th> --}}
+                        <th>Matricule</th>
+                        <th>Nom</th>
+                        <th>Prénoms</th>
+                        <th>Genre</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Adresse</th>
+                        <th>Date de naissance</th>
+                        <th>Classe</th>
+                        <th class="no-print">Action</th>
+                    </tr>
+                </thead>&nbsp;&nbsp;
+                <tbody id="etudiantTable">
+                    @php
+                        $num = 1;
+                    @endphp
+                    @foreach ($etudiants as $etudiant)
+                        <tr>
+                            {{-- <td data-label="Identifiant">{{ $num++ }}</td> --}}
+                            <td data-label="Matricule">{{ $etudiant->matricule }}</td>
+                            <td data-label="Nom">
+                                @if ($etudiant->image)
+                                    <img src="{{ asset('storage/profile/' . $etudiant->image) }}" alt="User"
+                                        class="rounded-circle profile-image"
+                                        style="width: 40px; height: 35x; margin-top:-5px">
+                                @else
+                                    <img src="{{ Avatar::create($etudiant->nom)->toBase64() }}" alt="User"
+                                        class="rounded-circle profile-image"
+                                        style="width: 40px; height: 35x; margin-top:-5px">
+                                @endif
+
+                                {{ $etudiant->nom }}
+                            </td>
+                            <td data-label="Prenom">{{ $etudiant->prenom }}</td>
+                            <td data-label="Genre">{{ $etudiant->genre }}</td>
+                            <td data-label="Email">{{ $etudiant->email }}</td>
+                            <td data-label="Contact">{{ $etudiant->contact }}</td>
+                            <td data-label="Adresse">{{ $etudiant->adresse }}</td>
+                            <td data-label="Date-naissance">{{ $etudiant->datenaiss }}</td>
+                            <td data-label="Classe">{{ $etudiant->nomclasse }}</td>
+                            <td data-label="Action" class="action-icons no-print">
+                                <button class="btn  btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#editEtudiant{{ $etudiant->id }}"
+                                    data-file="{{ $etudiant->image }}" data-id="{{ $etudiant->id }}"
+                                    data-nom="{{ $etudiant->nom }}" data-prenom="{{ $etudiant->prenom }}"
+                                    data-email="{{ $etudiant->email }}" data-datenaiss="{{ $etudiant->datenaiss }}"
+                                    data-adresse="{{ $etudiant->adresse }}">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button class="btn  btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#deleteEtudiant{{ $etudiant->id }}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
                         </tr>
-                    </thead>&nbsp;&nbsp;
-                    <tbody id="etudiantTable">
-                        @php
-                            $num = 1;
-                        @endphp
-                        @foreach ($etudiants as $etudiant)
-                            <tr>
-                                <td data-label="Identifiant">{{ $num++ }}</td>
-                                <td data-label="Matricule">{{ $etudiant->matricule }}</td>
-                                <td data-label="Nom">
-                                    @if ($etudiant->image)
-                                        <img src="{{ asset('storage/profile/' . $etudiant->image) }}" alt="User"
-                                            class="rounded-circle profile-image"
-                                            style="width: 40px; height: 35x; margin-top:-5px">
-                                    @else
-                                        <img src="{{ Avatar::create($etudiant->nom . ' ' . $etudiant->prenom)->toBase64() }}"
-                                            alt="User" class="rounded-circle profile-image"
-                                            style="width: 40px; height: 35x; margin-top:-5px">
-                                    @endif
 
-                                    {{ $etudiant->nom . ' ' . $etudiant->prenom }}
-                                </td>
-                                <td data-label="Genre">{{ $etudiant->genre }}</td>
-                                <td data-label="Email">{{ $etudiant->email }}</td>
-                                <td data-label="Contact">{{ $etudiant->contact }}</td>
-                                <td data-label="Adresse">{{ $etudiant->adresse }}</td>
-                                <td data-label="Date-naissance">{{ $etudiant->datenaiss }}</td>
-                                <td data-label="Classe">{{ $etudiant->nomclasse }}</td>
-                                <td data-label="Action" class="action-icons no-print">
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#editEtudiant{{ $etudiant->id }}"
-                                        data-file="{{ $etudiant->image }}" data-id="{{ $etudiant->id }}"
-                                        data-nom="{{ $etudiant->nom }}" data-prenom="{{ $etudiant->prenom }}"
-                                        data-email="{{ $etudiant->email }}"
-                                        data-datenaiss="{{ $etudiant->datenaiss }}"
-                                        data-adresse="{{ $etudiant->adresse }}">
-                                        <i class="fas fa-edit"></i>
+                        <!-- Modal de Modification -->
+                        <div class="modal fade" id="editEtudiant{{ $etudiant->id }}" tabindex="-1"
+                            aria-labelledby="editAdminLabel{{ $etudiant->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <button type="button" class="custom-close-btn" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        <i class="fa-solid fa-xmark"></i> <!-- Font Awesome close icon -->
                                     </button>
-                                    <button class="btn  btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#deleteEtudiant{{ $etudiant->id }}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- Modal de Modification -->
-                            <div class="modal fade" id="editEtudiant{{ $etudiant->id }}" tabindex="-1"
-                                aria-labelledby="editAdminLabel{{ $etudiant->id }}" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <h1 class="text-center">Modifier</h1>
-                                        <form action="{{ route('user.update', $etudiant->id) }}" method="POST"
-                                            enctype="multipart/form-data" class="needs-validation" novalidate>
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-body">
-                                                <div class="row g-3">
-                                                    <!-- Fields for editing teacher details -->
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control"
-                                                            id="editNom{{ $etudiant->id }}" name="matricule"
-                                                            placeholder="Matricule"
-                                                            value="{{ $etudiant->matricule }}" required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
+                                    {{-- <h1 class="text-center">Modifier</h1> --}}
+                                    <form action="{{ route('user.update', $etudiant->id) }}" method="POST"
+                                        enctype="multipart/form-data" class="needs-validation" novalidate>
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body">
+                                            <div class="row g-3">
+                                                <!-- Fields for editing teacher details -->
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control"
+                                                        id="editNom{{ $etudiant->id }}" name="matricule"
+                                                        placeholder="Matricule" value="{{ $etudiant->matricule }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
                                                     </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control"
-                                                            id="editNom{{ $etudiant->id }}" name="nom"
-                                                            placeholder="Nom" value="{{ $etudiant->nom }}" required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control"
-                                                            id="editPrenom{{ $etudiant->id }}" name="prenom"
-                                                            placeholder="Prénoms" value="{{ $etudiant->prenom }}"
-                                                            required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <select class="select2-multiple form-control" name="classe_id"
-                                                            style="width: 100%" id="select2Multiple">
-                                                            @foreach ($classes as $classe)
-                                                                <option value="{{ $classe->id }}"
-                                                                    @if ($classe->id == $etudiant->classe_id) selected @endif>
-                                                                    {{ $classe->nomclasse }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="email" class="form-control"
-                                                            id="editEmail{{ $etudiant->id }}" name="email"
-                                                            placeholder="Email" value="{{ $etudiant->email }}"
-                                                            required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="tel" class="form-control"
-                                                            id="editContact{{ $etudiant->id }}" name="contact"
-                                                            placeholder="Contact" value="{{ $etudiant->contact }}"
-                                                            required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="date" class="form-control"
-                                                            id="editDatenaiss{{ $etudiant->id }}" name="datenaiss"
-                                                            placeholder="datenaiss"
-                                                            value="{{ $etudiant->datenaiss }}" required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <select class="select2-single form-control" name="genre"
-                                                            id="genre" style="width: 100%">
-                                                            <option value="M"
-                                                                @if (old('genre') == 'M') selected @endif>M
-                                                            </option>
-                                                            <option value="F"
-                                                                @if (old('genre') == 'F') selected @endif>F
-                                                            </option>
-                                                        </select>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control"
-                                                            id="adresse{{ $etudiant->id }}" name="adresse"
-                                                            placeholder="Adresse" value="{{ $etudiant->adresse }}"
-                                                            required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <input type="file" class="form-control"
-                                                            id="adresse{{ $etudiant->id }}" name="file"
-                                                            placeholder="datenaiss" value="{{ $etudiant->image }}"
-                                                            required>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-
                                                 </div>
-                                            </div>
-                                            <div class="d-flex justify-content-around">
-                                                <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                                <button type="button" class="btn btn-danger"
-                                                    data-bs-dismiss="modal">Annuler</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
 
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control"
+                                                        id="editNom{{ $etudiant->id }}" name="nom"
+                                                        placeholder="Nom" value="{{ $etudiant->nom }}" required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
 
-                            <!-- Modal de Suppression -->
-                            <div class="modal fade" id="deleteEtudiant{{ $etudiant->id }}" tabindex="-1"
-                                aria-labelledby="deleteEtudiantLabel{{ $etudiant->id }}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body text-center">
-                                            <img src="{{ asset('frontend/dashboard/images/images.png') }}"
-                                                width="50" height="50" alt=""><br><br>
-                                            <p id="sure">Êtes-vous sûr?</p>
-                                            <p>Supprimer cet etudiant ?</p>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control"
+                                                        id="editPrenom{{ $etudiant->id }}" name="prenom"
+                                                        placeholder="Prénoms" value="{{ $etudiant->prenom }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <select class="select2-multiple form-control" name="classe_id"
+                                                        style="width: 100%" id="select2Multiple">
+                                                        @foreach ($classes as $classe)
+                                                            <option value="{{ $classe->id }}"
+                                                                @if ($classe->id == $etudiant->classe_id) selected @endif>
+                                                                {{ $classe->nomclasse }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="email" class="form-control"
+                                                        id="editEmail{{ $etudiant->id }}" name="email"
+                                                        placeholder="Email" value="{{ $etudiant->email }}" required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="tel" class="form-control"
+                                                        id="editContact{{ $etudiant->id }}" name="contact"
+                                                        placeholder="Contact" value="{{ $etudiant->contact }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="date" class="form-control"
+                                                        id="editDatenaiss{{ $etudiant->id }}" name="datenaiss"
+                                                        placeholder="datenaiss" value="{{ $etudiant->datenaiss }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <select class="select2-single form-control" name="genre"
+                                                        id="genre" style="width: 100%">
+                                                        <option value="M"
+                                                            @if (old('genre') == 'M') selected @endif>M
+                                                        </option>
+                                                        <option value="F"
+                                                            @if (old('genre') == 'F') selected @endif>F
+                                                        </option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control"
+                                                        id="adresse{{ $etudiant->id }}" name="adresse"
+                                                        placeholder="Adresse" value="{{ $etudiant->adresse }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div>
+
+                                                {{-- <div class="col-sm-6">
+                                                    <input type="file" class="form-control"
+                                                        id="adresse{{ $etudiant->id }}" name="file"
+                                                        placeholder="datenaiss" value="{{ $etudiant->image }}"
+                                                        required>
+                                                    <div class="invalid-feedback">
+                                                    </div>
+                                                </div> --}}
+
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-around">
-                                            <form action="{{ route('user.destroy', $etudiant->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                            </form>
-                                            <button type="button" class="btn btn-secondary"
+                                        <div class="d-flex justify-content-around  mt-4">
+                                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                            <button type="button" class="btn btn-danger"
                                                 data-bs-dismiss="modal">Annuler</button>
                                         </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal de Suppression -->
+                        <div class="modal fade" id="deleteEtudiant{{ $etudiant->id }}" tabindex="-1"
+                            aria-labelledby="deleteEtudiantLabel{{ $etudiant->id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <img src="{{ asset('frontend/dashboard/images/images.png') }}" width="50"
+                                            height="50" alt=""><br><br>
+                                        <p id="sure">Êtes-vous sûr?</p>
+                                        <p>Supprimer cet etudiant ?</p>
+                                    </div>
+                                    <div class="d-flex justify-content-around">
+                                        <form action="{{ route('user.destroy', $etudiant->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Annuler</button>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
 
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="pagination-container  no-print">
-                <div class="pagination-info">
-                    Affiche
-                    <select id="rowsPerPageSelect" data-table-id="#etudiantTable">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    de
-                </div>
-                <div class="pagination-buttons">
-                    <button class="btn prev">‹</button>
-                    <button class="btn active">1</button>
-                    <button class="btn next">›</button>
-                    <span id="nbr">sur 2</span>
-                </div>
-            </div><br>
+                </tbody>
+            </table>
         </div>
+
+        <div class="pagination-container  no-print">
+            <div class="pagination-info">
+                Affiche
+                <select class="classic" id="rowsPerPageSelect" data-table-id="#etudiantTable">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                de
+            </div>
+            <div class="pagination-buttons">
+                <button class="btn prev"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="btn active">1</button>
+                <button class="btn next me-2"><i class="fa-solid fa-chevron-right"></i></button>
+                <span id="nbr">sur 2</span>
+            </div>
+        </div><br>
     </div>
     <!--  -->
     <!--  -->
@@ -432,7 +442,7 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <select name="classe_id" id="classe_id" class="form-control w-100">
+                                    <select name="classe_id" id="classe_id" class="form-control w-100  rounded-0">
                                         @foreach ($classes as $classe)
                                             <option value="{{ $classe->id }}">{{ $classe->nomclasse }}</option>
                                         @endforeach
@@ -447,9 +457,10 @@
                                 </div>
                             </div> --}}
                         </div>
-                        <div class="modal-footer d-flex justify-content-between">
-                            <button type="submit" class="btn btn-success">Sauvegarder</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                        <div class="modal-footer d-flex justify-content-between  mt-4">
+                            <button type="submit" class="btn btn-success  p-3 border-0 rounded">Sauvegarder</button>
+                            <button type="button" class="btn btn-danger  p-3 border-0 rounded"
+                                data-bs-dismiss="modal">Annuler</button>
                         </div>
                     </form>
                 </div>
@@ -475,7 +486,6 @@
                 <form action="/path/to/your/upload/handler" method="post" enctype="multipart/form-data"
                     class="needs-validation" novalidate>
                     <div class="modal-body">
-
                         <div class="mb-3">
                             <label for="fileInput" class="form-label">Choisissez un fichier à importer</label>
                             <input type="file" class="form-control" id="fileInput" name="importedFile" required>
@@ -483,11 +493,11 @@
                                 Veuillez sélectionner un fichier.
                             </div>
                         </div>
-
                 </form>
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="submit" class="btn btn-success">Importer</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                <div class="modal-footer d-flex justify-content-between  mt-4">
+                    <button type="submit" class="btn btn-success p-3 border-0 rounded">Importer</button>
+                    <button type="button" class="btn btn-danger p-3 border-0 rounded"
+                        data-bs-dismiss="modal">Annuler</button>
                 </div>
 
                 <!-- Modal Footer -->
@@ -495,15 +505,18 @@
             </div>
         </div>
     </div>
-    <!--  -->
-
+    </div>
+    <!-- Footer -->
+    @include('admin.include.footer')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Définir la configuration pour ce fichier
             setTableConfig({
                 'Genre': 4,
-                'Classe': 8
+                'Adresse': 7,
+                'Classe': 9,
+
             });
 
 

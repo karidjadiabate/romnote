@@ -8,10 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/3c4b920158.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <style>
         .full-screen-div {
-            background: url("{{asset('frontend/img/font.png')}}") no-repeat center center;
+            background: url("{{ asset('frontend/img/font.png') }}") no-repeat center center;
             background-size: cover;
             z-index: 1;
             width: 100%;
@@ -153,7 +153,7 @@
         <!-- Contenu de la div -->
         <div class="content-container">
             <h2 class="mb-4"><span class="logo">AKP</span> ROM-Note</h2>
-            <a href="{{route('home')}}" id="btnRetour" class="btn btn-success ml-auto">Retour</a>
+            <a href="{{ route('home') }}" id="btnRetour" class="btn btn-success ml-auto">Retour</a>
         </div>
         <div class="text-center centered-title">
             <h1>Choisissez votre plan!</h1>
@@ -212,8 +212,8 @@
 
     <script src="../js/landing.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

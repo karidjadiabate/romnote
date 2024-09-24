@@ -29,12 +29,12 @@
     }
 
     .account-container {
-        width: 90%;
+        width: 100%;
         max-width: 1200px;
         background-color: white;
-        padding: 40px;
+        padding: 0px;
         border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); */
         margin: 20px auto;
         display: flex;
         align-items: flex-start;
@@ -44,12 +44,15 @@
     .account-title {
         font-size: 32px;
         color: #4a3dbb;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
+        margin-top: 3%;
+        margin-left: 10%
     }
 
     .tabs {
         display: flex;
-        margin-bottom: 20px;
+        margin-bottom: 50px;
+        margin-left: 10%
     }
 
     .tab-link {
@@ -137,8 +140,9 @@
     .account-form {
         display: flex;
         flex-direction: column;
-        width: 90%;
+        /* width: 100%; */
         gap: 20px;
+        margin-left: 10%
     }
 
     .form-row {
@@ -170,6 +174,10 @@
         border-radius: 4px;
         font-size: 16px;
         color: #4a3dbb;
+    }
+
+    .form-group textarea {
+        height: 100px;
     }
 
     .form-group input:focus,
@@ -231,6 +239,17 @@
         margin-left: 20%;
         width: 100%
     }
+
+    .profile-and-form {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+        width: 100%
+    }
+
+    #personal-info {
+        width: 100%
+    }
 </style>
 
 
@@ -247,211 +266,251 @@
     </div>
     <div class="account-container">
         <div id="personal-info" class="tab-content active">
-            <div class="profile-section">
-                <div class="profile-img-container">
-                    @if (auth()->user()->image)
-                        <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User"
-                            class="profile-img" id="user-image">
-                    @else
-                        <img src="{{ Avatar::create(auth()->user()->nom . ' ' . auth()->user()->prenom)->toBase64() }}"
-                            alt="User" class="profile-img" id="user-image">
-                    @endif
-                    <button class="photo-btn" id="camera-btn"><i class="fas fa-camera"></i></button>
+            <div class="profile-and-form">
+                <div class="profile-section">
+                    <div class="profile-img-container">
+                        @if (auth()->user()->image)
+                            <img src="{{ asset('storage/profile/' . auth()->user()->image) }}" alt="User"
+                                class="profile-img" id="user-image">
+                        @else
+                            <img src="{{ Avatar::create(auth()->user()->nom . ' ' . auth()->user()->prenom)->toBase64() }}"
+                                alt="User" class="profile-img" id="user-image">
+                        @endif
+                        <button class="photo-btn" id="camera-btn"><i class="fas fa-camera"></i></button>
 
+                    </div>
+                    <div class="profile-actions">
+                        <button class="upload-btn" onclick="document.getElementById('upload-input').click();"><i
+                                class="fas fa-upload"></i></button>
+                        <button class="delete-btn" onclick="deleteImage()"><i class="fas fa-trash-alt"></i></button>
+                    </div>
                 </div>
-                <div class="profile-actions">
-                    <button class="upload-btn" onclick="document.getElementById('upload-input').click();"><i
-                            class="fas fa-upload"></i></button>
-                    <button class="delete-btn" onclick="deleteImage()"><i class="fas fa-trash-alt"></i></button>
-                </div>
+
+                @if (auth()->user()->role_id == 2)
+                    <form class="account-form" action="{{ route('updateprofile.professeur', auth()->user()->id) }}"
+                        method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prenom">Prénoms</label>
+                                <input type="text" id="prenom" name="prenom"
+                                    value="{{ auth()->user()->prenom }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nom">Nom</label>
+                                <input type="text" id="nom" name="nom" value="{{ auth()->user()->nom }}">
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact">Contact</label>
+                                <input type="text" id="contact" name="contact"
+                                    value="{{ auth()->user()->contact }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="{{ auth()->user()->email }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="adresse">Adresse</label>
+                                <input type="text" id="adresse" name="adresse"
+                                    value="{{ auth()->user()->adresse }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="fonction">Fonction</label>
+                                <input type="text" id="fonction" name="role_id"
+                                    value="{{ auth()->user()->role->nomrole }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Sélectionnez un rôle</label>
+                            <select name="role" id="role" class="form-control w-100">
+                                <option value="1">Role</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="about">À propos</label>
+                            <textarea id="about" name="about" placeholder="Rédiger votre biographie"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notifications">Activité de Notifications</label>
+                            <hr>
+                        </div>
+                        <div class="notification-setting">
+                            <input type="checkbox" id="notifications" name="notifications" checked>
+                            <label for="notifications">Je souhaite recevoir une notification de ROMNote lorsque de
+                                nouveaux
+                                projets sont disponibles</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="file" name="file" id="upload-input" accept="image/*"
+                                style="display: none;" onchange="uploadImage(event)">
+                        </div>
+
+                        <button type="submit" class="save-btn">Sauvegarder</button>
+                    </form>
+                @elseif(auth()->user()->role_id === 3)
+                    <form class="account-form" action="{{ route('updateprofile.admin', auth()->user()->id) }}"
+                        method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nom">Nom</label>
+                                <input type="text" id="nom" name="nom"
+                                    value="{{ auth()->user()->nom }}">
+                            </div>
+                            <input type="file" name="file" id="upload-input" accept="image/*"
+                                style="display: none;"onchange="uploadImage(event)">
+                            <div class="form-group">
+                                <label for="prenom">Prénoms</label>
+                                <input type="text" id="prenom" name="prenom"
+                                    value="{{ auth()->user()->prenom }}">
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact">Contact</label>
+                                <input type="text" id="contact" name="contact"
+                                    value="{{ auth()->user()->contact }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email"
+                                    value="{{ auth()->user()->email }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="adresse">Adresse</label>
+                                <input type="text" id="adresse" name="adresse"
+                                    value="{{ auth()->user()->adresse }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fonction">Fonction</label>
+                                <input type="text" id="fonction" name="role_id"
+                                    value="{{ auth()->user()->role->nomrole }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Sélectionnez un rôle</label>
+                            <select name="role" id="role" class="form-control w-100">
+                                <option value="1">Role</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="about">À propos</label>
+                            <textarea id="about" placeholder="Rédiger votre biographie"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notifications">Activité de Notifications</label>
+                            <hr>
+                        </div>
+                        <div class="notification-setting">
+                            <input type="checkbox" id="notifications" checked>
+                            <label for="notifications">Je souhaite recevoir une notification de ROMNote lorsque de
+                                nouveaux
+                                projets sont disponibles</label>
+                        </div>
+
+                        <button type="submit" class="save-btn">Sauvegarder</button>
+                    </form>
+                @elseif(auth()->user()->role_id == 4)
+                    <form class="account-form" action="{{ route('updateprofile.superadmin', auth()->user()->id) }}"
+                        method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nom">Nom</label>
+                                <input type="text" id="nom" name="nom"
+                                    value="{{ auth()->user()->nom }}">
+                            </div>
+                            <input type="file" name="file" id="upload-input" accept="image/*"
+                                style="display: none;"onchange="uploadImage(event)">
+                            <div class="form-group">
+                                <label for="prenom">Prénoms</label>
+                                <input type="text" id="prenom" name="prenom"
+                                    value="{{ auth()->user()->prenom }}">
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact">Contact</label>
+                                <input type="text" id="contact" name="contact"
+                                    value="{{ auth()->user()->contact }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email"
+                                    value="{{ auth()->user()->email }}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="adresse">Adresse</label>
+                                <input type="text" id="adresse" name="adresse"
+                                    value="{{ auth()->user()->adresse }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fonction">Fonction</label>
+                                <input type="text" id="fonction" name="role_id"
+                                    value="{{ auth()->user()->role->nomrole }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Sélectionnez un rôle</label>
+                            <select name="role" id="role" class="form-control w-100">
+                                <option value="1">Role</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Sélectionnez un rôle</label>
+                            <select name="role" id="role" class="form-control w-100">
+                                <option value="1">Role</option>
+                            </select>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="about">À propos</label>
+                            <textarea id="about" placeholder="Rédiger votre biographie"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notifications">Activité de Notifications</label>
+                            <hr>
+                        </div>
+                        <div class="notification-setting">
+                            <input type="checkbox" id="notifications" checked>
+                            <label for="notifications">Je souhaite recevoir une notification de ROMNote lorsque de
+                                nouveaux
+                                projets sont disponibles</label>
+                        </div>
+
+                        <button type="submit" class="save-btn">Sauvegarder</button>
+                    </form>
+                @endif
             </div>
-
-            @if (auth()->user()->role_id === 2)
-                <form class="account-form" action="{{ route('updateprofile.professeur', auth()->user()->id) }}"
-                    method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nom">Nom</label>
-                            <input type="text" id="nom" name="nom" value="{{ auth()->user()->nom }}">
-                        </div>
-                        <input type="file" name="file" id="upload-input" accept="image/*"
-                            style="display: none;"onchange="uploadImage(event)">
-                        <div class="form-group">
-                            <label for="prenom">Prénoms</label>
-                            <input type="text" id="prenom" name="prenom" value="{{ auth()->user()->prenom }}">
-                        </div>
-
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="contact">Contact</label>
-                            <input type="text" id="contact" name="contact" value="{{ auth()->user()->contact }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" value="{{ auth()->user()->email }}">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="adresse">Adresse</label>
-                            <input type="text" id="adresse" name="adresse" value="{{ auth()->user()->adresse }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fonction">Fonction</label>
-                            <input type="text" id="fonction" name="role_id"
-                                value="{{ auth()->user()->role->nomrole }}" readonly>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="about">À propos</label>
-                        <textarea id="about" placeholder="Rédiger votre biographie"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="notifications">Activité de Notifications</label>
-                        <hr>
-                    </div>
-                    <div class="notification-setting">
-                        <input type="checkbox" id="notifications" checked>
-                        <label for="notifications">Je souhaite recevoir une notification de ROMNote lorsque de nouveaux
-                            projets sont disponibles</label>
-                    </div>
-
-                    <button type="submit" class="save-btn">Sauvegarder</button>
-                </form>
-            @elseif(auth()->user()->role_id === 3)
-                <form class="account-form" action="{{ route('updateprofile.admin', auth()->user()->id) }}"
-                    method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nom">Nom</label>
-                            <input type="text" id="nom" name="nom" value="{{ auth()->user()->nom }}">
-                        </div>
-                        <input type="file" name="file" id="upload-input" accept="image/*"
-                            style="display: none;"onchange="uploadImage(event)">
-                        <div class="form-group">
-                            <label for="prenom">Prénoms</label>
-                            <input type="text" id="prenom" name="prenom"
-                                value="{{ auth()->user()->prenom }}">
-                        </div>
-
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="contact">Contact</label>
-                            <input type="text" id="contact" name="contact"
-                                value="{{ auth()->user()->contact }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email"
-                                value="{{ auth()->user()->email }}">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="adresse">Adresse</label>
-                            <input type="text" id="adresse" name="adresse"
-                                value="{{ auth()->user()->adresse }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fonction">Fonction</label>
-                            <input type="text" id="fonction" name="role_id"
-                                value="{{ auth()->user()->role->nomrole }}" readonly>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="about">À propos</label>
-                        <textarea id="about" placeholder="Rédiger votre biographie"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="notifications">Activité de Notifications</label>
-                        <hr>
-                    </div>
-                    <div class="notification-setting">
-                        <input type="checkbox" id="notifications" checked>
-                        <label for="notifications">Je souhaite recevoir une notification de ROMNote lorsque de nouveaux
-                            projets sont disponibles</label>
-                    </div>
-
-                    <button type="submit" class="save-btn">Sauvegarder</button>
-                </form>
-            @elseif(auth()->user()->role_id === 4)
-                <form class="account-form" action="{{ route('updateprofile.superadmin', auth()->user()->id) }}"
-                    method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nom">Nom</label>
-                            <input type="text" id="nom" name="nom" value="{{ auth()->user()->nom }}">
-                        </div>
-                        <input type="file" name="file" id="upload-input" accept="image/*"
-                            style="display: none;"onchange="uploadImage(event)">
-                        <div class="form-group">
-                            <label for="prenom">Prénoms</label>
-                            <input type="text" id="prenom" name="prenom"
-                                value="{{ auth()->user()->prenom }}">
-                        </div>
-
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="contact">Contact</label>
-                            <input type="text" id="contact" name="contact"
-                                value="{{ auth()->user()->contact }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email"
-                                value="{{ auth()->user()->email }}">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="adresse">Adresse</label>
-                            <input type="text" id="adresse" name="adresse"
-                                value="{{ auth()->user()->adresse }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fonction">Fonction</label>
-                            <input type="text" id="fonction" name="role_id"
-                                value="{{ auth()->user()->role->nomrole }}" readonly>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="about">À propos</label>
-                        <textarea id="about" placeholder="Rédiger votre biographie"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="notifications">Activité de Notifications</label>
-                        <hr>
-                    </div>
-                    <div class="notification-setting">
-                        <input type="checkbox" id="notifications" checked>
-                        <label for="notifications">Je souhaite recevoir une notification de ROMNote lorsque de nouveaux
-                            projets sont disponibles</label>
-                    </div>
-
-                    <button type="submit" class="save-btn">Sauvegarder</button>
-                </form>
-            @endif
         </div>
 
         @if (auth()->user()->role_id === 3)
@@ -494,7 +553,7 @@
                     <button type="submit" class="save-btn">Sauvegarder</button>
                 </form>
             </div>
-        @elseif(auth()->user()->role_id === 2)
+        @elseif(auth()->user()->role_id == 2)
             <div id="security" class="tab-content">
                 <form class="account-form" action="{{ route('updatepassword.professeur') }}" method="POST">
                     @csrf
@@ -534,7 +593,7 @@
                     <button type="submit" class="save-btn">Sauvegarder</button>
                 </form>
             </div>
-        @elseif(auth()->user()->role_id === 4)
+        @elseif(auth()->user()->role_id == 4)
             <div id="security" class="tab-content">
                 <form class="account-form" action="{{ route('updatepassword.superadmin') }}" method="POST">
                     @csrf

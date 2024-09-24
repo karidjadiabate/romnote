@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/sujt.css') }}" />
     <script src="{{ asset('frontend/dashboard/html/script.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/dash.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/html/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/dashboard/css/lists.css') }}">
 
     <title>Registration Form</title>
 </head>
@@ -60,7 +63,7 @@
     @endif
 
 
-    @if (auth()->user()->role_id === 2)
+    @if (intval(auth()->user()->role_id) === 2)
         <form action="{{ route('sujetprofesseur.store') }}" class="form" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-step form-step-active">
@@ -85,11 +88,11 @@
                             <option value="" disabled selected hidden>
                                 Sélectionner la matière
                             </option>
-                            @if (auth()->user()->role_id === 3)
+                            @if (intval(auth()->user()->role_id) === 3)
                                 @foreach ($matieres as $matiere)
                                     <option value="{{ $matiere->id }}">{{ $matiere->nommatiere }}</option>
                                 @endforeach
-                            @elseif(auth()->user()->role_id === 2)
+                            @elseif(intval(auth()->user()->role_id) === 2)
                                 @foreach ($professeurMatiere as $matiere)
                                     <option value="{{ $matiere->id }}">{{ $matiere->nommatiere }}</option>
                                 @endforeach
@@ -129,8 +132,8 @@
                     </div>
                     <div class="input-group time-group">
                         <label for="time" class="label">Durée</label>
-                        <input type="text" name="heure" id="time" class="time-effect-1" placeholder="hh:mm"
-                            onfocus="this.type='time'" onblur="this.type='time'" required />
+                        <input type="text" name="heure" id="time" class="time-effect-1"
+                            placeholder="hh:mm" onfocus="this.type='time'" onblur="this.type='time'" required />
                         <span class="border"></span>
                     </div>
                 </div>
@@ -272,7 +275,7 @@
                 </div>
             </div>
         </form>
-    @elseif(auth()->user()->role_id === 3)
+    @elseif(intval(auth()->user()->role_id) === 3)
         <form action="{{ route('sujetadmin.store') }}" class="form" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-step form-step-active">
@@ -297,11 +300,11 @@
                             <option value="" disabled selected hidden>
                                 Sélectionner la matière
                             </option>
-                            @if (auth()->user()->role_id === 3)
+                            @if (intval(auth()->user()->role_id) === 3)
                                 @foreach ($matieres as $matiere)
                                     <option value="{{ $matiere->id }}">{{ $matiere->nommatiere }}</option>
                                 @endforeach
-                            @elseif(auth()->user()->role_id === 2)
+                            @elseif(intval(auth()->user()->role_id) === 2)
                                 @foreach ($professeurMatiere as $matiere)
                                     <option value="{{ $matiere->id }}">{{ $matiere->nommatiere }}</option>
                                 @endforeach
@@ -485,6 +488,7 @@
             </div>
         </form>
     @endif
+
     <script>
         document.body.addEventListener('change', function(event) {
             if (event.target && event.target.classList.contains('file-input')) {
@@ -748,7 +752,7 @@
                     <div class="questionnaire-container">
                         <div class="input-group">
                             <div class="questionnaire">
-                                <div class="input-group">
+                                <div class="input-group
                                     <div class="display-1">
                                         <div class="textarea">
                                             <textarea name="sections[${counters.section - 1}][questions][0][libquestion]" id="previewz${counters.file++}" required placeholder="Question"></textarea>
@@ -815,7 +819,7 @@
 
                     if (frm) {
                         frm.style.display = "block";
-                        input.disabled = true;
+                        // input.disabled = true;
                     }
 
                     this.classList.remove("valid-not");

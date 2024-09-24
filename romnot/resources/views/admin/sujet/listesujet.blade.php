@@ -250,7 +250,7 @@
                 <table id="inscriptionTable" class="table">
                     <thead class="table-aaa">
                         <tr class="aa">
-                            <th>Identifiant</th>
+                            {{-- <th>Identifiant</th> --}}
                             <th>Code</th>
                             @if (auth()->user()->role_id === 3)
                                 <th>Professeur</th>
@@ -266,7 +266,7 @@
                     <tbody>
                         @foreach ($listesujets as $listesujet)
                             <tr>
-                                <td data-label="Identifiant">{{ $listesujet->id }}</td>
+                                {{-- <td data-label="Identifiant">{{ $listesujet->id }}</td> --}}
                                 <td data-label="Code">{{ $listesujet->code }}</td>
                                 @if (auth()->user()->role_id === 3)
                                     <td data-label="User">{{ $listesujet->nom . ' ' . $listesujet->prenom }}</td>
@@ -275,7 +275,13 @@
                                 <td data-label="Filière">{{ $listesujet->nomfiliere }}</td>
                                 <td data-label="Classes">{{ $listesujet->nomclasse }}</td>
                                 <td data-label="Date de création">{{ $listesujet->created_date }}</td>
-                                <td data-label="statut" id="corrigé"><span>{{ $listesujet->status }}</span></td>
+                                <td data-label="statut" id="corrigé"><span>
+                                        @if ($listesujet->status === 'non-corrige')
+                                            Non Corrigé
+                                        @elseif($listesujet->status === 'corrige')
+                                            Corrigé
+                                        @endif
+                                    </span></td>
                                 <td data-label="Action" class="action-icons no-print">
                                     <button data-bs-toggle="modal" data-bs-target="#editTeacher"> <i
                                             class="fas fa-eye"></i></button>

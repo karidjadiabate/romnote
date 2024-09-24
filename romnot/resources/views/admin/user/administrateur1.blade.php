@@ -28,7 +28,7 @@
     <!-- header -->
     @include('admin.include.menu')
     <!-- accueil -->
-    <div class="container principal">
+    <div class="container">
         <div class="printableArea">
             <h2 class="text-start">Liste des Administrateurs</h2>
             <div class="d-flex justify-content-between align-items-center flex-wrap action-buttons mb-3 no-print">
@@ -99,11 +99,12 @@
                                         data-prenom="{{ $administrateur->prenom }}"
                                         data-email="{{ $administrateur->email }}"
                                         data-etablissement_id="{{ $administrateur->etablissement_id }}">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-pen"></i>
+
                                     </button>
                                     <button class="btn  btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#deleteAdmin{{ $administrateur->id }}">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -330,6 +331,8 @@
             </div>
         </div>
     </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -346,7 +349,7 @@
     </script>
 
     <!-- Bootstrap JS -->
-
+    <script src="../js/list.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
